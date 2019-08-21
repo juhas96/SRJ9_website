@@ -46,3 +46,13 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+
+.idea/codeStyles/codeStyleConfig.xml
+.idea/codeStyles/Project.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/SRJ9_website.iml
+.idea/vcs.xml
+
