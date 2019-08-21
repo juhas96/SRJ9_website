@@ -9,20 +9,29 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { GymComponent } from './gym/gym.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { LaundryComponent } from './laundry/laundry.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { EventComponent } from './event/event.component';
+import { MembersComponent } from './members/members.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    GymComponent
+    GymComponent,
+    LaundryComponent,
+    EventComponent,
+    MembersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
+    FormsModule,
     BrowserAnimationsModule,
-    FullCalendarModule
+    FullCalendarModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
