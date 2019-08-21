@@ -1,0 +1,14 @@
+.navbar {
+  justify-content: space-between;
+}
+
+a {
+  padding-right: 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+a:hover,
+a:active {
+  color: lightblue;
+}
