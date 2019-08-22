@@ -13,6 +13,7 @@ import { LaundryComponent } from './laundry/laundry.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventComponent } from './event/event.component';
 import { MembersComponent } from './members/members.component';
+import {FlexModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MembersComponent } from './members/members.component';
     BrowserAnimationsModule,
     FullCalendarModule,
     ReactiveFormsModule,
+    FlexModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
