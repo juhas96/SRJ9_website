@@ -15,6 +15,7 @@ import { EventComponent } from './event/event.component';
 import { MembersComponent } from './members/members.component';
 import { FlexModule } from '@angular/flex-layout';
 import { CdkModule } from './cdk.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { CdkModule } from './cdk.module';
     GymComponent,
     LaundryComponent,
     EventComponent,
-    MembersComponent
+    MembersComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,7 @@ import { CdkModule } from './cdk.module';
     FullCalendarModule,
     ReactiveFormsModule,
     FlexModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

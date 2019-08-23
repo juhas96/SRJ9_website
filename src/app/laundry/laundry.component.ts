@@ -3,6 +3,9 @@ import {MatDatepickerInputEvent, MatListOption, MatSelectionList} from '@angular
 import {SelectionModel} from '@angular/cdk/collections';
 import {Laundry} from '../model/laundry.model';
 import * as moment from 'moment';
+import {LaundryService} from '../services/laundry.service';
+import {HttpClient} from '@angular/common/http';
+import {Status} from '../enums/status.enum';
 
 @Component({
   selector: 'app-laundry',
@@ -11,24 +14,28 @@ import * as moment from 'moment';
 })
 export class LaundryComponent implements OnInit {
 
+  readonly ROOT_URL = 'http://localhost:8080/api';
+
   currentDate = new Date();
-  events: string[] = [];
+  eventsFromSelectedTimeFrom: string[] = [];
+  eventsFromSelectedTimeUntil: string[] = [];
   availableHours: string[];
-  laundry: Laundry;
+  selectedDate: Date;
   currentSelectedTimeFrom: string;
   currentSelectedTimeUntil: string;
+  status: Status;
 
   @ViewChild(MatSelectionList, {static: true}) selectionList: MatSelectionList;
 
-  constructor() {}
+  constructor(private laundryService: LaundryService) { }
 
   ngOnInit() {
     this.availableHours = this.generateAvailableHours();
     this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
   }
 
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.events.push(`${type}: ${event.value}`);
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>, events: string[]) {
+    events.push(`${type}: ${event.value}`);
   }
 
   generateAvailableHours(): string[] {
@@ -43,14 +50,13 @@ export class LaundryComponent implements OnInit {
     return arr;
   }
 
-  convertStringTimeToDateFormat(time: string) {
+  convertStringTimeToDateFormat(time: string): Date {
     const cdt = moment(time, 'HH:mm');
-    cdt.toDate();
-    console.log(cdt.format('YYYY/MM/DD HH:mm'));
+    return cdt.toDate();
   }
 
-  onSelection(e, v) {
-    this.currentSelectedTimeFrom = e.option.value;
+  onSelection(e, v): string {
+    return e.option.value;
   }
 
   getValue(event) {
@@ -61,5 +67,7 @@ export class LaundryComponent implements OnInit {
     const date = Date.parse(strDate);
     return date / 1000;
   }
+
+
 
 }
