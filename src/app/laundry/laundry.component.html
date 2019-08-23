@@ -1,40 +1,47 @@
 <h1 fxLayoutAlign="center center">Here you can reserve your laundry time</h1>
-
 <mat-divider></mat-divider>
-
+<h1>Options Selected: {{availableHoursToSelect.selectedOptions.selected.length}} </h1>
 <div fxLayout="row" fxLayoutAlign="center center">
-  <mat-vertical-stepper linear>
+  <mat-vertical-stepper linear class="vertical-stepper">
     <mat-step label="Choose Laundry Date" completed="true">
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <input matInput [matDatepicker]="picker" [min]="currentDate" placeholder="Choose a date"
+                (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+      <div>
+        <button mat-button matStepperNext class="stepperButton">Next</button>
+      </div>
     </mat-step>
 
     <mat-step label="Choose Laundry Time From" completed="true">
-      <mat-list>
-        <mat-list-item>13:00</mat-list-item>
-        <mat-list-item>14:00</mat-list-item>
-        <mat-list-item>15:00</mat-list-item>
-        <mat-list-item>16:00</mat-list-item>
-      </mat-list>
+      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <mat-selection-list #availableHoursToSelect (selectionChange)="onSelection($event, availableHoursToSelect.selectedOptions)">
+          <mat-list-option *ngFor="let availableHour of availableHours" [value]="availableHour" (click)="getValue($event)">{{availableHour}}</mat-list-option>
+        </mat-selection-list>
+      </cdk-virtual-scroll-viewport>
+      <div>
+        <button mat-button matStepperNext class="stepperButton" (click)="convertStringTimeToDateFormat(this.currentSelectedTimeFrom)">Next</button>
+      </div>
     </mat-step>
 
     <mat-step label="Choose Laundry Time Until" completed="true">
-      <mat-list>
-        <mat-list-item>13:00</mat-list-item>
-        <mat-list-item>14:00</mat-list-item>
-        <mat-list-item>15:00</mat-list-item>
-        <mat-list-item>16:00</mat-list-item>
-      </mat-list>
+      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <mat-selection-list #availableHoursToSelect2>
+          <mat-list-option *ngFor="let availableHour of availableHours">{{availableHour}}</mat-list-option>
+        </mat-selection-list>
+      </cdk-virtual-scroll-viewport>
+      <div>
+        <button mat-button matStepperNext class="stepperButton">Next</button>
+      </div>
     </mat-step>
 
     <mat-step label="Please enter your name" completed="true">
       <mat-form-field>
         <input matInput placeholder="Enter your name" required>
       </mat-form-field>
-      <button mat-button color="primary">Reserve</button>
+      <button mat-button class="stepperButton">Reserve</button>
     </mat-step>
   </mat-vertical-stepper>
 </div>

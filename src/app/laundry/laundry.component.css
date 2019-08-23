@@ -1,0 +1,13 @@
+.stepperButton {
+  background-color: #3F51B5;
+  color: white;
+}
+
+.example-viewport {
+  height:400px;
+  /*width: 600px;*/
+}
+
+mat-vertical-stepper {
+  width: max-content;
+}

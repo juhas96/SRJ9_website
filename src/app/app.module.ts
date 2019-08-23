@@ -10,10 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { GymComponent } from './gym/gym.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { LaundryComponent } from './laundry/laundry.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventComponent } from './event/event.component';
 import { MembersComponent } from './members/members.component';
-import {FlexModule} from '@angular/flex-layout';
+import { FlexModule } from '@angular/flex-layout';
+import { CdkModule } from './cdk.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {FlexModule} from '@angular/flex-layout';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
+    CdkModule,
     FormsModule,
     BrowserAnimationsModule,
     FullCalendarModule,
