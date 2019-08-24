@@ -13,22 +13,11 @@ const httpOptions = {
 })
 export class ApiService {
 
-  readonly ROOT_URL = 'http://localhost:8080/api';
-
   constructor(private http: HttpClient) { }
 
-  public post(params: ApiParams, body): Observable<any> {
-    return this.http.post(
-      this.ROOT_URL + '' + params.endp,
-      JSON.stringify(body),
-      httpOptions
-    ).pipe(
-      retry(1),
-      catchError(this.handleError)
-    );
-  }
+  readonly ROOT_URL = 'http://localhost:8080/api';
 
-  private handleError(error) {
+  private static handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get cliend-side error
@@ -37,5 +26,45 @@ export class ApiService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
+  }
+
+  public post(params: ApiParams, body): Observable<any> {
+    return this.http.post(
+      this.ROOT_URL + '' + params.endp,
+      JSON.stringify(body),
+      httpOptions
+    ).pipe(
+      retry(1),
+      catchError(ApiService.handleError)
+    );
+  }
+
+  public get(params: ApiParams): Observable<any> {
+    return this.http.get(
+      this.ROOT_URL + '' + params.endp, httpOptions
+    ).pipe(
+      retry(1),
+      catchError(ApiService.handleError)
+    );
+  }
+
+  public delete(params: ApiParams): Observable<any> {
+    return this.http.delete(
+      this.ROOT_URL + '' + params.endp,
+      httpOptions
+    ).pipe(
+      catchError(ApiService.handleError)
+    );
+  }
+
+  public put(params: ApiParams, body): Observable<any> {
+    return this.http.put(
+      this.ROOT_URL + '' + params.endp,
+      JSON.stringify(body),
+      httpOptions
+    ).pipe(
+      retry(1),
+      catchError(ApiService.handleError)
+    );
   }
 }

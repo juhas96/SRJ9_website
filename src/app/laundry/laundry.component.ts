@@ -1,10 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDatepickerInputEvent, MatListOption, MatSelectionList} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {Laundry} from '../model/laundry.model';
 import * as moment from 'moment';
 import {LaundryService} from '../services/laundry.service';
-import {HttpClient} from '@angular/common/http';
 import {Status} from '../enums/status.enum';
 
 @Component({
@@ -17,8 +15,7 @@ export class LaundryComponent implements OnInit {
   readonly ROOT_URL = 'http://localhost:8080/api';
 
   currentDate = new Date();
-  eventsFromSelectedTimeFrom: string[] = [];
-  eventsFromSelectedTimeUntil: string[] = [];
+  events: string[] = [];
   availableHours: string[];
   selectedDate: Date;
   currentSelectedTimeFrom: string;

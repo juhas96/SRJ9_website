@@ -2,7 +2,7 @@
 <mat-divider></mat-divider>
 <h1>Options Selected: {{availableHoursFromToSelect.selectedOptions.selected.length}} </h1>
 <h1>Selected Date: </h1>
-<div *ngFor="let e of eventsFromSelectedTimeFrom">{{e}}</div>
+<div *ngFor="let e of events">{{e}}</div>
 {{selectedDate}}
 
 <div fxLayout="row" fxLayoutAlign="center center">
@@ -10,7 +10,7 @@
     <mat-step label="Choose Laundry Date" completed="true">
       <mat-form-field>
         <input matInput [matDatepicker]="picker" [min]="currentDate" placeholder="Choose a date"
-                (dateInput)="addEvent('input', $event, eventsFromSelectedTimeFrom)" (dateChange)="addEvent('change', $event,eventsFromSelectedTimeFrom)" [(ngModel)]="selectedDate">
+               (dateInput)="addEvent('input', $event, events)" (dateChange)="addEvent('change', $event,events)" [(ngModel)]="selectedDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
