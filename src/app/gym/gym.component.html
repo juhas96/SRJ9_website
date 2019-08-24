@@ -1,1 +1,33 @@
-<p>gym works!</p>
+<h1 fxLayoutAlign="center center">Here you can reserve your laundry time</h1>
+<mat-divider></mat-divider>
+{{choosenGym}}
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-vertical-stepper linear class="vertical-stepper">
+
+    <mat-step label="Choose Gym">
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="choosenGym">
+        <mat-radio-button class="example-radio-button" *ngFor="let gym of gyms" [value]="gym">
+          {{gym}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <div>
+        <button mat-button matStepperNext class="stepperButton">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step label="Choose Gym Reservation Date" completed="true">
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" [min]="currentDate" [max]="nextWeekDay" placeholder="Choose a date"
+               (dateInput)="addEvent('input', $event, events)" (dateChange)="addEvent('change', $event,events)" [(ngModel)]="selectedDate" [matDatepickerFilter]="filterDays">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext class="stepperButton">Next</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
