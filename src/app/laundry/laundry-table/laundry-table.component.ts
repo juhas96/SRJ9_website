@@ -11,6 +11,7 @@ export class LaundryTableComponent  implements OnInit {
   availableHours: string[];
   reservationDates: string[];
   checkList: any[];
+  currentlySelectedHours: any[];
 
   ngOnInit(): void {
     this.availableHours = this.generateAvailableHours();
@@ -46,5 +47,9 @@ export class LaundryTableComponent  implements OnInit {
 
     console.log(formatedDates);
     return formatedDates;
+  }
+
+  onCheckboxClick() {
+
   }
 }

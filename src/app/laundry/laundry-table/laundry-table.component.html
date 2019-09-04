@@ -3,7 +3,7 @@
     <th *ngFor="let date of reservationDates"><h2>{{date}}</h2></th>
   </tr>
   <tr *ngFor="let hour of availableHours">
-    <td><mat-checkbox checked>{{hour}}</mat-checkbox></td>
+    <td><mat-checkbox (click)="onCheckboxClick">{{hour}}</mat-checkbox></td>
     <td><mat-checkbox>{{hour}}</mat-checkbox></td>
     <td><mat-checkbox>{{hour}}</mat-checkbox></td>
   </tr>
