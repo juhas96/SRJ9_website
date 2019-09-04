@@ -1,6 +1,4 @@
-import {SelectionModel} from '@angular/cdk/collections';
 import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
 
 
 @Component({
@@ -11,9 +9,12 @@ import {MatTableDataSource} from '@angular/material/table';
 export class LaundryTableComponent  implements OnInit {
 
   availableHours: string[];
+  reservationDates: string[];
+  checkList: any[];
 
   ngOnInit(): void {
     this.availableHours = this.generateAvailableHours();
+    this.reservationDates = this.convertDateToStringFormat(this.generateCurrentReservationDates());
   }
 
   generateAvailableHours(): string[] {
@@ -26,5 +27,24 @@ export class LaundryTableComponent  implements OnInit {
       }
     }
     return arr;
+  }
+
+  generateCurrentReservationDates(): Date[] {
+    const dates: Date[] = [new Date(), new Date(), new Date()];
+    const currentDate = new Date();
+    dates.map((value, i) => value.setDate(currentDate.getDate() + i++));
+    console.log(dates);
+    return dates;
+  }
+
+  convertDateToStringFormat(dates: Date[]): string[] {
+    const formatedDates: string[] = [];
+
+    dates.map((value) => {
+      formatedDates.push((value.getDate() + '-' + (value.getMonth() + 1) + '-' + value.getFullYear()).toString());
+    });
+
+    console.log(formatedDates);
+    return formatedDates;
   }
 }

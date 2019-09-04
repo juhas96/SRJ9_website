@@ -1,37 +1,10 @@
 <table>
   <tr>
-    <th>6.9.2019</th>
-    <th>7.9.2019</th>
-    <th>8.9.2019</th>
+    <th *ngFor="let date of reservationDates"><h2>{{date}}</h2></th>
   </tr>
-  <tr>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-  </tr>
-  <tr>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-  </tr>
-  <tr>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-  </tr>
-  <tr>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-  </tr>
-  <tr>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-  </tr>
-  <tr>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
-    <td><button mat-button>06:00</button></td>
+  <tr *ngFor="let hour of availableHours">
+    <td><mat-checkbox checked>{{hour}}</mat-checkbox></td>
+    <td><mat-checkbox>{{hour}}</mat-checkbox></td>
+    <td><mat-checkbox>{{hour}}</mat-checkbox></td>
   </tr>
 </table>
