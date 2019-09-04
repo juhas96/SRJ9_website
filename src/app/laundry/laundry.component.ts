@@ -24,11 +24,11 @@ export class LaundryComponent implements OnInit {
 
   @ViewChild(MatSelectionList, {static: true}) selectionList: MatSelectionList;
 
-  constructor(private laundryService: LaundryService) { }
+  constructor(public laundryService: LaundryService) { }
 
   ngOnInit() {
     this.availableHours = this.generateAvailableHours();
-    this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
+    // this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
   }
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>, events: string[]) {
@@ -60,9 +60,13 @@ export class LaundryComponent implements OnInit {
     console.log(event.target.parentNode.innerText);
   }
 
-  toTimestamp(strDate) {
+  convertDateToTimestamp(strDate) {
     const date = Date.parse(strDate);
     return date / 1000;
+  }
+
+  generateRandomNumberBetweenSpecificRange(): number {
+    return Math.floor(Math.random() * 12) + 1;
   }
 
 

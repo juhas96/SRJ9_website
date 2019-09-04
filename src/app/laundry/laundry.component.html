@@ -1,47 +1,49 @@
 <h1 fxLayoutAlign="center center">Here you can reserve your laundry time</h1>
 <mat-divider></mat-divider>
 
-<div fxLayout="row" fxLayoutAlign="center center">
-  <mat-vertical-stepper linear class="vertical-stepper">
-    <mat-step label="Choose Laundry Date" completed="true">
-      <mat-form-field>
-        <input matInput [matDatepicker]="picker" [min]="currentDate" placeholder="Choose a date"
-               (dateInput)="addEvent('input', $event, events)" (dateChange)="addEvent('change', $event,events)" [(ngModel)]="selectedDate">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext class="stepperButton">Next</button>
-      </div>
-    </mat-step>
+<app-laundry-table></app-laundry-table>
 
-    <mat-step label="Choose Laundry Time From" completed="true">
-      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-        <mat-selection-list #availableHoursFromToSelect (selectionChange)="this.currentSelectedTimeFrom = onSelection($event, availableHoursFromToSelect.selectedOptions)">
-          <mat-list-option *ngFor="let availableHour of availableHours" [value]="availableHour" (click)="getValue($event)">{{availableHour}}</mat-list-option>
-        </mat-selection-list>
-      </cdk-virtual-scroll-viewport>
-      <div>
-        <button mat-button matStepperNext class="stepperButton" (click)="convertStringTimeToDateFormat(this.currentSelectedTimeFrom)">Next</button>
-      </div>
-    </mat-step>
+<!--<div fxLayout="row" fxLayoutAlign="center center">-->
+<!--  <mat-vertical-stepper linear class="vertical-stepper">-->
+<!--    <mat-step label="Choose Laundry Date" completed="true">-->
+<!--      <mat-form-field>-->
+<!--        <input matInput [matDatepicker]="picker" [min]="currentDate" placeholder="Choose a date"-->
+<!--               (dateInput)="addEvent('input', $event, events)" (dateChange)="addEvent('change', $event,events)" [(ngModel)]="selectedDate">-->
+<!--        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--        <mat-datepicker #picker></mat-datepicker>-->
+<!--      </mat-form-field>-->
+<!--      <div>-->
+<!--        <button mat-button matStepperNext class="stepperButton">Next</button>-->
+<!--      </div>-->
+<!--    </mat-step>-->
 
-    <mat-step label="Choose Laundry Time Until" completed="true">
-      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-        <mat-selection-list #availableHoursUntilToSelect (selectionChange)="this.currentSelectedTimeUntil = onSelection($event, availableHoursUntilToSelect.selectedOptions)">
-          <mat-list-option *ngFor="let availableHour of availableHours" [value]="availableHour" (click)="getValue($event)">{{availableHour}}</mat-list-option>
-        </mat-selection-list>
-      </cdk-virtual-scroll-viewport>
-      <div>
-        <button mat-button matStepperNext class="stepperButton" (click)="convertStringTimeToDateFormat(this.currentSelectedTimeUntil)">Next</button>
-      </div>
-    </mat-step>
+<!--    <mat-step label="Choose Laundry Time From" completed="true">-->
+<!--      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">-->
+<!--        <mat-selection-list #availableHoursFromToSelect (selectionChange)="this.currentSelectedTimeFrom = onSelection($event, availableHoursFromToSelect.selectedOptions)">-->
+<!--          <mat-list-option *ngFor="let availableHour of availableHours" [value]="availableHour" (click)="getValue($event)">{{availableHour}}</mat-list-option>-->
+<!--        </mat-selection-list>-->
+<!--      </cdk-virtual-scroll-viewport>-->
+<!--      <div>-->
+<!--        <button mat-button matStepperNext class="stepperButton" (click)="convertStringTimeToDateFormat(this.currentSelectedTimeFrom)">Next</button>-->
+<!--      </div>-->
+<!--    </mat-step>-->
 
-    <mat-step label="Please enter your name" completed="true">
-      <mat-form-field>
-        <input matInput placeholder="Enter your name" required>
-      </mat-form-field>
-      <button mat-button class="stepperButton" (click)="laundryService.createLaundryReservation({ date: this.selectedDate, status: 'RESERVED', reservation_number: '3213DSAD', washing_machine_number: 1, time_from: convertStringTimeToDateFormat(this.currentSelectedTimeFrom), time_until: convertStringTimeToDateFormat(this.currentSelectedTimeUntil)})">Reserve</button>
-    </mat-step>
-  </mat-vertical-stepper>
-</div>
+<!--    <mat-step label="Choose Laundry Time Until" completed="true">-->
+<!--      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">-->
+<!--        <mat-selection-list #availableHoursUntilToSelect (selectionChange)="this.currentSelectedTimeUntil = onSelection($event, availableHoursUntilToSelect.selectedOptions)">-->
+<!--          <mat-list-option *ngFor="let availableHour of availableHours" [value]="availableHour" (click)="getValue($event)">{{availableHour}}</mat-list-option>-->
+<!--        </mat-selection-list>-->
+<!--      </cdk-virtual-scroll-viewport>-->
+<!--      <div>-->
+<!--        <button mat-button matStepperNext class="stepperButton" (click)="convertStringTimeToDateFormat(this.currentSelectedTimeUntil)">Next</button>-->
+<!--      </div>-->
+<!--    </mat-step>-->
+
+<!--    <mat-step label="Please enter your name" completed="true">-->
+<!--      <mat-form-field>-->
+<!--        <input matInput placeholder="Enter your name" required>-->
+<!--      </mat-form-field>-->
+<!--      <button mat-button class="stepperButton" (click)="laundryService.createLaundryReservation({ date: this.selectedDate, status: 'RESERVED', reservation_number: '3213DSAD', washing_machine_number: 1, time_from: convertStringTimeToDateFormat(this.currentSelectedTimeFrom), time_until: convertStringTimeToDateFormat(this.currentSelectedTimeUntil)})">Reserve</button>-->
+<!--    </mat-step>-->
+<!--  </mat-vertical-stepper>-->
+<!--</div>-->

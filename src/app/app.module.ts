@@ -16,6 +16,10 @@ import { MembersComponent } from './members/members.component';
 import { FlexModule } from '@angular/flex-layout';
 import { CdkModule } from './cdk.module';
 import {HttpClientModule} from '@angular/common/http';
+import { CheckExistingLaundryReservationComponent } from './laundry/check-existing-laundry-reservation/check-existing-laundry-reservation.component';
+import { LaundryChooseComponent } from './laundry/laundry-choose/laundry-choose.component';
+import { LaundryTableComponent } from './laundry/laundry-table/laundry-table.component';
+import { LaundryTableRowComponent } from './laundry/laundry-table-row/laundry-table-row.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import {HttpClientModule} from '@angular/common/http';
     LaundryComponent,
     EventComponent,
     MembersComponent,
+    CheckExistingLaundryReservationComponent,
+    LaundryChooseComponent,
+    LaundryTableComponent,
+    LaundryTableRowComponent,
   ],
   imports: [
     BrowserModule,
