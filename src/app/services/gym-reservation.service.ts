@@ -23,8 +23,8 @@ export class GymReservationService {
   }
 
   // GET /api/gym_reservation/current_week
-  public getReservationForCurrentWeek(): Observable<GymReservation> {
-    return this.httpService.get<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/current_week');
+  public getReservationForCurrentWeek(): Observable<GymReservation[]> {
+    return this.httpService.get<GymReservation[]>('http://147.232.191.144:8087/api/gym_reservation/current_week');
   }
 
   // POST /api/gym_reservation
