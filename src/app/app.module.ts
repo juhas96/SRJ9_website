@@ -14,8 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventComponent } from './event/event.component';
 import { MembersComponent } from './members/members.component';
 import { FlexModule } from '@angular/flex-layout';
-import { HttpClientModule } from '@angular/common/http'
-import { FlexModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 import { CdkModule } from './cdk.module';
 import { CheckExistingLaundryReservationComponent } from './laundry/check-existing-laundry-reservation/check-existing-laundry-reservation.component';
 import { LaundryChooseComponent } from './laundry/laundry-choose/laundry-choose.component';
