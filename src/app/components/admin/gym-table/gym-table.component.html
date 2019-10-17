@@ -1,0 +1,60 @@
+<nz-table #nzTable [nzData]="data" [nzFrontPagination]="true" [nzPageSize]="5" [nzLoading]="loading" [nzPaginationPosition]="'top'">
+<thead>
+    <tr>
+    <th nzCustomFilter>
+        Date
+        <i
+        nz-th-extra
+        class="ant-table-filter-icon"
+        nz-icon
+        nz-dropdown
+        #dropdown="nzDropdown"
+        nzType="search"
+        [nzDropdownMenu]="menu"
+        [class.ant-table-filter-open]="dropdown.nzVisible"
+        nzTrigger="click"
+        nzPlacement="bottomRight"
+        [nzClickHide]="false"
+        nzTableFilter
+        ></i>
+    </th>
+    <th>Reservation Number</th>
+    <th nzShowFilter [nzFilters]="listOfFilterAddress" (nzFilterChange)="filterAddressChange($event)">User</th>
+    <th>Time From</th>
+    <th>Time Until</th>
+    <th>Status</th>
+    <th>Gym Number</th>
+    <th>Actions</th>
+    </tr>
+</thead>
+<tbody>
+    <tr *ngFor="let data of nzTable.data">
+    <td>{{ data.date | date }}</td>
+    <td>{{ data.reservation_number }}</td>
+    <td></td>
+    <td>{{ data.time_from | date: 'HH:mm'}}</td>
+    <td>{{ data.time_until | date: 'HH:mm' }}</td>
+    <td>{{ data.status }}</td>
+    <td>{{ data.gym_number }}</td>
+    <td>
+        <div nz-row nzType="flex" nzJustify="start">
+            <button nz-button nzType="primary" class="table-button" (click)="editReservation()">
+                <i nz-icon nzType="edit"></i> Edit
+            </button>
+            <button nz-button nzType="danger" class="table-button">
+                    <i nz-icon nzType="delete"></i> Delete
+            </button>
+        </div>
+    </td>
+    </tr>
+</tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+<div class="search-box">
+    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+    Search
+    </button>
+    <button nz-button nzSize="small" (click)="reset()">Reset</button>
+</div>
+</nz-dropdown-menu>
