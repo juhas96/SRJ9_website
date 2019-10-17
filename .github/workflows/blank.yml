@@ -25,6 +25,15 @@ jobs:
         npm run build --if-present
     - name: List output files
       run: ls
+      
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME_SSH }}
+        password: ${{ secrets.PASSWORD_SSH }}
+        port: ${{ secrets.PORT_SSH }}
+        script: sudo chmod 777 -R /opt && rm -rf /opt/tomcat/webapps/srj9
     
     - name: Deploy FTP
       uses: sebastianpopp/ftp-action@master
