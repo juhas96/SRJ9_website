@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import { GymReservation } from 'src/app/model/gym.model';
+import { NzModalService, NzModalRef } from 'ng-zorro-antd';
+import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
 
 @Component({
   selector: 'app-gym-table',
@@ -9,6 +11,8 @@ import { GymReservation } from 'src/app/model/gym.model';
 })
 export class GymTableComponent implements OnInit {
 
+  tplModal: NzModalRef;
+  htmlModalVisible = false;
   searchValue = '';
   data: GymReservation[] = [];
   loading = true;
@@ -40,7 +44,7 @@ export class GymTableComponent implements OnInit {
   ];
   listOfDisplayData = [...this.listOfData];
 
-  constructor(private gymReservationService: GymReservationService){}
+  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService){}
 
   reset(): void {
     this.searchValue = '';
@@ -97,5 +101,23 @@ export class GymTableComponent implements OnInit {
       );
   }
 
-
+  createComponentModal(): void {
+    const modal = this.modalService.create({
+      nzTitle: 'Modal Title',
+      nzContent: EditGymReservationComponent,
+      nzWrapClassName: 'vertical-center-modal',
+      // nzComponentParams: {
+      //   title: 'title in component',
+      //   subtitle: 'component sub title，will be changed after 2 sec'
+      // },
+      // nzFooter: [
+      //   {
+      //     label: 'change component title from outside',
+      //     onClick: componentInstance => {
+      //       componentInstance!.title = 'title in inner component is changed';
+      //     }
+      //   }
+      // ]
+    });
+  }
 }
