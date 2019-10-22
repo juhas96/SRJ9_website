@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, ValidationErrors, FormBuilder, Validators } from '@angular/forms';
 import { Observer, Observable } from 'rxjs';
 import { NzModalRef } from 'ng-zorro-antd';
+import { GymReservation } from 'src/app/model/gym.model';
 
 @Component({
   selector: 'app-edit-gym-reservation',
@@ -9,7 +10,11 @@ import { NzModalRef } from 'ng-zorro-antd';
   styleUrls: ['./edit-gym-reservation.component.css']
 })
 export class EditGymReservationComponent implements OnInit {
-  ngOnInit(): void {}
+  @Output() reservationForEdit = new EventEmitter<GymReservation>();
+
+  ngOnInit(): void {console.log(this.reservationForEdit);}
+
+
 
   validateForm: FormGroup;
 
@@ -21,48 +26,15 @@ export class EditGymReservationComponent implements OnInit {
     console.log(value);
   }
 
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
-    this.validateForm.reset();
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsPristine();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-  }
-
-  validateConfirmPassword(): void {
-    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
-  }
-
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-
   constructor(private fb: FormBuilder, private modal: NzModalRef) {
     this.validateForm = this.fb.group({
-      userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
-      confirm: ['', [this.confirmValidator]],
-      comment: ['', [Validators.required]]
+      date: ['', Validators.required],
+      reservation_number: [{value: '', disabled: true}],
+      user: ['', Validators.required],
+      time_from: ['', Validators.required],
+      time_until: ['', Validators.required],
+      status: ['', Validators.required],
+      gym_number: ['', Validators.required]
     });
   }
 
