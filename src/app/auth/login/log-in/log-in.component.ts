@@ -36,6 +36,7 @@ export class LogInComponent implements OnInit {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUsername(data.username);
         this.tokenStorage.saveAuthorities(data.authorities);
+        this.tokenStorage.saveUserId(data.user_id);
 
         this.isLoginFailed = false;
         this.authService.setLoggedIn(true);
@@ -63,7 +64,7 @@ export class LogInComponent implements OnInit {
       remember: [true]
     });
 
-  
+
   }
 
   reloadPage() {

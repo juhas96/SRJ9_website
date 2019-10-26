@@ -1,4 +1,4 @@
-<nz-table #nzTable [nzData]="data" [nzFrontPagination]="true" [nzPageSize]="5" [nzLoading]="loading" [nzPaginationPosition]="'top'">
+<nz-table #nzTable [nzData]="data" [nzFrontPagination]="true" [nzPageSize]="5" [nzLoading]="loading">
 <thead>
     <tr>
     <th nzCustomFilter>
@@ -31,17 +31,17 @@
     <tr *ngFor="let data of nzTable.data">
     <td>{{ data.date | date }}</td>
     <td>{{ data.reservation_number }}</td>
-    <td></td>
+    <td>{{ data.user }}</td>
     <td>{{ data.time_from | date: 'HH:mm'}}</td>
     <td>{{ data.time_until | date: 'HH:mm' }}</td>
     <td>{{ data.status }}</td>
     <td>{{ data.gym_number }}</td>
     <td>
         <div nz-row nzType="flex" nzJustify="start">
-            <button nz-button nzType="primary" class="table-button" (click)="editReservation()">
+            <button nz-button nzType="primary" class="table-button" (click)="createComponentModal(data.id)">
                 <i nz-icon nzType="edit"></i> Edit
             </button>
-            <button nz-button nzType="danger" class="table-button">
+            <button nz-button nzType="danger" class="table-button" (click)="deleteReservation(data.id)">
                     <i nz-icon nzType="delete"></i> Delete
             </button>
         </div>

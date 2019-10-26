@@ -14,14 +14,22 @@
     <ul *ngIf="!authority" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li routerLink="/login" nz-menu-item nz-tooltip nzPlacement="right">
         <i nz-icon nzType="login"></i>
-        <span >Log in</span>
+        <span>Log in</span>
       </li>
-      <li nz-menu-item nz-tooltip nzPlacement="right">
+      <li routerLink="/signup" nz-menu-item nz-tooltip nzPlacement="right">
         <i nz-icon nzType="user-add"></i>
-        <span routerLink="/signup">Sign Up</span>
+        <span>Sign Up</span>
       </li>
     </ul>
     <ul *ngIf="authority === 'user'" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li routerLink="/members" nz-menu-item nz-tooltip nzPlacement="right">
+        <i nz-icon nzType="dashboard"></i>
+        <span>Members</span>
+      </li>
+      <li routerLink="/user-reservations" nz-menu-item nz-tooltip nzPlacement="right">
+        <i nz-icon nzType="dashboard"></i>
+        <span>My Reservations</span>
+      </li>
       <li nz-menu-item nz-tooltip nzPlacement="right">
         <i nz-icon nzType="logout"></i>
         <span (click)="tokenStorage.signOut()">Logout</span>

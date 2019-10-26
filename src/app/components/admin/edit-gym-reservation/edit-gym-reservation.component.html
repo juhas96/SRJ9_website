@@ -1,0 +1,42 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Date</nz-form-label>
+      <nz-date-picker [(ngModel)]="date" formControlName="date"></nz-date-picker>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Reserv. Number</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="reservation_number" [placeholder]="reservationForEdit.reservation_number"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>User</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <input nz-input formControlName="user"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Time From</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="time_from"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Time Until</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="time_until"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Status</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="status"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Gym Number</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="gym_number"/>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
