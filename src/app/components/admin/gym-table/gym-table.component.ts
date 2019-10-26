@@ -3,6 +3,8 @@ import { GymReservationService } from 'src/app/services/gym-reservation.service'
 import { GymReservation } from 'src/app/model/gym.model';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
+import { DataService } from 'src/app/services/data.service';
+
 
 @Component({
   selector: 'app-gym-table',
@@ -22,7 +24,7 @@ export class GymTableComponent implements OnInit {
   listOfFilterAddress = [{ text: 'London', value: 'London' }, { text: 'Sidney', value: 'Sidney' }];
   listOfSearchAddress: string[] = [];
 
-  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService){}
+  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService, private dataService: DataService){}
 
   reset(): void {
     this.searchValue = '';
@@ -66,6 +68,7 @@ export class GymTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchData();
+    
   }
 
   searchData() {
@@ -81,6 +84,8 @@ export class GymTableComponent implements OnInit {
 
   createComponentModal(id: number): void {
     this.reservationForEdit = this.data.find(item => item.id === id);
+    this.dataService.changeReservation(this.reservationForEdit);
+    console.log(this.reservationForEdit);
     const modal = this.modalService.create({
       nzTitle: 'Modal Title',
       nzContent: EditGymReservationComponent,
@@ -101,7 +106,8 @@ export class GymTableComponent implements OnInit {
   }
 
   deleteReservation(id: number) {
-    this.gymReservationService.deleteGymReservation(id);
+    console.log('prislo id: ' + id);
+    this.gymReservationService.deleteGymReservation(id).subscribe();
     // const itemIndex = this.data.findIndex(obj => obj[idColumn] === id);
     // this.data.splice(itemIndex, 1);
   }
