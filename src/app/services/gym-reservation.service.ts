@@ -8,6 +8,8 @@ import { GymReservation } from '../model/gym.model';
 })
 export class GymReservationService {
 
+  
+
   constructor(private httpService: HttpClient) {
 
   }
@@ -15,6 +17,11 @@ export class GymReservationService {
   // GET /api/gym_reservation
   public getReservations(): Observable<GymReservation[]> {
     return this.httpService.get<GymReservation[]>('http://localhost:8087/api/gym_reservation');
+  }
+
+  // GET /api/user/gym_reservation
+  public getAllReservationsForSpecificUser(userId: Number): Observable<GymReservation[]> {
+    return this.httpService.get<GymReservation[]>('http://localhost:8087/api/gym_reservation/user/' + userId);
   }
 
   // GET /api/gym_reservation/id

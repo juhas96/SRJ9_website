@@ -20,6 +20,9 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { GymTableComponent } from './components/admin/gym-table/gym-table.component';
 import { CardComponent } from './components/admin/card/card.component';
 import { EditGymReservationComponent } from './components/admin/edit-gym-reservation/edit-gym-reservation.component';
+import { UserReservationsComponent } from './pages/user/user-reservations/user-reservations.component';
+import { MembersComponent } from './pages/members/members.component';
+import { ReservationTableComponent } from './components/user/reservation-table/reservation-table.component';
 
 registerLocaleData(sk);
 
@@ -33,7 +36,10 @@ registerLocaleData(sk);
     DashboardComponent,
     GymTableComponent,
     CardComponent,
-    EditGymReservationComponent
+    EditGymReservationComponent,
+    UserReservationsComponent,
+    MembersComponent,
+    ReservationTableComponent
   ],
   imports: [
     BrowserModule,
