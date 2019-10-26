@@ -1,1 +1,43 @@
-<p>gym-reservation works!</p>
+<nz-card nzTitle="{{sundayDate}} Nedeľa T1">
+    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
+    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let el of arr">
+        <button *ngIf="el.id==6 || el.id==33" (click)="fk(el.id)">klik</button>{{el.id}}
+    </div>
+    <!-- <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div> -->
+  </nz-card>
+  <br><br>
+  <nz-card nzTitle="{{sundayDate}} Utorok T1">
+    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+  </nz-card>
+  <br><br>
+  <nz-card nzTitle="{{sundayDate}} Utorok T2">
+    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+  </nz-card>
+
+  <br><br>
+  <nz-card nzTitle="{{sundayDate}} Štvrtok T1">
+    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+  </nz-card>
+  <br><br>
+  <nz-card nzTitle="{{sundayDate}} Štvrtok T2">
+    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
+  </nz-card>

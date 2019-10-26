@@ -12,9 +12,9 @@
       </li>
     </ul>
     <ul *ngIf="!authority" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item nz-tooltip nzPlacement="right">
+      <li routerLink="/login" nz-menu-item nz-tooltip nzPlacement="right">
         <i nz-icon nzType="login"></i>
-        <span routerLink="/login">Log in</span>
+        <span >Log in</span>
       </li>
       <li nz-menu-item nz-tooltip nzPlacement="right">
         <i nz-icon nzType="user-add"></i>
