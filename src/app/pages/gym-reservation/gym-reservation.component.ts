@@ -3,6 +3,7 @@ import { GymReservationService } from 'src/app/services/gym-reservation.service'
 import { GymReservation } from 'src/app/model/gym.model';
 import { filter } from 'rxjs/operators'
 import * as moment from 'moment'
+import { NzModalService } from 'ng-zorro-antd';
 
 
 @Component({
@@ -19,23 +20,54 @@ export class GymReservationComponent implements OnInit {
 
 
   gymTimes = ["21:00 - 21:59", "22:00 - 22:59", "23:00 - 23:59", "00:00 - 00:59"]
-  sundayDate = new Date();
-  arr:GymReservation[];
-  arr2:GymReservation[];
-  menic: GymReservation
+  // dates and arrays for current sunday and next sunday
+  sundayDate = moment().day(0).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // zero for sunday
+  nextSundayDate = moment().day(7).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // seven (0+7) for next sunday
+  sundayDateTable = moment().day(0).format("DD.MM.YYYY") // variable for writing sunday date in table e.g. 20.10.2010
+  nextSundayDateTable = moment().day(7).format("DD.MM.YYYY")
+  sundayArray: GymReservation[]
+  nextSundayArray: GymReservation[]
+
+  tuesdayDate = moment().day(2).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // two for tuesay
+  nextTuesdayDate = moment().day(9).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // nine (2+7) for next tuesday
+  tuesdayDateTable = moment().day(2).format("DD.MM.YYYY")
+  nextTuesdayDateTable = moment().day(9).format("DD.MM.YYYY")
+  tuesdayArray: GymReservation[]
+  nextTuesdayArray: GymReservation[]
+
+  thursdayDate = moment().day(4).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // four for thursday
+  nextThursdayDate = moment().day(11).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // eleven (4+7) for next thursday
+  thursdayDateTable = moment().day(4).format("DD.MM.YYYY") 
+  nextThursdayDateTable = moment().day(11).format("DD.MM.YYYY")
+  thursdayArray: GymReservation[]
+  nextThursdayArray: GymReservation[] 
+
+  reservation: GymReservation
+  isVisible = false;
+
+
 
   
 
-  constructor(private gymService: GymReservationService) {
+  constructor(private gymService: GymReservationService, private modalService: NzModalService) {
    }
 
   ngOnInit() {
 
-    this.gymService.getReservationForCurrentWeek().subscribe(data => {
-      //this.arr=data;
-      this.arr = data.filter(res => res.id==6 || res.id==33)
-      console.log(this.arr);
+    this.gymService.getReservations().subscribe(data => {
+      this.sundayArray = data.filter(value=>value.date==this.sundayDate)
+      this.nextSundayArray = data.filter(value=>value.date==this.nextSundayDate)
+      this.sundayArray.sort( (a,b)=>a.id-b.id)
       
+      this.tuesdayArray = data.filter(value=>value.date==this.tuesdayDate)
+      this.nextTuesdayArray = data.filter(value=>value.date==this.nextTuesdayDate)
+      console.log("utorok datum je " + this.nextTuesdayDate)
+      console.log(this.tuesdayArray)
+      this.thursdayArray = data.filter(value=>value.date==this.thursdayDate)
+      this.nextThursdayArray = data.filter(value=>value.date==this.nextThursdayDate)
+      console.log("stvrtok datum - "+ this.nextThursdayDate)
+      console.log(this.nextThursdayArray)
+
     })
 
     console.log(moment().day(0).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //0 pre nedelu
@@ -48,14 +80,28 @@ export class GymReservationComponent implements OnInit {
   }
 
 
-  fk(id){
-    this.menic = this.arr.filter(el => el.id==id)[0]
-    console.log(this.menic)
-    setTimeout( () => { 
-      this.menic.status = "zmenene"
-    console.log(this.menic)
-    }, 1000)
-    
+  showConfirm(reservation: GymReservation): void {
+    //this.reservation=reservation
+    this.modalService.confirm({
+      nzTitle: '<i>Do you really want to reserve this reservation ?</i>',
+      //nzContent: '<b>Some descriptions</b>',
+      nzCancelText: "Cancel",
+      nzOkText: "Yes",
+      nzOnOk: () => {
+        console.log('OK')
+        this.reservation = reservation
+        console.log(this.reservation)
+        this.reservation.status = "RESERVED";
+        this.reservation.user = {id: 2}
+        console.log(this.reservation)
+        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe()
+        console.log(this.reservation)
+      }
+      });
   }
 
+  
+  sort(a,b){
+    return a-b;
+  }
 }

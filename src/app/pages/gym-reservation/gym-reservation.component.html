@@ -1,43 +1,131 @@
-<nz-card nzTitle="{{sundayDate}} Nedeľa T1">
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let el of arr">
-        <button *ngIf="el.id==6 || el.id==33" (click)="fk(el.id)">klik</button>{{el.id}}
-    </div>
-    <!-- <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div> -->
-  </nz-card>
-  <br><br>
-  <nz-card nzTitle="{{sundayDate}} Utorok T1">
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-  </nz-card>
-  <br><br>
-  <nz-card nzTitle="{{sundayDate}} Utorok T2">
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-  </nz-card>
+<nz-collapse nzAccordion>
+  <nz-collapse-panel nzHeader="Aktuálny týždeň" nzActive="true">
 
-  <br><br>
-  <nz-card nzTitle="{{sundayDate}} Štvrtok T1">
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-  </nz-card>
-  <br><br>
-  <nz-card nzTitle="{{sundayDate}} Štvrtok T2">
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-    <div nz-card-grid [ngStyle]="gridStyle">Content</div>
-  </nz-card>
+    <nz-card nzTitle="{{sundayDateTable}} Nedeľa T1">
+      <!-- <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let gymTime of gymTimes">{{gymTime}}</div> -->
+      <!-- TREBA DOPLNIT ngFor pre sundayArray-->
+
+
+    </nz-card>
+    <br><br>
+    <nz-card nzTitle="{{tuesdayDateTable}} Utorok T1">
+      <div *ngFor="let element of tuesdayArray | slice:0:4;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+
+    </nz-card>
+    <br><br>
+    <nz-card nzTitle="{{tuesdayDateTable}} Utorok T2">
+      <div *ngFor="let element of tuesdayArray | slice:4:8;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+
+    </nz-card>
+
+    <br><br>
+    <nz-card nzTitle="{{thursdayDateTable}} Štvrtok T1">
+      <div *ngFor="let element of thursdayArray | slice:0:4;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+
+    </nz-card>
+    <br><br>
+    <nz-card nzTitle="{{thursdayDateTable}} Štvrtok T2">
+      <div  *ngFor="let element of thursdayArray | slice:4:8;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+
+    </nz-card>
+
+  </nz-collapse-panel>
+
+
+  <nz-collapse-panel nzHeader="Budúci týdeň" nzActive="false">
+    <nz-card nzTitle="{{nextSundayDateTable}} Nedeľa T1">
+      <div  *ngFor="let element of nextSundayArray | slice:0:4;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+
+    </nz-card>
+    <br><br>
+    <nz-card nzTitle="{{nextTuesdayDateTable}} Utorok T1">
+      <div *ngFor="let element of nextTuesdayArray | slice:0:4;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+    </nz-card>
+    <br><br>
+    <nz-card nzTitle="{{nextTuesdayDateTable}} Utorok T2">
+      <div *ngFor="let element of nextTuesdayArray | slice:4:8;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+    </nz-card>
+
+    <br><br>
+    <nz-card nzTitle="{{nextThursdayDateTable}} Štvrtok T1">
+      <div  *ngFor="let element of nextThursdayArray | slice:0:4;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+    </nz-card>
+    <br><br>
+    <nz-card nzTitle="{{nextThursdayDateTable}} Štvrtok T2">
+      <div  *ngFor="let element of nextThursdayArray | slice:4:8;">
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='FREE'" style="background-color: green;"
+          (click)="showConfirm(element)">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid [ngStyle]="gridStyle" *ngIf="element.status=='RESERVED'" style="background-color: red;">
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+      </div>
+    </nz-card>
+  </nz-collapse-panel>
+
+</nz-collapse>

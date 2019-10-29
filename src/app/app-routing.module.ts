@@ -12,8 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LogInComponent},
   { path: 'signup', component: SignUpComponent},
   { path: 'admin/dashboard', component: DashboardComponent},
-  { path: 'gym_reservation', component: GymReservationComponent}
-  { path: 'admin/dashboard', component: DashboardComponent},
+  { path: 'gym_reservation', component: GymReservationComponent},
   { path: 'user-reservations', component: UserReservationsComponent},
   { path: 'members', component: MembersComponent}
 ];
