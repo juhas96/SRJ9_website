@@ -4,6 +4,7 @@ import { GymReservation } from 'src/app/model/gym.model';
 import { filter } from 'rxjs/operators'
 import * as moment from 'moment'
 import { NzModalService } from 'ng-zorro-antd';
+import { User } from 'src/app/model/user.model';
 
 
 @Component({
@@ -68,6 +69,8 @@ export class GymReservationComponent implements OnInit {
       console.log("stvrtok datum - "+ this.nextThursdayDate)
       console.log(this.nextThursdayArray)
 
+      console.log("toto je userid " + sessionStorage.getItem("UserId"))
+      
     })
 
     console.log(moment().day(0).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //0 pre nedelu
@@ -90,11 +93,15 @@ export class GymReservationComponent implements OnInit {
       nzOnOk: () => {
         console.log('OK')
         this.reservation = reservation
-        console.log(this.reservation)
+        
         this.reservation.status = "RESERVED";
-        this.reservation.user = {id: 2}
-        console.log(this.reservation)
-        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe()
+        var user: User = new User()
+
+        
+        user.id = +sessionStorage.getItem("UserId");
+        this.reservation.user = user;
+
+        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(value => console.log(value))
         console.log(this.reservation)
       }
       });

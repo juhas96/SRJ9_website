@@ -46,7 +46,9 @@ export class GymReservationService {
 
   // PUT /api/gym_reservation/id
   public updateGymReservation(id: Number, gymReservation: GymReservation): Observable<GymReservation> {
-    return this.httpService.put<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id, gymReservation) //httpOptions ?
+    return this.httpService.put<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id, gymReservation, {
+       headers: { 'Content-Type': 'application/json' } 
+    }) //httpOptions ?
   }
 
 
