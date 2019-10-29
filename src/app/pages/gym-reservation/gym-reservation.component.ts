@@ -14,13 +14,13 @@ import { User } from 'src/app/model/user.model';
 })
 export class GymReservationComponent implements OnInit {
 
-  gridStyle = {
+  /* gridStyle = {
     width: '25%',
     textAlign: 'center'
-  };
+  }; */
 
 
-  gymTimes = ["21:00 - 21:59", "22:00 - 22:59", "23:00 - 23:59", "00:00 - 00:59"]
+
   // dates and arrays for current sunday and next sunday
   sundayDate = moment().day(0).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // zero for sunday
   nextSundayDate = moment().day(7).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // seven (0+7) for next sunday
@@ -44,7 +44,7 @@ export class GymReservationComponent implements OnInit {
   nextThursdayArray: GymReservation[] 
 
   reservation: GymReservation
-  isVisible = false;
+  
 
 
 
@@ -102,13 +102,10 @@ export class GymReservationComponent implements OnInit {
         this.reservation.user = user;
 
         this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(value => console.log(value))
-        console.log(this.reservation)
+        
       }
-      });
+      }); 
   }
 
-  
-  sort(a,b){
-    return a-b;
-  }
+
 }

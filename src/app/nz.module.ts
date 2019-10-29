@@ -6,6 +6,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 const nz = [
   NzLayoutModule,
@@ -14,7 +15,8 @@ const nz = [
   NzMenuModule,
   NzTableModule,
   NzCardModule,
-  NzModalModule
+  NzModalModule,
+  NzToolTipModule
 ];
 
 @NgModule({
