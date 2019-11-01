@@ -27,7 +27,7 @@ export class AuthService {
     this.loggedInStatus = value;
   }
 
-  get isLoggedIn() {
+  get isLoggedIn(): boolean {
     return this.loggedInStatus;
   }
 
