@@ -1,0 +1,17 @@
+.free{
+    background-color: #85bb65;
+    font-weight: bold;
+    font-size: 1.40em;
+}
+
+.reserved{
+    background-color: red;
+    font-weight: bold;
+    font-size: 1.40em;
+    cursor: default;
+}
+
+.gridStyle{
+    width: 25%;
+    text-align: center;
+}

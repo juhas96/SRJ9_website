@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, sk_SK } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import sk from '@angular/common/locales/sk';
@@ -23,6 +23,7 @@ import { EditGymReservationComponent } from './components/admin/edit-gym-reserva
 import { UserReservationsComponent } from './pages/user/user-reservations/user-reservations.component';
 import { MembersComponent } from './pages/members/members.component';
 import { ReservationTableComponent } from './components/user/reservation-table/reservation-table.component';
+import {AuthInterceptor} from './auth/auth-interceptor';
 
 registerLocaleData(sk);
 
@@ -51,7 +52,9 @@ registerLocaleData(sk);
     NzModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: sk_SK }, AuthService, AuthGuard, ],
+  providers: [{ provide: NZ_I18N, useValue: sk_SK },
+              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+              AuthService, AuthGuard, ],
   bootstrap: [AppComponent],
   entryComponents: [EditGymReservationComponent]
 })
