@@ -17,8 +17,8 @@ export class AuthService {
 
   private loggedInStatus = false;
 
-  private loginUrl = 'http://localhost:8087/api/auth/signin';
-  private signupUrl = 'http://localhost:8087/api/auth/signup';
+  private loginUrl = 'http://147.232.191.144:8087/api/auth/signin';
+  private signupUrl = 'http://147.232.191.144:8087/api/auth/signup';
 
   constructor(private http: HttpClient) {
   }
@@ -27,7 +27,7 @@ export class AuthService {
     this.loggedInStatus = value;
   }
 
-  get isLoggedIn() {
+  get isLoggedIn(): boolean {
     return this.loggedInStatus;
   }
 

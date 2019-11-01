@@ -8,6 +8,8 @@ import { GymReservation } from '../model/gym.model';
 })
 export class GymReservationService {
 
+
+
   constructor(private httpService: HttpClient) {
 
   }
@@ -15,6 +17,11 @@ export class GymReservationService {
   // GET /api/gym_reservation
   public getReservations(): Observable<GymReservation[]> {
     return this.httpService.get<GymReservation[]>('http://147.232.191.144:8087/api/gym_reservation');
+  }
+
+  // GET /api/user/gym_reservation
+  public getAllReservationsForSpecificUser(userId: Number): Observable<GymReservation[]> {
+    return this.httpService.get<GymReservation[]>('http://147.232.191.144:8087/api/gym_reservation/user/' + userId);
   }
 
   // GET /api/gym_reservation/id
@@ -29,17 +36,19 @@ export class GymReservationService {
 
   // POST /api/gym_reservation
   public createNewGymReservation(gymReservation: GymReservation): Observable<GymReservation> {
-    return this.httpService.post<GymReservation>('http://147.232.191.144:8087/api/gym_reservation', gymReservation); //httpOptions ? 
+    return this.httpService.post<GymReservation>('http://147.232.191.144:8087/api/gym_reservation', gymReservation); //httpOptions ?
   }
 
   // DELETE /api/gym_reservation/id
-  public deleteGymReservation(id: Number): Observable<GymReservation> {
-    return this.httpService.delete<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id)
+  public deleteGymReservation(id: number): Observable<GymReservation> {
+    return this.httpService.delete<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id);
   }
 
   // PUT /api/gym_reservation/id
   public updateGymReservation(id: Number, gymReservation: GymReservation): Observable<GymReservation> {
-    return this.httpService.put<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id, gymReservation) //httpOptions ?
+    return this.httpService.put<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id, gymReservation, {
+       headers: { 'Content-Type': 'application/json' } 
+    }) //httpOptions ?
   }
 
 
