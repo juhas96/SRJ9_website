@@ -24,6 +24,7 @@ import { UserReservationsComponent } from './pages/user/user-reservations/user-r
 import { MembersComponent } from './pages/members/members.component';
 import { ReservationTableComponent } from './components/user/reservation-table/reservation-table.component';
 import {AuthInterceptor} from './auth/auth-interceptor';
+import { SearchInputComponent } from './components/admin/search-input/search-input.component';
 
 registerLocaleData(sk);
 
@@ -40,7 +41,8 @@ registerLocaleData(sk);
     EditGymReservationComponent,
     UserReservationsComponent,
     MembersComponent,
-    ReservationTableComponent
+    ReservationTableComponent,
+    SearchInputComponent
   ],
   imports: [
     BrowserModule,

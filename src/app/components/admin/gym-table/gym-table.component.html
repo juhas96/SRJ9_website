@@ -36,9 +36,7 @@
     <td>{{ data.gym_number }}</td>
     <td>
         <div nz-row nzType="flex" nzJustify="start">
-            <button *ngIf="data.status === 'FREE'" nz-button nzType="primary" class="table-button" (click)="createComponentModal()">
-                <i nz-icon nzType="edit"></i> Edit
-            </button>
+            <app-search-input *ngIf="data.status === 'FREE'"></app-search-input>
             <button *ngIf="data.status === 'RESERVED'" nz-button nzType="danger" class="table-button" (click)="deleteReservation(data.id, data)">
                     <i nz-icon nzType="delete"></i> Delete
             </button>
