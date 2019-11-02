@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './auth/token-storage.service';
+import {AuthService} from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,10 @@ export class AppComponent implements OnInit {
   private roles: string[];
   private authority: string;
 
-  constructor(private tokenStorage: TokenStorageService) {}
+  constructor(private tokenStorage: TokenStorageService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
+    if (this.tokenStorage.getToken() && this.tokenStorage.getUsername() !== '') {
       this.roles = this.tokenStorage.getAuthorities();
       this.roles.every(role => {
         if (role === 'ROLE_ADMIN') {
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
         this.authority = 'user';
         return true;
       });
+      this.authService.setLoggedIn(true);
     }
   }
 }

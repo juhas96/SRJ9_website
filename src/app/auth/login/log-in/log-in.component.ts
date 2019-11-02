@@ -29,7 +29,7 @@ export class LogInComponent implements OnInit {
     this.loginInfo = new AuthLoginInfo(
       this.validateForm.get('userName').value,
       this.validateForm.get('password').value
-    )
+    );
 
     this.authService.attemptAuth(this.loginInfo).subscribe(
       data => {

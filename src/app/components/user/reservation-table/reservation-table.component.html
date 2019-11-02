@@ -13,8 +13,8 @@
         <tr *ngFor="let data of nzTable.data">
         <td>{{ data.date | date }}</td>
         <td>{{ data.reservation_number }}</td>
-        <td>{{ data.time_from | date: 'HH:mm'}}</td>
-        <td>{{ data.time_until | date: 'HH:mm' }}</td>
+        <td>{{ data.time_from}}</td>
+        <td>{{ data.time_until}}</td>
         <td>{{ data.status }}</td>
         <td>{{ data.gym_number }}</td>
         <!-- <td>

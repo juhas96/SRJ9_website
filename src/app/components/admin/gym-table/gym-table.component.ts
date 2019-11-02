@@ -4,6 +4,7 @@ import { GymReservation } from 'src/app/model/gym.model';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
 import { DataService } from 'src/app/services/data.service';
+import {GymReservationComponent} from '../../../pages/gym-reservation/gym-reservation.component';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class GymTableComponent implements OnInit {
   listOfFilterAddress = [{ text: 'London', value: 'London' }, { text: 'Sidney', value: 'Sidney' }];
   listOfSearchAddress: string[] = [];
 
-  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService, private dataService: DataService){}
+  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService) {}
 
   reset(): void {
     this.searchValue = '';
@@ -68,7 +69,6 @@ export class GymTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchData();
-    
   }
 
   searchData() {
@@ -76,39 +76,25 @@ export class GymTableComponent implements OnInit {
     this.gymReservationService
       .getReservations()
       .subscribe(
-        (res) => this.data = res,
+        (res) => {this.data = res; console.log(res); },
         (err) => console.log(err),
         () => this.loading = false
       );
   }
 
-  createComponentModal(id: number): void {
-    this.reservationForEdit = this.data.find(item => item.id === id);
-    this.dataService.changeReservation(this.reservationForEdit);
-    console.log(this.reservationForEdit);
-    const modal = this.modalService.create({
+  createComponentModal(): void {
+    this.modalService.create({
       nzTitle: 'Modal Title',
-      nzContent: EditGymReservationComponent,
+      nzContent: GymReservationComponent,
       nzWrapClassName: 'vertical-center-modal',
-      // nzComponentParams: {
-      //   title: 'title in component',
-      //   subtitle: 'component sub title，will be changed after 2 sec'
-      // },
-      // nzFooter: [
-      //   {
-      //     label: 'change component title from outside',
-      //     onClick: componentInstance => {
-      //       componentInstance!.title = 'title in inner component is changed';
-      //     }
-      //   }
-      // ]
+      nzWidth: '80%'
     });
   }
 
-  deleteReservation(id: number) {
-    console.log('prislo id: ' + id);
-    this.gymReservationService.deleteGymReservation(id).subscribe();
-    // const itemIndex = this.data.findIndex(obj => obj[idColumn] === id);
-    // this.data.splice(itemIndex, 1);
+  deleteReservation(id: number, gymReservation: GymReservation) {
+    gymReservation.user = null;
+    gymReservation.status = 'FREE';
+    console.log(gymReservation);
+    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(value => console.log(value));
   }
 }
