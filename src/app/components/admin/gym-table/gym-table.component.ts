@@ -14,22 +14,21 @@ import {GymReservationComponent} from '../../../pages/gym-reservation/gym-reserv
 })
 export class GymTableComponent implements OnInit {
 
-  tplModal: NzModalRef;
-  htmlModalVisible = false;
   searchValue = '';
   data: GymReservation[] = [];
   reservationForEdit: GymReservation;
+  listOfDisplayData: GymReservation[] = [];
   loading = true;
   sortName: string | null = null;
   sortValue: string | null = null;
-  listOfFilterAddress = [{ text: 'London', value: 'London' }, { text: 'Sidney', value: 'Sidney' }];
-  listOfSearchAddress: string[] = [];
+  listOfAvailableGyms = [{ text: 'T1', value: '1' }, { text: 'T2', value: '2' }];
+  selectedGymNumber: string;
 
   constructor(private gymReservationService: GymReservationService, private modalService: NzModalService) {}
 
   reset(): void {
     this.searchValue = '';
-    this.search();
+    this.listOfDisplayData = this.data;
   }
 
   sort(sortName: string, value: string): void {
@@ -38,33 +37,18 @@ export class GymTableComponent implements OnInit {
     this.search();
   }
 
-  filterAddressChange(value: string[]): void {
-    this.listOfSearchAddress = value;
-    this.search();
+  filterGymChange(value: string): void {
+    this.selectedGymNumber = value;
+    this.filterData();
   }
 
   search(): void {
-    const filterFunc = (item: { name: string; age: number; address: string }) => {
-      return (
-        (this.listOfSearchAddress.length
-          ? this.listOfSearchAddress.some(address => item.address.indexOf(address) !== -1)
-          : true) && item.name.indexOf(this.searchValue) !== -1
-      );
-    };
-    // const data = this.listOfData.filter((item: { name: string; age: number; address: string }) => filterFunc(item));
-    // this.listOfDisplayData = data.sort((a, b) =>
-    //   this.sortValue === 'ascend'
-    //     ? a[this.sortName!] > b[this.sortName!]
-    //       ? 1
-    //       : -1
-    //     : b[this.sortName!] > a[this.sortName!]
-    //     ? 1
-    //     : -1
-    // );
+      this.listOfDisplayData = this.data.filter(reservation => reservation.user &&
+                                                reservation.user.email === this.searchValue + '@student.tuke.sk');
   }
 
-  editReservation() {
-    console.log('edit');
+  filterData() {
+      this.listOfDisplayData = this.data.filter(reservation => reservation.gym_number.toString() === this.selectedGymNumber);
   }
 
   ngOnInit(): void {
@@ -76,7 +60,7 @@ export class GymTableComponent implements OnInit {
     this.gymReservationService
       .getReservations()
       .subscribe(
-        (res) => {this.data = res; console.log(res); },
+        (res) => {this.data = res; this.listOfDisplayData = this.data; },
         (err) => console.log(err),
         () => this.loading = false
       );
@@ -96,5 +80,13 @@ export class GymTableComponent implements OnInit {
     gymReservation.status = 'FREE';
     console.log(gymReservation);
     this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(value => console.log(value));
+  }
+
+  parseNameFromEmail(reservation: GymReservation): string {
+      if (reservation.user) {
+          return reservation.user.email.slice(0, reservation.user.email.indexOf('@'));
+      } else {
+          return '';
+      }
   }
 }

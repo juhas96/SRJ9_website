@@ -8,17 +8,11 @@ import { GymReservationService } from 'src/app/services/gym-reservation.service'
   styleUrls: ['./reservation-table.component.css']
 })
 export class ReservationTableComponent implements OnInit {
-  
-  htmlModalVisible = false;
-  searchValue = '';
+
   data: GymReservation[] = [];
   loading = true;
-  sortName: string | null = null;
-  sortValue: string | null = null;
-  listOfFilterAddress = [{ text: 'London', value: 'London' }, { text: 'Sidney', value: 'Sidney' }];
-  listOfSearchAddress: string[] = [];
 
-  constructor(private gymReservationService: GymReservationService){}
+  constructor(private gymReservationService: GymReservationService) {}
 
   ngOnInit(): void {
     this.searchData();

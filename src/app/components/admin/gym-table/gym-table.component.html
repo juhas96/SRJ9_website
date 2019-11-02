@@ -1,28 +1,27 @@
-<nz-table #nzTable [nzData]="data" [nzFrontPagination]="true" [nzPageSize]="5" [nzLoading]="loading">
+<nz-table #nzTable [nzData]="listOfDisplayData" [nzFrontPagination]="true" [nzPageSize]="5" [nzLoading]="loading">
 <thead>
     <tr>
-    <th nzCustomFilter>
+    <th>
         Date
-        <i
-        nz-th-extra
-        class="ant-table-filter-icon"
-        nz-icon
-        nz-dropdown
-        #dropdown="nzDropdown"
-        nzType="search"
-        [nzDropdownMenu]="menu"
-        [class.ant-table-filter-open]="dropdown.nzVisible"
-        nzTrigger="click"
-        nzPlacement="bottomRight"
-        [nzClickHide]="false"
-        nzTableFilter
-        ></i>
     </th>
-    <th>Reservation Number</th>
-    <th nzShowFilter [nzFilters]="listOfFilterAddress" (nzFilterChange)="filterAddressChange($event)">User</th>
+    <th  nzCustomFilter>User <i
+            nz-th-extra
+            class="ant-table-filter-icon"
+            nz-icon
+            nz-dropdown
+            #dropdown="nzDropdown"
+            nzType="search"
+            [nzDropdownMenu]="menu"
+            [class.ant-table-filter-open]="dropdown.nzVisible"
+            nzTrigger="click"
+            nzPlacement="bottomRight"
+            [nzClickHide]="false"
+            nzTableFilter
+    ></i></th>
     <th>Time From</th>
     <th>Time Until</th>
     <th>Status</th>
+<!--    <th nzShowFilter [nzFilters]="listOfAvailableGyms" (nzFilterChange)="filterGymChange($event)">Gym Number</th>-->
     <th>Gym Number</th>
     <th>Actions</th>
     </tr>
@@ -30,10 +29,7 @@
 <tbody>
     <tr *ngFor="let data of nzTable.data">
     <td>{{ data.date | date }}</td>
-    <td></td>
-    <td></td>
-<!--    <td>{{ data.reservation_number }}</td>-->
-<!--    <td>{{ data.user.name }}</td>-->
+    <td>{{ parseNameFromEmail(data) }}</td>
     <td>{{ data.time_from}}</td>
     <td>{{ data.time_until}}</td>
     <td>{{ data.status }}</td>
@@ -60,3 +56,4 @@
     <button nz-button nzSize="small" (click)="reset()">Reset</button>
 </div>
 </nz-dropdown-menu>
+
