@@ -20,12 +20,12 @@ export class GymReservationService {
   }
 
   // GET /api/user/gym_reservation
-  public getAllReservationsForSpecificUser(userId: Number): Observable<GymReservation[]> {
+  public getAllReservationsForSpecificUser(userId: number): Observable<GymReservation[]> {
     return this.httpService.get<GymReservation[]>('http://147.232.191.144:8087/api/gym_reservation/user/' + userId);
   }
 
   // GET /api/gym_reservation/id
-  public getReservationById(id: Number): Observable<GymReservation> {
+  public getReservationById(id: number): Observable<GymReservation> {
     return this.httpService.get<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id);
   }
 
@@ -36,7 +36,7 @@ export class GymReservationService {
 
   // POST /api/gym_reservation
   public createNewGymReservation(gymReservation: GymReservation): Observable<GymReservation> {
-    return this.httpService.post<GymReservation>('http://147.232.191.144:8087/api/gym_reservation', gymReservation); //httpOptions ?
+    return this.httpService.post<GymReservation>('http://147.232.191.144:8087/api/gym_reservation', gymReservation); // httpOptions ?
   }
 
   // DELETE /api/gym_reservation/id
@@ -45,10 +45,10 @@ export class GymReservationService {
   }
 
   // PUT /api/gym_reservation/id
-  public updateGymReservation(id: Number, gymReservation: GymReservation): Observable<GymReservation> {
+  public updateGymReservation(id: number, gymReservation: GymReservation): Observable<GymReservation> {
     return this.httpService.put<GymReservation>('http://147.232.191.144:8087/api/gym_reservation/' + id, gymReservation, {
-       headers: { 'Content-Type': 'application/json' } 
-    }) //httpOptions ?
+       headers: { 'Content-Type': 'application/json' }
+    }); // httpOptions ?
   }
 
 
