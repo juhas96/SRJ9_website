@@ -1,8 +1,3 @@
-<div *ngIf="isSignedUp; else signupForm">
-    Your registration is successful. Please login!
-</div>
-
-<ng-template #signupForm>
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
@@ -49,4 +44,3 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-</ng-template>

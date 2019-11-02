@@ -3,6 +3,7 @@ import { AuthLoginInfo } from '../../login-info';
 import { AuthService } from '../../auth.service';
 import { TokenStorageService } from '../../token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
@@ -17,7 +18,10 @@ export class LogInComponent implements OnInit {
   loginInfo: AuthLoginInfo;
   validateForm: FormGroup;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private fb: FormBuilder) { }
+  constructor(private authService: AuthService,
+              private tokenStorage: TokenStorageService,
+              private fb: FormBuilder,
+              private router: Router) { }
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -41,7 +45,7 @@ export class LogInComponent implements OnInit {
         this.isLoginFailed = false;
         this.authService.setLoggedIn(true);
         this.roles = this.tokenStorage.getAuthorities();
-        this.reloadPage();
+        this.router.navigate(['/welcome-page']);
       },
       error => {
         console.log(error);

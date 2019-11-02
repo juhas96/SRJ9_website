@@ -5,6 +5,7 @@ import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
 import { DataService } from 'src/app/services/data.service';
 import {GymReservationComponent} from '../../../pages/gym-reservation/gym-reservation.component';
+import {NotificationService} from '../../../services/notification.service';
 
 
 @Component({
@@ -24,7 +25,9 @@ export class GymTableComponent implements OnInit {
   listOfAvailableGyms = [{ text: 'T1', value: '1' }, { text: 'T2', value: '2' }];
   selectedGymNumber: string;
 
-  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService) {}
+  constructor(private gymReservationService: GymReservationService,
+              private modalService: NzModalService,
+              private notificationService: NotificationService) {}
 
   reset(): void {
     this.searchValue = '';
@@ -79,7 +82,9 @@ export class GymTableComponent implements OnInit {
     gymReservation.user = null;
     gymReservation.status = 'FREE';
     console.log(gymReservation);
-    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(value => console.log(value));
+    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
+        () => this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!'),
+        error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
   }
 
   parseNameFromEmail(reservation: GymReservation): string {

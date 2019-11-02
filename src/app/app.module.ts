@@ -25,6 +25,9 @@ import { MembersComponent } from './pages/members/members.component';
 import { ReservationTableComponent } from './components/user/reservation-table/reservation-table.component';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import { SearchInputComponent } from './components/admin/search-input/search-input.component';
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
+import { SuccessfullLoginComponent } from './pages/successfull-login/successfull-login.component';
+import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
 
 registerLocaleData(sk);
 
@@ -42,7 +45,10 @@ registerLocaleData(sk);
     UserReservationsComponent,
     MembersComponent,
     ReservationTableComponent,
-    SearchInputComponent
+    SearchInputComponent,
+    UnauthorizedComponent,
+    SuccessfullLoginComponent,
+    SuccessfullRegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignupInfo } from '../../signup-info';
 import { AuthService } from '../../auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,6 +34,7 @@ export class SignUpComponent implements OnInit {
         console.log(data);
         this.isSignedUp = true;
         this.isSignUpFailed = false;
+        this.router.navigate(['/successfull-registration']);
       },
       error => {
         console.log(error);
@@ -59,7 +61,7 @@ export class SignUpComponent implements OnInit {
     e.preventDefault();
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

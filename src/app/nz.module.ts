@@ -8,6 +8,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 const nz = [
   NzLayoutModule,
@@ -18,7 +20,9 @@ const nz = [
   NzCardModule,
   NzModalModule,
   NzToolTipModule,
-  NzSelectModule
+  NzSelectModule,
+  NzResultModule,
+  NzNotificationModule
 ];
 
 @NgModule({
