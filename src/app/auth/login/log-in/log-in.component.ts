@@ -46,6 +46,7 @@ export class LogInComponent implements OnInit {
         this.authService.setLoggedIn(true);
         this.roles = this.tokenStorage.getAuthorities();
         this.router.navigate(['/welcome-page']);
+        this.reloadPage();
       },
       error => {
         console.log(error);

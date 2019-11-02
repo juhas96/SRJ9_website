@@ -10,6 +10,7 @@ const USER_ID = 'UserId';
 })
 export class TokenStorageService {
   private roles: Array<string> = [];
+  authorities: string;
   constructor() { }
 
   signOut() {
@@ -54,6 +55,20 @@ export class TokenStorageService {
     }
 
     return this.roles;
+  }
+
+  public getParsedAuthorities() {
+    if (this.getToken() && this.getUsername() !== '') {
+      this.getAuthorities().forEach(role => {
+        console.log(role);
+        if ( role === 'ROLE_ADMIN') {
+          console.log('retutrno som admin');
+          this.authorities = 'admin';
+        } else {
+          this.authorities = 'user';
+        }
+      });
+    }
   }
 }
 
