@@ -75,14 +75,6 @@ export class GymReservationComponent implements OnInit {
       console.log('toto je userid ' + sessionStorage.getItem('UserId'));
 
     });
-    //
-    // console.log(moment().day(0).hour(0).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000')); // 0 pre nedelu
-    // console.log(moment().day(2).hour(0).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000')); // 2 pre utorok
-    // console.log(moment().day(4).hour(0).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000')); // 4 pre stvrtok
-    //
-    // console.log(moment().day(7).hour(0).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000')); // 7 pre buducu nedelu
-    // console.log(moment().day(9).hour(0).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000')); // 9 pre buduci utorok
-    // console.log(moment().day(11).hour(0).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000')); // 11 pre buduci stvrtok
   }
 
 
@@ -106,14 +98,30 @@ export class GymReservationComponent implements OnInit {
 
         this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(
             () => this.notificationService.createNotification('success', 'Reserved', 'Reservation was successfully created.'),
-            () => this.notificationService.createNotification('error', 'Error', 'Reservation cannot be created.')
+            (err) => {
+              if (err.status === 400) {
+                this.notificationService.createNotification('error',
+                    'Too many reservations for one week',
+                    'You have 2 reservations for current week.');
+                this.reservation.status = 'FREE';
+                this.reservation.user = null;
+              } else {
+                this.notificationService.createNotification('error',
+                    'Error',
+                    'Reservation cannot be created.');
+                this.reservation.status = 'FREE';
+                this.reservation.user = null;
+              }
+            }
         );
       }
       });
   }
 
   parseUsernameFromEmail(email: string) {
-    return email.substring(0, email.indexOf('@'));
+    if (email) {
+      return email.substring(0, email.indexOf('@'));
+    }
   }
 
 

@@ -13,7 +13,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log('Sem tuu');
     if (sessionStorage.getItem('AuthToken')) {
       req = req.clone({
         setHeaders: {

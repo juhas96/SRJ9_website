@@ -8,7 +8,7 @@ import { GymReservation } from '../model/gym.model';
 })
 export class GymReservationService {
 
-  private baseUrl = 'http://localhost:8087/';
+  private baseUrl = 'http://147.232.191.144:8087/';
 
   constructor(private httpService: HttpClient) {
 

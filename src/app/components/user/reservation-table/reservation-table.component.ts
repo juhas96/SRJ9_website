@@ -36,9 +36,11 @@ export class ReservationTableComponent implements OnInit {
     gymReservation.status = 'FREE';
     console.log(gymReservation);
     this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
-        () => this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!'),
+        () => {
+          this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!');
+          this.searchData();
+        },
         error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
-    this.searchData();
   }
 
 

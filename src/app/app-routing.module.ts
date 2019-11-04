@@ -14,6 +14,7 @@ import {HomeComponent} from './pages/home/home.component';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'login', component: LogInComponent},
   { path: 'signup', component: SignUpComponent},
   { path: 'admin/dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
@@ -22,7 +23,7 @@ const routes: Routes = [
   { path: 'welcome-page', component: SuccessfullLoginComponent, canActivate: [AuthGuard]},
   { path: 'successfull-registration', component: SuccessfullRegistrationComponent},
   { path: 'unauthorized', component: UnauthorizedComponent},
-  { path: 'home', component: HomeComponent}
+  // { path: 'home', component: HomeComponent}
   // { path: 'members', component: MembersComponent }
 ];
 
