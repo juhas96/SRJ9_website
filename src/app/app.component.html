@@ -1,7 +1,7 @@
 <nz-layout>
   <nz-header>
     <span id="logo" routerLink="/"><img src="../assets/logo.png" alt="logo" class="logo"></span>
-    <ul *ngIf="!authService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal">
+    <ul *ngIf="!getAuthService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal">
         <li routerLink="/login" nz-menu-item>
             <i nz-icon nzType="login"></i>
             <span>Log in</span>
@@ -13,8 +13,8 @@
   
       </ul>
 
-      <ul *ngIf="authService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal" >
-          <li *ngIf="authService.getUserAuthority()" routerLink="/admin/dashboard" nz-menu-item>
+      <ul *ngIf="getAuthService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal" >
+          <li *ngIf="getAuthService.getUserAuthority()" routerLink="/admin/dashboard" nz-menu-item>
               <i nz-icon nzType="dashboard"></i>
               <span>Dashboard</span>
           </li>
@@ -28,7 +28,7 @@
           </li>
           <li nz-menu-item>
             <i nz-icon nzType="logout"></i>
-            <span (click)="tokenStorage.signOut()">Logout</span>
+            <span (click)="getTokenStorage.signOut()">Logout</span>
           </li>
         </ul>
   </nz-header>

@@ -19,4 +19,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.authService.getUserAuthority());
   }
+
+  get getTokenStorage() {
+    return this.tokenStorage;
+  }
+
+  get getAuthService() {
+    return this.authService;
+  }
 }

@@ -24,7 +24,7 @@ export class EditGymReservationComponent implements OnInit {
     });
   }
 
-  
+
   validateForm: FormGroup;
   reservationForEdit: GymReservation;
 

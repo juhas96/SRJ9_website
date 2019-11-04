@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
       return { confirm: true, error: true };
     }
     return {};
-  };
+  }
 
   getCaptcha(e: MouseEvent): void {
     e.preventDefault();

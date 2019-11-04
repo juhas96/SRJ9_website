@@ -74,8 +74,10 @@ export class LogInComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [true]
     });
+  }
 
-
+  get getAuthService() {
+    return this.authService;
   }
 
   reloadPage() {
