@@ -10,6 +10,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 const nz = [
   NzLayoutModule,
@@ -22,7 +23,8 @@ const nz = [
   NzToolTipModule,
   NzSelectModule,
   NzResultModule,
-  NzNotificationModule
+  NzNotificationModule,
+  NzSpinModule
 ];
 
 @NgModule({

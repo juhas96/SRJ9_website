@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { NzModalService } from 'ng-zorro-antd';
 import { User } from 'src/app/model/user.model';
 import {NotificationService} from '../../services/notification.service';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class GymReservationComponent implements OnInit {
     textAlign: 'center'
   }; */
 
-
+  isSpinning = false;
 
   // dates and arrays for current sunday and next sunday
   sundayDate = moment().day(0).hour(1).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000'); // zero for sunday
@@ -53,7 +54,8 @@ export class GymReservationComponent implements OnInit {
 
   constructor(private gymService: GymReservationService,
               private modalService: NzModalService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private userService: UserService) {
    }
 
   ngOnInit() {
@@ -86,6 +88,7 @@ export class GymReservationComponent implements OnInit {
       nzCancelText: 'Cancel',
       nzOkText: 'Yes',
       nzOnOk: () => {
+        this.isSpinning = true;
         console.log('OK');
         this.reservation = reservation;
 
@@ -94,24 +97,32 @@ export class GymReservationComponent implements OnInit {
 
 
         user.id = +sessionStorage.getItem('UserId');
-        this.reservation.user = user;
+        this.userService.getSingleUser(user.id).subscribe(
+            (val) => this.reservation.user = val);
+        // this.reservation.user = user;
 
         this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(
-            () => this.notificationService.createNotification('success', 'Reserved', 'Reservation was successfully created.'),
+            () => {},
             (err) => {
               if (err.status === 400) {
+                this.isSpinning = false;
                 this.notificationService.createNotification('error',
                     'Too many reservations for one week',
                     'You have 2 reservations for current week.');
                 this.reservation.status = 'FREE';
                 this.reservation.user = null;
               } else {
+                this.isSpinning = false;
                 this.notificationService.createNotification('error',
                     'Error',
                     'Reservation cannot be created.');
                 this.reservation.status = 'FREE';
                 this.reservation.user = null;
               }
+            },
+            () => {
+              this.notificationService.createNotification('success', 'Reserved', 'Reservation was successfully created.');
+              this.isSpinning = false;
             }
         );
       }

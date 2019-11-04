@@ -1,8 +1,6 @@
-<nz-result *ngIf="getAuthService.isUserLoggedIn()" [nzIcon]="'smile-twotone'" [nzTitle]="'Great, your registration was successfull. Now you can login.'">
-    <div nz-result-extra>
-        <button nz-button nzType="primary" routerLink="/login">Login</button>
-    </div>
-</nz-result>
+<div *ngIf="getAuthService.isUserLoggedIn()">
+    <app-successfull-login></app-successfull-login>
+</div>
 
 <form *ngIf="!getAuthService.isUserLoggedIn()" nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
@@ -21,10 +19,10 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="remember">
-          <span>Remember me</span>
-        </label>
-        <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+<!--        <label nz-checkbox formControlName="remember">-->
+<!--          <span>Remember me</span>-->
+<!--        </label>-->
+<!--        <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>-->
         <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
         Or
         <a routerLink="/signup">register now!</a>

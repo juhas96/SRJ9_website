@@ -1,18 +1,19 @@
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Email must have format fistName.lastName@student.tuke.sk">
         <input nz-input formControlName="email" id="email" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Password must have at least 6 characters">
         <input
           nz-input
           type="password"
           id="password"
           formControlName="password"
+          minlength="6"
           (ngModelChange)="updateConfirmValidator()"
         />
       </nz-form-control>
@@ -31,16 +32,16 @@
         </ng-template>
       </nz-form-control>
     </nz-form-item>
+<!--    <nz-form-item nz-row class="register-area">-->
+<!--      <nz-form-control [nzSpan]="14" [nzOffset]="6">-->
+<!--        <label nz-checkbox formControlName="agree">-->
+<!--          <span>I have read the <a>agreement</a></span>-->
+<!--        </label>-->
+<!--      </nz-form-control>-->
+<!--    </nz-form-item>-->
     <nz-form-item nz-row class="register-area">
       <nz-form-control [nzSpan]="14" [nzOffset]="6">
-        <label nz-checkbox formControlName="agree">
-          <span>I have read the <a>agreement</a></span>
-        </label>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item nz-row class="register-area">
-      <nz-form-control [nzSpan]="14" [nzOffset]="6">
-        <button nz-button nzType="primary">Register</button>
+        <button [disabled]="validateForm.invalid" nz-button nzType="primary">Register</button>
       </nz-form-control>
     </nz-form-item>
   </form>
