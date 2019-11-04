@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SignupInfo } from '../../signup-info';
 import { AuthService } from '../../auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
+import {NotificationService} from '../../../services/notification.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,7 +25,8 @@ export class SignUpComponent implements OnInit {
     }
 
     this.signupInfo = new SignupInfo (
-      'test',
+      this.parseFirstNameFromEmail(this.validateForm.get('email').value),
+      this.parseLastNameFromEmail(this.validateForm.get('email').value),
       this.parseUsernameFromEmail(this.validateForm.get('email').value),
       this.validateForm.get('email').value,
       this.validateForm.get('password').value);
@@ -33,9 +36,14 @@ export class SignUpComponent implements OnInit {
         console.log(data);
         this.isSignedUp = true;
         this.isSignUpFailed = false;
+        this.router.navigate(['/successfull-registration']);
       },
       error => {
-        console.log(error);
+        if (error.status === 400) {
+          this.notificationService.createNotification('error',
+              'Error while creating user account',
+              'User with same email address is already created.');
+        }
         this.isSignUpFailed = true;
       }
     );
@@ -53,13 +61,16 @@ export class SignUpComponent implements OnInit {
       return { confirm: true, error: true };
     }
     return {};
-  };
+  }
 
   getCaptcha(e: MouseEvent): void {
     e.preventDefault();
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private router: Router,
+              private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -72,6 +83,14 @@ export class SignUpComponent implements OnInit {
 
   parseUsernameFromEmail(email: string) {
     return email.substring(0, email.indexOf('@'));
+  }
+
+  parseFirstNameFromEmail(email: string) {
+    return email.substring(0, email.indexOf('.'));
+  }
+
+  parseLastNameFromEmail(email: string) {
+    return email.substr(email.indexOf('.'), email.indexOf('@'));
   }
 
 }

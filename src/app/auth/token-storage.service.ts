@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {Router} from '@angular/router';
+import {NotificationService} from '../services/notification.service';
 
 const TOKEN_KEY = 'AuthToken';
 const USERNAME_KEY = 'AuthUsername';
@@ -10,11 +12,13 @@ const USER_ID = 'UserId';
 })
 export class TokenStorageService {
   private roles: Array<string> = [];
-  constructor() { }
+  authorities: string;
+  constructor(private router: Router, private notificationService: NotificationService) { }
 
   signOut() {
     window.sessionStorage.clear();
-    window.location.reload();
+    this.router.navigate(['/']);
+    this.notificationService.createNotification('success', 'Log Out', 'Your log out was successfull');
   }
 
   public saveToken(token: string) {
@@ -54,6 +58,19 @@ export class TokenStorageService {
     }
 
     return this.roles;
+  }
+
+  public getParsedAuthorities() {
+    if (this.getToken() && this.getUsername() !== '') {
+      this.getAuthorities().forEach(role => {
+        console.log(role);
+        if ( role === 'ROLE_ADMIN') {
+          this.authorities = 'admin';
+        } else {
+          this.authorities = 'user';
+        }
+      });
+    }
   }
 }
 

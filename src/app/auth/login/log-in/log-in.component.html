@@ -1,8 +1,10 @@
-<div *ngIf="authService.isLoggedIn; else loggedOut">
-    Logged in as {{roles}}.
-  </div>
-<ng-template #loggedOut>
-<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+<nz-result *ngIf="getAuthService.isUserLoggedIn()" [nzIcon]="'smile-twotone'" [nzTitle]="'Great, your registration was successfull. Now you can login.'">
+    <div nz-result-extra>
+        <button nz-button nzType="primary" routerLink="/login">Login</button>
+    </div>
+</nz-result>
+
+<form *ngIf="!getAuthService.isUserLoggedIn()" nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-control nzErrorTip="Please input your username!">
         <nz-input-group nzPrefixIcon="user">
@@ -25,8 +27,7 @@
         <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
         <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
         Or
-        <a>register now!</a>
+        <a routerLink="/signup">register now!</a>
       </nz-form-control>
     </nz-form-item>
   </form>
-</ng-template>

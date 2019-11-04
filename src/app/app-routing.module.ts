@@ -7,15 +7,24 @@ import { UserReservationsComponent } from './pages/user/user-reservations/user-r
 import { MembersComponent } from './pages/members/members.component';
 import { GymReservationComponent } from './pages/gym-reservation/gym-reservation.component';
 import {AuthGuard} from './auth.guard';
+import {UnauthorizedComponent} from './pages/unauthorized/unauthorized.component';
+import {SuccessfullLoginComponent} from './pages/successfull-login/successfull-login.component';
+import {SuccessfullRegistrationComponent} from './pages/successfull-registration/successfull-registration.component';
+import {HomeComponent} from './pages/home/home.component';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'login', component: LogInComponent},
   { path: 'signup', component: SignUpComponent},
   { path: 'admin/dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'gym_reservation', component: GymReservationComponent, canActivate: [AuthGuard]},
   { path: 'user-reservations', component: UserReservationsComponent, canActivate: [AuthGuard]},
-  { path: 'members', component: MembersComponent}
+  { path: 'welcome-page', component: SuccessfullLoginComponent, canActivate: [AuthGuard]},
+  { path: 'successfull-registration', component: SuccessfullRegistrationComponent},
+  { path: 'unauthorized', component: UnauthorizedComponent},
+  // { path: 'home', component: HomeComponent}
+  // { path: 'members', component: MembersComponent }
 ];
 
 @NgModule({
