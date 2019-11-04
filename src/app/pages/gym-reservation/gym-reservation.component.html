@@ -6,9 +6,18 @@
             <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
               (click)="showConfirm(element)">
               {{element.time_from}} - {{element.time_until}}
+              <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
             </div>
             <div nz-card-grid  nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
               {{element.time_from}} - {{element.time_until}}
+              <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+            </div>
+            <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+              {{element.time_from}} - {{element.time_until}}
+              <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
             </div>
           </div>
 
@@ -19,10 +28,17 @@
       <div *ngFor="let element of tuesdayArray | slice:0:4;">
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
-          {{element.time_from}} - {{element.time_until}}
+          {{element.time_from}} - {{element.time_until}} <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid  nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
 
@@ -33,9 +49,18 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
 
@@ -47,9 +72,18 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
 
@@ -62,6 +96,9 @@
           {{element.time_from}} - {{element.time_until}}
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
           {{element.time_from}} - {{element.time_until}}
         </div>
       </div>
@@ -77,9 +114,18 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
 
@@ -90,9 +136,18 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
     </nz-card>
@@ -102,9 +157,18 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
     </nz-card>
@@ -115,9 +179,18 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
     </nz-card>
@@ -127,9 +200,17 @@
         <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
           (click)="showConfirm(element)">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
         <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
           {{element.time_from}} - {{element.time_until}}
+          <br>
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+        </div>
+        <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+          {{element.time_from}} - {{element.time_until}} :
+          <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
         </div>
       </div>
     </nz-card>

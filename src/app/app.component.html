@@ -1,69 +1,7 @@
-<!-- <nz-layout>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200px">
-    <div><img src="../assets/logo.png" alt="logo" class="logo"></div>
-    <ul *ngIf="authority === 'admin'" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item nz-tooltip nzPlacement="right">
-        <i nz-icon nzType="dashboard"></i>
-        <span routerLink="/admin/dashboard">Dashboard</span>
-      </li>
-      <li nz-menu-item nz-tooltip nzPlacement="right" (click)="tokenStorage.signOut()">
-        <i nz-icon nzType="logout"></i>
-        <span>Logout</span>
-      </li>
-    </ul>
-    <ul *ngIf="!authority" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li routerLink="/login" nz-menu-item nz-tooltip nzPlacement="right">
-        <i nz-icon nzType="login"></i>
-        <span>Log in</span>
-      </li>
-      <li routerLink="/signup" nz-menu-item nz-tooltip nzPlacement="right">
-        <i nz-icon nzType="user-add"></i>
-        <span>Sign Up</span>
-      </li>
-    </ul>
-    <ul *ngIf="authority === 'user'" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li routerLink="/members" nz-menu-item nz-tooltip nzPlacement="right">
-        <i nz-icon nzType="dashboard"></i>
-        <span>Members</span>
-      </li>
-      <li routerLink="/user-reservations" nz-menu-item nz-tooltip nzPlacement="right">
-        <i nz-icon nzType="dashboard"></i>
-        <span>My Reservations</span>
-      </li>
-      <li nz-menu-item nz-tooltip nzPlacement="right">
-        <i nz-icon nzType="logout"></i>
-        <span (click)="tokenStorage.signOut()">Logout</span>
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header></nz-header>
-    <nz-content>
-      <div class="inner-content">
-        <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-    <nz-footer>SRJ9 ©2019 Created by Unkown</nz-footer>
-  </nz-layout>
-</nz-layout>
- -->
-
-
- <nz-layout>
+<nz-layout>
   <nz-header>
-    <span><img src="../assets/logo.png" alt="logo" class="logo"></span>
-    <ul *ngIf="authority === 'admin'" nz-menu nzTheme="dark" nzMode="horizontal">
-      <li nz-menu-item>
-        <i nz-icon nzType="dashboard"></i>
-        <span routerLink="/admin/dashboard">Dashboard</span>
-      </li>
-      <li nz-menu-item (click)="tokenStorage.signOut()">
-          <i nz-icon nzType="logout"></i>
-          <span>Logout</span>
-      </li>
-
-    </ul>
-    <ul *ngIf="!authority" nz-menu nzTheme="dark" nzMode="horizontal">
+    <span id="logo" routerLink="/home"><img src="../assets/logo.png" alt="logo" class="logo"></span>
+    <ul *ngIf="!authService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal">
         <li routerLink="/login" nz-menu-item>
             <i nz-icon nzType="login"></i>
             <span>Log in</span>
@@ -75,10 +13,14 @@
   
       </ul>
 
-      <ul *ngIf="authority === 'user'" nz-menu nzTheme="dark" nzMode="horizontal" >
-          <li routerLink="/members" nz-menu-item >
+      <ul *ngIf="authService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal" >
+          <li *ngIf="authService.getUserAuthority()" routerLink="/admin/dashboard" nz-menu-item>
+              <i nz-icon nzType="dashboard"></i>
+              <span>Dashboard</span>
+          </li>
+          <li routerLink="/gym_reservation" nz-menu-item >
             <i nz-icon nzType="dashboard"></i>
-            <span>Members</span>
+            <span>Create Gym Reservation</span>
           </li>
           <li routerLink="/user-reservations" nz-menu-item >
             <i nz-icon nzType="dashboard"></i>
@@ -93,5 +35,5 @@
   <nz-content>
     <div class="inner-content"><router-outlet></router-outlet></div>
   </nz-content>
-  <nz-footer>SRJ9 ©2019 Created by Unkown</nz-footer>
+  <nz-footer>SRJ9 ©2019 Created by Jkbjhs</nz-footer>
 </nz-layout>

@@ -13,20 +13,10 @@ export class AppComponent implements OnInit {
   private roles: string[];
   private authority: string;
 
-  constructor(private tokenStorage: TokenStorageService, private authService: AuthService) {}
+  constructor(private tokenStorage: TokenStorageService, private authService: AuthService) {
+  }
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken() && this.tokenStorage.getUsername() !== '') {
-      this.roles = this.tokenStorage.getAuthorities();
-      this.roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          this.authority = 'admin';
-          return false;
-        }
-        this.authority = 'user';
-        return true;
-      });
-      this.authService.setLoggedIn(true);
-    }
+    console.log(this.authService.getUserAuthority());
   }
 }

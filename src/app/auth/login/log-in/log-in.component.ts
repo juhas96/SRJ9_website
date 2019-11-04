@@ -4,6 +4,7 @@ import { AuthService } from '../../auth.service';
 import { TokenStorageService } from '../../token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+import {NotificationService} from '../../../services/notification.service';
 
 @Component({
   selector: 'app-log-in',
@@ -21,7 +22,8 @@ export class LogInComponent implements OnInit {
   constructor(private authService: AuthService,
               private tokenStorage: TokenStorageService,
               private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private notificationService: NotificationService) { }
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -46,10 +48,13 @@ export class LogInComponent implements OnInit {
         this.authService.setLoggedIn(true);
         this.roles = this.tokenStorage.getAuthorities();
         this.router.navigate(['/welcome-page']);
-        this.reloadPage();
       },
       error => {
-        console.log(error);
+        if (error.status === 401) {
+          this.notificationService.createNotification('error',
+              'Log In error',
+              'Your username or password is not correct. Try again or contact page administrator');
+        }
         this.isLoginFailed = true;
       }
     );
@@ -58,6 +63,7 @@ export class LogInComponent implements OnInit {
 
 
   ngOnInit() {
+
     if (this.tokenStorage.getToken()) {
       this.authService.setLoggedIn(true);
       this.roles = this.tokenStorage.getAuthorities();

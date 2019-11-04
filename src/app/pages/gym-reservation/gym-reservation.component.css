@@ -2,6 +2,7 @@
     background-color: #85bb65;
     font-weight: bold;
     font-size: 1.40em;
+    height: 100px!important;
 }
 
 .reserved{
@@ -9,6 +10,15 @@
     font-weight: bold;
     font-size: 1.40em;
     cursor: default;
+    height: 100px!important;
+}
+
+.closed {
+    background-color: gray;
+    font-weight: bold;
+    font-size: 1.40em;
+    cursor: default;
+    height: 100px!important;
 }
 
 .gridStyle{

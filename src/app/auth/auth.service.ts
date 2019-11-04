@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {JwtResponse} from './jwt-response';
 import {AuthLoginInfo} from './login-info';
 import {SignupInfo} from './signup-info';
+import {TokenStorageService} from './token-storage.service';
 
 
 const httpOptions = {
@@ -16,19 +17,25 @@ const httpOptions = {
 export class AuthService {
 
   private loggedInStatus = false;
+  private roles;
 
-  private loginUrl = 'http://147.232.191.144:8087/api/auth/signin';
-  private signupUrl = 'http://147.232.191.144:8087/api/auth/signup';
+  private loginUrl = 'http://localhost:8087/api/auth/signin';
+  private signupUrl = 'http://localhost:8087/api/auth/signup';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
   }
 
   setLoggedIn(value: boolean) {
     this.loggedInStatus = value;
   }
 
-  get isLoggedIn(): boolean {
-    return this.loggedInStatus;
+  isUserLoggedIn() {
+    const user = sessionStorage.getItem('AuthUsername');
+    return !(user === null);
+  }
+
+  getUserAuthority() {
+    return sessionStorage.getItem('AuthAuthorities') === '[{"authority":"ROLE_ADMIN"}]';
   }
 
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {

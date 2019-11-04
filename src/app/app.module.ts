@@ -28,6 +28,7 @@ import { SearchInputComponent } from './components/admin/search-input/search-inp
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { SuccessfullLoginComponent } from './pages/successfull-login/successfull-login.component';
 import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
+import { SettingsComponent } from './pages/admin/settings/settings.component';
 
 registerLocaleData(sk);
 
@@ -48,7 +49,8 @@ registerLocaleData(sk);
     SearchInputComponent,
     UnauthorizedComponent,
     SuccessfullLoginComponent,
-    SuccessfullRegistrationComponent
+    SuccessfullRegistrationComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

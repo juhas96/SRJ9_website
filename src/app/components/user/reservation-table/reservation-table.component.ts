@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GymReservation } from 'src/app/model/gym.model';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
+import {NotificationService} from '../../../services/notification.service';
 
 @Component({
   selector: 'app-reservation-table',
@@ -12,7 +13,8 @@ export class ReservationTableComponent implements OnInit {
   data: GymReservation[] = [];
   loading = true;
 
-  constructor(private gymReservationService: GymReservationService) {}
+  constructor(private gymReservationService: GymReservationService,
+              private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.searchData();
@@ -21,11 +23,23 @@ export class ReservationTableComponent implements OnInit {
   searchData() {
     this.loading = true;
     this.gymReservationService
-      .getAllReservationsForSpecificUser(2)
+      .getAllReservationsForSpecificUser(parseInt(sessionStorage.getItem('UserId'), 10))
       .subscribe(
         (res) => this.data = res,
-        (err) => console.log(err),
+        (err) => this.notificationService.createNotification('error', 'Reservations can\'t be loaded', err),
         () => this.loading = false
       );
   }
+
+  deleteReservation(id: number, gymReservation: GymReservation) {
+    gymReservation.user = null;
+    gymReservation.status = 'FREE';
+    console.log(gymReservation);
+    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
+        () => this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!'),
+        error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
+    this.searchData();
+  }
+
+
 }

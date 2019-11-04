@@ -10,6 +10,7 @@ import {AuthGuard} from './auth.guard';
 import {UnauthorizedComponent} from './pages/unauthorized/unauthorized.component';
 import {SuccessfullLoginComponent} from './pages/successfull-login/successfull-login.component';
 import {SuccessfullRegistrationComponent} from './pages/successfull-registration/successfull-registration.component';
+import {HomeComponent} from './pages/home/home.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'user-reservations', component: UserReservationsComponent, canActivate: [AuthGuard]},
   { path: 'welcome-page', component: SuccessfullLoginComponent, canActivate: [AuthGuard]},
   { path: 'successfull-registration', component: SuccessfullRegistrationComponent},
-  { path: 'unauthorized', component: UnauthorizedComponent}
+  { path: 'unauthorized', component: UnauthorizedComponent},
+  { path: 'home', component: HomeComponent}
   // { path: 'members', component: MembersComponent }
 ];
 

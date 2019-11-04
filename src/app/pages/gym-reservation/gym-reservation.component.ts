@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import * as moment from 'moment';
 import { NzModalService } from 'ng-zorro-antd';
 import { User } from 'src/app/model/user.model';
+import {NotificationService} from '../../services/notification.service';
 
 
 @Component({
@@ -50,7 +51,9 @@ export class GymReservationComponent implements OnInit {
 
 
 
-  constructor(private gymService: GymReservationService, private modalService: NzModalService) {
+  constructor(private gymService: GymReservationService,
+              private modalService: NzModalService,
+              private notificationService: NotificationService) {
    }
 
   ngOnInit() {
@@ -101,10 +104,16 @@ export class GymReservationComponent implements OnInit {
         user.id = +sessionStorage.getItem('UserId');
         this.reservation.user = user;
 
-        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(value => console.log(value));
-
+        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(
+            () => this.notificationService.createNotification('success', 'Reserved', 'Reservation was successfully created.'),
+            () => this.notificationService.createNotification('error', 'Error', 'Reservation cannot be created.')
+        );
       }
       });
+  }
+
+  parseUsernameFromEmail(email: string) {
+    return email.substring(0, email.indexOf('@'));
   }
 
 
