@@ -63,7 +63,10 @@ export class GymTableComponent implements OnInit {
     this.gymReservationService
       .getReservations()
       .subscribe(
-        (res) => {this.data = res; this.listOfDisplayData = this.data; },
+        (res) => {
+          this.data = res;
+          this.listOfDisplayData = this.data;
+          },
         (err) => console.log(err),
         () => this.loading = false
       );

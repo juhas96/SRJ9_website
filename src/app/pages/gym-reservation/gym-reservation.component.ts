@@ -94,11 +94,16 @@ export class GymReservationComponent implements OnInit {
 
         this.reservation.status = 'RESERVED';
         const user: User = new User();
+        this.reservation.user = user;
 
 
         user.id = +sessionStorage.getItem('UserId');
         this.userService.getSingleUser(user.id).subscribe(
-            (val) => this.reservation.user = val);
+            (val: User) => {
+              console.log('PRISLO MI: ' + val.email);
+              this.reservation.user = val;
+            });
+        // this.reservation.user.id = 4;
         // this.reservation.user = user;
 
         this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(
