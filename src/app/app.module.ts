@@ -24,6 +24,7 @@ import { UserReservationsComponent } from './pages/user/user-reservations/user-r
 import { MembersComponent } from './pages/members/members.component';
 import { ReservationTableComponent } from './components/user/reservation-table/reservation-table.component';
 import {AuthInterceptor} from './auth/auth-interceptor';
+import { CookieService } from 'ngx-cookie-service'
 
 registerLocaleData(sk);
 
@@ -54,7 +55,7 @@ registerLocaleData(sk);
   ],
   providers: [{ provide: NZ_I18N, useValue: sk_SK },
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-              AuthService, AuthGuard, ],
+              AuthService, AuthGuard, CookieService ],
   bootstrap: [AppComponent],
   entryComponents: [EditGymReservationComponent]
 })
