@@ -1,0 +1,17 @@
+h1 {
+    margin: 0 auto
+}
+
+#main {
+    margin: 0 auto;
+    left: 50%;
+}
+
+#logo {
+    max-width: 20%;
+    margin: 0 auto;
+}
+
+.inner-content {
+    margin: 0 auto;
+}

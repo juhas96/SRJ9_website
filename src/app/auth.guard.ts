@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import { Observable } from 'rxjs';
 import {AuthService} from './auth/auth.service';
 
@@ -8,14 +8,17 @@ import {AuthService} from './auth/auth.service';
 })
 export class AuthGuard implements CanActivate  {
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {}
 
-  }
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.auth.isUserLoggedIn()) {
+      return true;
+    }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.auth.isLoggedIn;
+    // navigate to login page
+    this.router.navigate(['/unauthorized']);
+    // you can save redirect url so after authing we can move them back to the page they requested
+    return false;
   }
 
 }

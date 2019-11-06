@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import * as moment from 'moment';
+import {Router} from '@angular/router';
+import {NotificationService} from '../services/notification.service';
+import {CookieService} from 'ngx-cookie-service';
 
 const TOKEN_KEY = 'AuthToken';
 const USERNAME_KEY = 'AuthUsername';
@@ -12,16 +13,20 @@ const USER_ID = 'UserId';
 })
 export class TokenStorageService {
   private roles: Array<string> = [];
-  constructor(private cookieService: CookieService) { }
+  authorities: string;
+  constructor(private router: Router,
+              private notificationService: NotificationService,
+              private cookieService: CookieService) { }
 
   signOut() {
     this.cookieService.deleteAll();
-    window.location.reload();
+    this.router.navigate(['/']);
+    this.notificationService.createNotification('success', 'Log Out', 'Your log out was successfull');
   }
 
   public saveToken(token: string) {
     this.cookieService.delete(TOKEN_KEY);
-    this.cookieService.set(TOKEN_KEY, token, 7);
+    this.cookieService.set(TOKEN_KEY, token);
   }
 
   public getToken(): string {
@@ -30,11 +35,11 @@ export class TokenStorageService {
 
   public saveUsername(username: string) {
     this.cookieService.delete(USERNAME_KEY);
-    this.cookieService.set(USERNAME_KEY, username, 7);
+    this.cookieService.set(USERNAME_KEY, username);
   }
 
   public saveUserId(userId: number) {
-    this.cookieService.set(USER_ID, userId.toString(), 7);
+    this.cookieService.set(USER_ID, userId.toString());
   }
 
   public getUsername(): string {
@@ -43,7 +48,7 @@ export class TokenStorageService {
 
   public saveAuthorities(authorities: string[]) {
     this.cookieService.delete(AUTHORITIES_KEY);
-    this.cookieService.set(AUTHORITIES_KEY, JSON.stringify(authorities), 7);
+    this.cookieService.set(AUTHORITIES_KEY, JSON.stringify(authorities));
   }
 
   public getAuthorities(): string[] {
@@ -54,7 +59,21 @@ export class TokenStorageService {
         this.roles.push(authority.authority);
       });
     }
+
     return this.roles;
+  }
+
+  public getParsedAuthorities() {
+    if (this.getToken() && this.getUsername() !== '') {
+      this.getAuthorities().forEach(role => {
+        console.log(role);
+        if ( role === 'ROLE_ADMIN') {
+          this.authorities = 'admin';
+        } else {
+          this.authorities = 'user';
+        }
+      });
+    }
   }
 }
 

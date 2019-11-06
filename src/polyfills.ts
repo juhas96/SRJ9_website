@@ -61,3 +61,12 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+if (!window.console) {
+    const console = {
+        log() {},
+        warn() {},
+        error() {},
+        time() {},
+        timeEnd() {}
+    };
+}
