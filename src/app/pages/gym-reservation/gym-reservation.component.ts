@@ -7,6 +7,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { User } from 'src/app/model/user.model';
 import {NotificationService} from '../../services/notification.service';
 import {UserService} from '../../services/user.service';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Component({
@@ -55,7 +56,8 @@ export class GymReservationComponent implements OnInit {
   constructor(private gymService: GymReservationService,
               private modalService: NzModalService,
               private notificationService: NotificationService,
-              private userService: UserService) {
+              private userService: UserService,
+              private cookiesService: CookieService) {
    }
 
   ngOnInit() {
@@ -73,8 +75,6 @@ export class GymReservationComponent implements OnInit {
       this.nextThursdayArray = data.filter(value => value.date == this.nextThursdayDate);
       console.log('stvrtok datum - ' + this.nextThursdayDate);
       console.log(this.nextThursdayArray);
-
-      console.log('toto je userid ' + sessionStorage.getItem('UserId'));
 
     });
   }
@@ -97,7 +97,7 @@ export class GymReservationComponent implements OnInit {
         this.reservation.user = user;
 
 
-        user.id = +sessionStorage.getItem('UserId');
+        user.id = +this.cookiesService.get('UserId');
         this.userService.getSingleUser(user.id).subscribe(
             (val: User) => {
               console.log('PRISLO MI: ' + val.email);

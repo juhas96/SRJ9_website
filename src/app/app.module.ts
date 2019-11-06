@@ -29,6 +29,7 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
 import { SuccessfullLoginComponent } from './pages/successfull-login/successfull-login.component';
 import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
 import { SettingsComponent } from './pages/admin/settings/settings.component';
+import { CookieService } from 'ngx-cookie-service';
 
 registerLocaleData(sk);
 
@@ -64,7 +65,7 @@ registerLocaleData(sk);
   ],
   providers: [{ provide: NZ_I18N, useValue: sk_SK },
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-              AuthService, AuthGuard, ],
+              AuthService, AuthGuard, CookieService],
   bootstrap: [AppComponent],
   entryComponents: [EditGymReservationComponent]
 })

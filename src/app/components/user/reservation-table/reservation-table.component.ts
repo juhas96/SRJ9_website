@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GymReservation } from 'src/app/model/gym.model';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import {NotificationService} from '../../../services/notification.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-reservation-table',
@@ -14,7 +15,8 @@ export class ReservationTableComponent implements OnInit {
   loading = true;
 
   constructor(private gymReservationService: GymReservationService,
-              private notificationService: NotificationService) {}
+              private notificationService: NotificationService,
+              private cookiesService: CookieService) {}
 
   ngOnInit(): void {
     this.searchData();
@@ -23,7 +25,7 @@ export class ReservationTableComponent implements OnInit {
   searchData() {
     this.loading = true;
     this.gymReservationService
-      .getAllReservationsForSpecificUser(parseInt(sessionStorage.getItem('UserId'), 10))
+      .getAllReservationsForSpecificUser(parseInt(this.cookiesService.get('UserId'), 10))
       .subscribe(
         (res) => this.data = res,
         (err) => this.notificationService.createNotification('error', 'Reservations can\'t be loaded', err),

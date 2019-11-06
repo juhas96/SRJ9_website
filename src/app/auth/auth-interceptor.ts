@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import {TokenStorageService} from './token-storage.service';
+import {CookieService} from 'ngx-cookie-service';
 
 
 
@@ -10,13 +11,13 @@ const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (sessionStorage.getItem('AuthToken')) {
+    if (this.cookieService.get('AuthToken')) {
       req = req.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('AuthToken')
+          Authorization: 'Bearer ' + this.cookieService.get('AuthToken')
         }
       });
     }
