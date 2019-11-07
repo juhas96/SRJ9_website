@@ -15,10 +15,12 @@ export class SignUpComponent implements OnInit {
   signupInfo: SignupInfo;
   isSignedUp = false;
   isSignUpFailed = false;
+  isLoading = false;
   emailValidationPattern = '^[A-Za-z0-9._%+-]+@student.tuke.sk$';
 
   submitForm(): void {
     if (this.validateForm.valid) {
+      this.isLoading = true;
       // tslint:disable-next-line: forin
       for (const i in this.validateForm.controls) {
         this.validateForm.controls[i].markAsDirty();
@@ -35,6 +37,7 @@ export class SignUpComponent implements OnInit {
       this.authService.signUp(this.signupInfo).subscribe(
           data => {
             console.log(data);
+            this.isLoading = false;
             this.isSignedUp = true;
             this.isSignUpFailed = false;
             this.router.navigate(['/successfull-registration']);
@@ -45,10 +48,12 @@ export class SignUpComponent implements OnInit {
                   'Error while creating user account',
                   'User with same email address is already created.');
             }
+            this.isLoading = false;
             this.isSignUpFailed = true;
           }
       );
     } else {
+      this.isLoading = false;
       this.notificationService.createNotification('error',
           'Invalid formular', 'Sorry your form is invalid');
     }

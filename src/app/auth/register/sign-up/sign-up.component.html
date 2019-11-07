@@ -1,3 +1,4 @@
+<nz-spin [nzSpinning]="isLoading">
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
@@ -44,4 +45,5 @@
         <button [disabled]="validateForm.invalid" nz-button nzType="primary">Register</button>
       </nz-form-control>
     </nz-form-item>
-  </form>
+</form>
+</nz-spin>

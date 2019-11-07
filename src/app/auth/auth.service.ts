@@ -33,7 +33,7 @@ export class AuthService {
 
   isUserLoggedIn() {
     const user = this.cookieService.get('AuthUsername');
-    return !(user === null);
+    return !(user === '');
   }
 
   getUserAuthority() {

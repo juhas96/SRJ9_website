@@ -18,6 +18,7 @@ export class LogInComponent implements OnInit {
   roles: string[] = [];
   loginInfo: AuthLoginInfo;
   validateForm: FormGroup;
+  isLoading = false;
 
   constructor(private authService: AuthService,
               private tokenStorage: TokenStorageService,
@@ -36,6 +37,7 @@ export class LogInComponent implements OnInit {
       this.validateForm.get('userName').value,
       this.validateForm.get('password').value
     );
+    this.isLoading = true;
 
     this.authService.attemptAuth(this.loginInfo).subscribe(
       data => {
@@ -44,6 +46,7 @@ export class LogInComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveUserId(data.user_id);
 
+        this.isLoading = true;
         this.isLoginFailed = false;
         this.authService.setLoggedIn(true);
         this.roles = this.tokenStorage.getAuthorities();
@@ -54,7 +57,12 @@ export class LogInComponent implements OnInit {
           this.notificationService.createNotification('error',
               'Log In error',
               'Your username or password is not correct. Try again or contact page administrator');
+        } else if (error.status === 500) {
+          this.notificationService.createNotification('error',
+              'Log In Error',
+              'Your account is probably not authorized yet.');
         }
+        this.isLoading = true;
         this.isLoginFailed = true;
       }
     );
