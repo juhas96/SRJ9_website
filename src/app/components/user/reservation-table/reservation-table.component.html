@@ -18,9 +18,12 @@
             <td>{{ data.gym_number }}</td>
             <td>
                 <div nz-row nzType="flex" nzJustify="start">
-                    <button nz-button nzType="danger" class="table-button" (click)="deleteReservation(data.id, data)">
+                    <button nz-popconfirm nzPopconfirmTitle="Are you sure?" [nzIcon]="iconTpl" nz-button nzType="danger" class="table-button" (nzOnConfirm)="deleteReservation(data.id, data)">
                             <i nz-icon nzType="delete"></i> Delete
                     </button>
+                    <ng-template #iconTpl>
+                        <i nz-icon nzType="question-circle-o" style="color:red"></i>
+                    </ng-template>
                 </div>
             </td>
         </tr>

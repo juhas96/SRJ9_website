@@ -1,39 +1,40 @@
 <nz-spin [nzSpinning]="isSpinning">
   <nz-collapse nzAccordion>
-    <nz-collapse-panel nzHeader="Aktuálny týždeň" nzActive="true">
-
-      <nz-card class="cardTitle" nzTitle="{{sundayDateTable}} Nedeľa T1">
+    <nz-collapse-panel nzHeader="Current week" nzActive="true">
+      <nz-card class="cardTitle" nzTitle="{{sundayDateTable}} Sunday T1">
           <div *ngFor="let element of sundayArray | slice:0:4;">
               <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
                 (click)="showConfirm(element)">
                 {{element.time_from}} - {{element.time_until}}
                 <br>
-            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
               <div nz-card-grid  nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
                 {{element.time_from}} - {{element.time_until}}
                 <br>
-            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
               <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
                 {{element.time_from}} - {{element.time_until}}
                 <br>
-              <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
             </div>
-
-
       </nz-card>
+
       <br><br>
-      <nz-card nzTitle="{{tuesdayDateTable}} Utorok T1">
+
+      <nz-card nzTitle="{{tuesdayDateTable}} Tuesday T1">
         <div *ngFor="let element of tuesdayArray | slice:0:4;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
+            <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
           <div nz-card-grid  nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
+            <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
           <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
@@ -42,10 +43,11 @@
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
         </div>
-
       </nz-card>
+
       <br><br>
-      <nz-card nzTitle="{{tuesdayDateTable}} Utorok T2">
+
+      <nz-card nzTitle="{{tuesdayDateTable}} Tuesday T2">
         <div *ngFor="let element of tuesdayArray | slice:4:8;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -64,11 +66,11 @@
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
         </div>
-
       </nz-card>
 
       <br><br>
-      <nz-card nzTitle="{{thursdayDateTable}} Štvrtok T1">
+
+      <nz-card nzTitle="{{thursdayDateTable}} Thursday T1">
         <div *ngFor="let element of thursdayArray | slice:0:4;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -87,30 +89,34 @@
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
         </div>
-
       </nz-card>
+
       <br><br>
-      <nz-card nzTitle="{{thursdayDateTable}} Štvrtok T2">
+
+      <nz-card nzTitle="{{thursdayDateTable}} Thursday T2">
         <div  *ngFor="let element of thursdayArray | slice:4:8;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
           <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
           <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
         </div>
-
       </nz-card>
-
     </nz-collapse-panel>
 
-
-    <nz-collapse-panel nzHeader="Budúci týdeň" nzActive="false">
-      <nz-card nzTitle="{{nextSundayDateTable}} Nedeľa T1">
+    <nz-collapse-panel nzHeader="Next Week" nzActive="false">
+      <nz-card nzTitle="{{nextSundayDateTable}} Sunday T1">
         <div  *ngFor="let element of nextSundayArray | slice:0:4;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -129,10 +135,11 @@
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
         </div>
-
       </nz-card>
+
       <br><br>
-      <nz-card  nzTitle="{{nextTuesdayDateTable}} Utorok T1">
+
+      <nz-card  nzTitle="{{nextTuesdayDateTable}} Tuesday T1">
         <div *ngFor="let element of nextTuesdayArray | slice:0:4;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -152,8 +159,10 @@
           </div>
         </div>
       </nz-card>
+
       <br><br>
-      <nz-card nzTitle="{{nextTuesdayDateTable}} Utorok T2">
+
+      <nz-card nzTitle="{{nextTuesdayDateTable}} Tuesday T2">
         <div *ngFor="let element of nextTuesdayArray | slice:4:8;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -175,7 +184,8 @@
       </nz-card>
 
       <br><br>
-      <nz-card nzTitle="{{nextThursdayDateTable}} Štvrtok T1">
+
+      <nz-card nzTitle="{{nextThursdayDateTable}} Thursday T1">
         <div  *ngFor="let element of nextThursdayArray | slice:0:4;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -195,8 +205,10 @@
           </div>
         </div>
       </nz-card>
+
       <br><br>
-      <nz-card nzTitle="{{nextThursdayDateTable}} Štvrtok T2">
+
+      <nz-card nzTitle="{{nextThursdayDateTable}} Thursday T2">
         <div  *ngFor="let element of nextThursdayArray | slice:4:8;">
           <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
@@ -216,6 +228,5 @@
         </div>
       </nz-card>
     </nz-collapse-panel>
-
   </nz-collapse>
 </nz-spin>

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import { GymReservation } from 'src/app/model/gym.model';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
-import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
-import { DataService } from 'src/app/services/data.service';
 import {GymReservationComponent} from '../../../pages/gym-reservation/gym-reservation.component';
 import {NotificationService} from '../../../services/notification.service';
 
@@ -67,7 +65,11 @@ export class GymTableComponent implements OnInit {
           this.data = res;
           this.listOfDisplayData = this.data;
           },
-        (err) => console.log(err),
+        (err) => this.notificationService.createNotification(
+            'error',
+            'Cannot load data',
+            'Unexpected error happened ' + err.toLocaleString()
+        ),
         () => this.loading = false
       );
   }

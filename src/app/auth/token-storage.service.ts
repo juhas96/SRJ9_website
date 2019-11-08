@@ -66,7 +66,6 @@ export class TokenStorageService {
   public getParsedAuthorities() {
     if (this.getToken() && this.getUsername() !== '') {
       this.getAuthorities().forEach(role => {
-        console.log(role);
         if ( role === 'ROLE_ADMIN') {
           this.authorities = 'admin';
         } else {

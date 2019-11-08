@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgZorroAntdModule, NZ_I18N, sk_SK } from 'ng-zorro-antd';
+import {en_US, NgZorroAntdModule, NZ_I18N} from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,7 +63,7 @@ registerLocaleData(sk);
     NzModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: sk_SK },
+  providers: [{ provide: NZ_I18N, useValue: en_US },
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
               AuthService, AuthGuard, CookieService],
   bootstrap: [AppComponent],

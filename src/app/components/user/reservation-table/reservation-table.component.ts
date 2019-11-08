@@ -36,7 +36,6 @@ export class ReservationTableComponent implements OnInit {
   deleteReservation(id: number, gymReservation: GymReservation) {
     gymReservation.user = null;
     gymReservation.status = 'FREE';
-    console.log(gymReservation);
     this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
         () => {
           this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!');

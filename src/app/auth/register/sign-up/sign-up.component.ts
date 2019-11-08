@@ -35,8 +35,7 @@ export class SignUpComponent implements OnInit {
           this.validateForm.get('password').value);
 
       this.authService.signUp(this.signupInfo).subscribe(
-          data => {
-            console.log(data);
+          () => {
             this.isLoading = false;
             this.isSignedUp = true;
             this.isSignUpFailed = false;
