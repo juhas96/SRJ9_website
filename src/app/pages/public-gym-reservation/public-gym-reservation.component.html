@@ -1,0 +1,221 @@
+<nz-spin [nzSpinning]="isSpinning">
+    <nz-collapse nzAccordion>
+        <nz-collapse-panel nzHeader="{{txt.common.week}} {{sundayDateTable}} - {{thursdayDateTable}}" nzActive="true">
+            <nz-card class="cardTitle" nzTitle="{{sundayDateTable}} {{txt.days.sunday}} {{txt.gymTable.t1}}">
+                <div *ngFor="let element of sundayArray | slice:0:4;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+            <br><br>
+
+            <nz-card nzTitle="{{tuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t1}}">
+                <div *ngFor="let element of tuesdayArray | slice:0:4;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card nzTitle="{{tuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t2}}">
+                <div *ngFor="let element of tuesdayArray | slice:4:8;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card nzTitle="{{thursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t1}}">
+                <div *ngFor="let element of thursdayArray | slice:0:4;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card nzTitle="{{thursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t2}}">
+                <div  *ngFor="let element of thursdayArray | slice:4:8;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+        </nz-collapse-panel>
+
+        <nz-collapse-panel nzHeader="{{txt.common.week}} {{nextSundayDateTable}} - {{nextThursdayDateTable}}" nzActive="false">
+            <nz-card nzTitle="{{nextSundayDateTable}} {{txt.days.sunday}} {{txt.gymTable.t1}}">
+                <div  *ngFor="let element of nextSundayArray | slice:0:4;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card  nzTitle="{{nextTuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t1}}">
+                <div *ngFor="let element of nextTuesdayArray | slice:0:4;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}" *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card nzTitle="{{nextTuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t2}}">
+                <div *ngFor="let element of nextTuesdayArray | slice:4:8;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card nzTitle="{{nextThursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t1}}">
+                <div  *ngFor="let element of nextThursdayArray | slice:0:4;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+
+            <br><br>
+
+            <nz-card nzTitle="{{nextThursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t2}}">
+                <div  *ngFor="let element of nextThursdayArray | slice:4:8;">
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+                        {{element.time_from}} - {{element.time_until}}
+                        <br>
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                    <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+                        {{element.time_from}} - {{element.time_until}} :
+                        <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+                    </div>
+                </div>
+            </nz-card>
+        </nz-collapse-panel>
+    </nz-collapse>
+</nz-spin>
