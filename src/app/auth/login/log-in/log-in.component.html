@@ -4,28 +4,24 @@
 
 <form *ngIf="!getAuthService.isUserLoggedIn()" nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your username!">
-        <nz-input-group nzAddOnAfter="@student.tuke.sk" nzPrefixIcon="user">
-          <input type="text" nz-input formControlName="userName" placeholder="Username" />
+      <nz-form-control nzErrorTip="{{txt.errors.logInError}}">
+        <nz-input-group nzAddOnAfter="{{txt.logIn.postFixEmail}}" nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="userName" placeholder="{{txt.logIn.userNamePlaceholder}}" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your Password!">
+      <nz-form-control nzErrorTip="txt.errors.signUpError!">
         <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password" placeholder="Password" />
+          <input type="password" nz-input formControlName="password" placeholder="{{txt.common.passwordPlaceholder}}" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-control>
-<!--        <label nz-checkbox formControlName="remember">-->
-<!--          <span>Remember me</span>-->
-<!--        </label>-->
-<!--        <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>-->
-        <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
-        Or
-        <a routerLink="/signup">register now!</a>
+        <button nz-button class="login-form-button" [nzType]="'primary'">{{txt.common.logIn}}</button>
+        {{txt.logIn.or}}
+        <a routerLink="/signup">{{txt.common.register}}</a>
       </nz-form-control>
     </nz-form-item>
   </form>

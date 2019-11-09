@@ -4,6 +4,7 @@ import { AuthService } from '../../auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../../services/notification.service';
+import {text} from '../../../texts/constants';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,6 +18,7 @@ export class SignUpComponent implements OnInit {
   isSignUpFailed = false;
   isLoading = false;
   emailValidationPattern = '^[A-Za-z0-9._%+-]+@student.tuke.sk$';
+  txt = text;
 
   submitForm(): void {
     if (this.validateForm.valid) {
@@ -31,7 +33,7 @@ export class SignUpComponent implements OnInit {
           this.parseFirstNameFromEmail(this.validateForm.get('email').value),
           this.parseLastNameFromEmail(this.validateForm.get('email').value),
           this.parseUsernameFromEmail(this.validateForm.get('email').value),
-          this.validateForm.get('email').value,
+          this.validateForm.get('email').value + '@student.tuke.sk',
           this.validateForm.get('password').value);
 
       this.authService.signUp(this.signupInfo).subscribe(
@@ -44,8 +46,8 @@ export class SignUpComponent implements OnInit {
           error => {
             if (error.status === 400) {
               this.notificationService.createNotification('error',
-                  'Error while creating user account',
-                  'User with same email address is already created.');
+                  this.txt.errors.sameEmailAddressErrorTitle,
+                  this.txt.errors.sameEmailAddressErrorDesc);
             }
             this.isLoading = false;
             this.isSignUpFailed = true;
@@ -54,7 +56,7 @@ export class SignUpComponent implements OnInit {
     } else {
       this.isLoading = false;
       this.notificationService.createNotification('error',
-          'Invalid formular', 'Sorry your form is invalid');
+          this.txt.errors.invalidFormularTitle, this.txt.errors.invalidFormularDesc);
     }
   }
 

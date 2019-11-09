@@ -3,6 +3,7 @@ import { GymReservation } from 'src/app/model/gym.model';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import {NotificationService} from '../../../services/notification.service';
 import {CookieService} from 'ngx-cookie-service';
+import {text} from '../../../texts/constants';
 
 @Component({
   selector: 'app-reservation-table',
@@ -13,6 +14,7 @@ export class ReservationTableComponent implements OnInit {
 
   data: GymReservation[] = [];
   loading = true;
+  txt = text;
 
   constructor(private gymReservationService: GymReservationService,
               private notificationService: NotificationService,
@@ -38,7 +40,9 @@ export class ReservationTableComponent implements OnInit {
     gymReservation.status = 'FREE';
     this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
         () => {
-          this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!');
+          this.notificationService.createNotification('success',
+              this.txt.gymTable.reservationDeleted,
+              this.txt.gymTable.reservationDeletedDesc);
           this.searchData();
         },
         error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));

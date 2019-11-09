@@ -1,43 +1,70 @@
 <nz-spin [nzSpinning]="isSpinning">
   <nz-collapse nzAccordion>
-    <nz-collapse-panel nzHeader="Current week" nzActive="true">
-      <nz-card class="cardTitle" nzTitle="{{sundayDateTable}} Sunday T1">
+    <nz-collapse-panel nzHeader="{{txt.common.week}} {{sundayDateTable}} - {{thursdayDateTable}}" nzActive="true">
+      <nz-card class="cardTitle" nzTitle="{{sundayDateTable}} {{txt.days.sunday}} {{txt.gymTable.t1}}">
           <div *ngFor="let element of sundayArray | slice:0:4;">
-              <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
-                (click)="showConfirm(element)">
+              <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
+                   (click)="showConfirm(element)">
                 {{element.time_from}} - {{element.time_until}}
                 <br>
                 <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
-              <div nz-card-grid  nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+
+              <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
                 {{element.time_from}} - {{element.time_until}}
                 <br>
                 <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
-              <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+              <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+                   *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+                   class="reserved-same-id gridStyle"
+                  (nzOnConfirm)="deleteReservation(element.id, element)">
+                {{element.time_from}} - {{element.time_until}}
+                <br>
+                <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+                <ng-template #iconTpl>
+                  <i nz-icon nzType="question-circle-o" style="color:red"></i>
+                </ng-template>
+              </div>
+
+              <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
                 {{element.time_from}} - {{element.time_until}}
                 <br>
                 <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
             </div>
       </nz-card>
-
       <br><br>
 
-      <nz-card nzTitle="{{tuesdayDateTable}} Tuesday T1">
+      <nz-card nzTitle="{{tuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t1}}">
         <div *ngFor="let element of tuesdayArray | slice:0:4;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -47,20 +74,33 @@
 
       <br><br>
 
-      <nz-card nzTitle="{{tuesdayDateTable}} Tuesday T2">
+      <nz-card nzTitle="{{tuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t2}}">
         <div *ngFor="let element of tuesdayArray | slice:4:8;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -70,20 +110,33 @@
 
       <br><br>
 
-      <nz-card nzTitle="{{thursdayDateTable}} Thursday T1">
+      <nz-card nzTitle="{{thursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t1}}">
         <div *ngFor="let element of thursdayArray | slice:0:4;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -93,20 +146,33 @@
 
       <br><br>
 
-      <nz-card nzTitle="{{thursdayDateTable}} Thursday T2">
+      <nz-card nzTitle="{{thursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t2}}">
         <div  *ngFor="let element of thursdayArray | slice:4:8;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -115,21 +181,34 @@
       </nz-card>
     </nz-collapse-panel>
 
-    <nz-collapse-panel nzHeader="Next Week" nzActive="false">
-      <nz-card nzTitle="{{nextSundayDateTable}} Sunday T1">
+    <nz-collapse-panel nzHeader="{{txt.common.week}} {{nextSundayDateTable}} - {{nextThursdayDateTable}}" nzActive="false">
+      <nz-card nzTitle="{{nextSundayDateTable}} {{txt.days.sunday}} {{txt.gymTable.t1}}">
         <div  *ngFor="let element of nextSundayArray | slice:0:4;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -139,20 +218,33 @@
 
       <br><br>
 
-      <nz-card  nzTitle="{{nextTuesdayDateTable}} Tuesday T1">
+      <nz-card  nzTitle="{{nextTuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t1}}">
         <div *ngFor="let element of nextTuesdayArray | slice:0:4;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}" *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -162,20 +254,33 @@
 
       <br><br>
 
-      <nz-card nzTitle="{{nextTuesdayDateTable}} Tuesday T2">
+      <nz-card nzTitle="{{nextTuesdayDateTable}} {{txt.days.tuesday}} {{txt.gymTable.t2}}">
         <div *ngFor="let element of nextTuesdayArray | slice:4:8;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -185,20 +290,33 @@
 
       <br><br>
 
-      <nz-card nzTitle="{{nextThursdayDateTable}} Thursday T1">
+      <nz-card nzTitle="{{nextThursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t1}}">
         <div  *ngFor="let element of nextThursdayArray | slice:0:4;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
@@ -208,20 +326,33 @@
 
       <br><br>
 
-      <nz-card nzTitle="{{nextThursdayDateTable}} Thursday T2">
+      <nz-card nzTitle="{{nextThursdayDateTable}} {{txt.days.thursday}} {{txt.gymTable.t2}}">
         <div  *ngFor="let element of nextThursdayArray | slice:4:8;">
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Free reservation"   *ngIf="element.status=='FREE'" class="free gridStyle"
+          <div nz-card-grid nz-tooltip nzTooltipTitle="{{txt.gymTable.freeReservation}}"   *ngIf="element.status=='FREE'" class="free gridStyle"
             (click)="showConfirm(element)">
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid nz-tooltip nzTooltipTitle="Reserved reservation"   *ngIf="element.status=='RESERVED'" class="reserved gridStyle">
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="Closed reservation"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
+
+          <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
+               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               class="reserved-same-id gridStyle"
+               (nzOnConfirm)="deleteReservation(element.id, element)">
+            {{element.time_from}} - {{element.time_until}}
+            <br>
+            <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
+
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color:red"></i>
+            </ng-template>
+          </div>
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.closedReservation}}"   *ngIf="element.status=='CLOSED'" class="closed gridStyle" >
             {{element.time_from}} - {{element.time_until}} :
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>

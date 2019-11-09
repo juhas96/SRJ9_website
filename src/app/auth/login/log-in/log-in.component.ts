@@ -5,6 +5,7 @@ import { TokenStorageService } from '../../token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../../services/notification.service';
+import {text} from '../../../texts/constants';
 
 @Component({
   selector: 'app-log-in',
@@ -19,6 +20,7 @@ export class LogInComponent implements OnInit {
   loginInfo: AuthLoginInfo;
   validateForm: FormGroup;
   isLoading = false;
+  txt = text;
 
   constructor(private authService: AuthService,
               private tokenStorage: TokenStorageService,
@@ -55,12 +57,12 @@ export class LogInComponent implements OnInit {
       error => {
         if (error.status === 401) {
           this.notificationService.createNotification('error',
-              'Log In error',
-              'Your username or password is not correct. Try again or contact page administrator');
+              this.txt.errors.logInErrorTitle,
+              this.txt.errors.logInUsernameIsNotCorrect);
         } else if (error.status === 500) {
           this.notificationService.createNotification('error',
-              'Log In Error',
-              'Your account is probably not authorized yet.');
+              this.txt.errors.logInErrorTitle,
+              this.txt.errors.logInEmailIsNotAuthorized);
         }
         this.isLoading = true;
         this.isLoginFailed = true;

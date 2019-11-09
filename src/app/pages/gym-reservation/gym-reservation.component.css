@@ -13,6 +13,13 @@
     height: 100px!important;
 }
 
+.reserved-same-id {
+    background-color: red;
+    font-weight: bold;
+    font-size: 1.40em;
+    height: 100px!important;
+}
+
 .closed {
     background-color: gray;
     font-weight: bold;

@@ -4,11 +4,15 @@
     <ul *ngIf="!getAuthService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal">
         <li routerLink="/login" nz-menu-item>
             <i nz-icon nzType="login"></i>
-            <span>Log in</span>
+            <span>{{txt.common.logIn}}</span>
         </li>
         <li routerLink="/signup" nz-menu-item>
             <i nz-icon nzType="user-add"></i>
-            <span>Sign Up</span>
+            <span>{{txt.common.register}}</span>
+        </li>
+        <li routerLink="/public_reservations" nz-menu-item>
+<!--            <i nz-icon nzType="user-add"></i>-->
+            <span>{{txt.common.gymReservations}}</span>
         </li>
   
       </ul>
@@ -16,24 +20,24 @@
       <ul *ngIf="getAuthService.isUserLoggedIn()" nz-menu nzTheme="dark" nzMode="horizontal" >
           <li *ngIf="getAuthService.getUserAuthority()" routerLink="/admin/dashboard" nz-menu-item>
               <i nz-icon nzType="dashboard"></i>
-              <span>Dashboard</span>
+              <span>{{txt.common.dashboard}}</span>
           </li>
           <li routerLink="/gym_reservation" nz-menu-item >
             <i nz-icon nzType="dashboard"></i>
-            <span>Create Gym Reservation</span>
+            <span>{{txt.common.createGymReservation}}</span>
           </li>
           <li routerLink="/user-reservations" nz-menu-item >
             <i nz-icon nzType="dashboard"></i>
-            <span>My Reservations</span>
+            <span>{{txt.common.myReservations}}</span>
           </li>
           <li nz-menu-item (click)="getTokenStorage.signOut()">
             <i nz-icon nzType="logout"></i>
-            <span>Logout</span>
+            <span>{{txt.common.logOut}}</span>
           </li>
         </ul>
   </nz-header>
   <nz-content>
     <div class="inner-content"><router-outlet></router-outlet></div>
   </nz-content>
-  <nz-footer>SRJ9 ©2019 Created by Unknown</nz-footer>
+  <nz-footer>SRJ9 ©2019 Created by Jakub Juhás</nz-footer>
 </nz-layout>

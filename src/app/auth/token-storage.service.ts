@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {NotificationService} from '../services/notification.service';
 import {CookieService} from 'ngx-cookie-service';
+import {text} from '../texts/constants';
 
 const TOKEN_KEY = 'AuthToken';
 const USERNAME_KEY = 'AuthUsername';
@@ -13,6 +14,7 @@ const USER_ID = 'UserId';
 })
 export class TokenStorageService {
   private roles: Array<string> = [];
+  txt = text;
   authorities: string;
   constructor(private router: Router,
               private notificationService: NotificationService,
@@ -21,7 +23,7 @@ export class TokenStorageService {
   signOut() {
     this.cookieService.deleteAll();
     this.router.navigate(['/']);
-    this.notificationService.createNotification('success', 'Log Out', 'Your log out was successfull');
+    this.notificationService.createNotification('success', this.txt.common.logOutTitle, this.txt.common.logOutDesc);
   }
 
   public saveToken(token: string) {

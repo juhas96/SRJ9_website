@@ -4,13 +4,13 @@ import { SignUpComponent } from './auth/register/sign-up/sign-up.component';
 import { LogInComponent } from './auth/login/log-in/log-in.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { UserReservationsComponent } from './pages/user/user-reservations/user-reservations.component';
-import { MembersComponent } from './pages/members/members.component';
 import { GymReservationComponent } from './pages/gym-reservation/gym-reservation.component';
-import {AuthGuard} from './auth.guard';
-import {UnauthorizedComponent} from './pages/unauthorized/unauthorized.component';
-import {SuccessfullLoginComponent} from './pages/successfull-login/successfull-login.component';
-import {SuccessfullRegistrationComponent} from './pages/successfull-registration/successfull-registration.component';
-import {HomeComponent} from './pages/home/home.component';
+import { AuthGuard} from './auth.guard';
+import { UnauthorizedComponent} from './pages/unauthorized/unauthorized.component';
+import { SuccessfullLoginComponent} from './pages/successfull-login/successfull-login.component';
+import { SuccessfullRegistrationComponent} from './pages/successfull-registration/successfull-registration.component';
+import { HomeComponent} from './pages/home/home.component';
+import { PublicGymReservationComponent} from './pages/public-gym-reservation/public-gym-reservation.component';
 
 
 const routes: Routes = [
@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'welcome-page', component: SuccessfullLoginComponent, canActivate: [AuthGuard]},
   { path: 'successfull-registration', component: SuccessfullRegistrationComponent},
   { path: 'unauthorized', component: UnauthorizedComponent},
+  { path: 'public_reservations', component: PublicGymReservationComponent}
   // { path: 'home', component: HomeComponent}
   // { path: 'members', component: MembersComponent }
 ];

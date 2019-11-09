@@ -1,7 +1,7 @@
 <div id="main" *ngIf="!getAuthService.isUserLoggedIn()">
-        <nz-result nzTitle="Welcome to SRJ9 Website. If you want use our services you need to Log In">
+        <nz-result nzTitle="{{txt.common.welcomeText}}">
             <div nz-result-extra>
-                <button nz-button nzType="primary" routerLink="/login">Log In</button>
+                <button nz-button nzType="primary" routerLink="/login">{{txt.common.register}}</button>
             </div>
         </nz-result>
 </div>

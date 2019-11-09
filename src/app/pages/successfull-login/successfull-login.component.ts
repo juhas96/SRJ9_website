@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {text} from '../../texts/constants';
 
 @Component({
   selector: 'app-successfull-login',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./successfull-login.component.css']
 })
 export class SuccessfullLoginComponent implements OnInit {
+
+  txt = text;
 
   constructor() { }
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {en_US, NgZorroAntdModule, NZ_I18N} from 'ng-zorro-antd';
+import {en_US, NgZorroAntdModule, NZ_I18N, sk_SK} from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +30,7 @@ import { SuccessfullLoginComponent } from './pages/successfull-login/successfull
 import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
 import { SettingsComponent } from './pages/admin/settings/settings.component';
 import { CookieService } from 'ngx-cookie-service';
+import { PublicGymReservationComponent } from './pages/public-gym-reservation/public-gym-reservation.component';
 
 registerLocaleData(sk);
 
@@ -51,7 +52,8 @@ registerLocaleData(sk);
     UnauthorizedComponent,
     SuccessfullLoginComponent,
     SuccessfullRegistrationComponent,
-    SettingsComponent
+    SettingsComponent,
+    PublicGymReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,7 @@ registerLocaleData(sk);
     NzModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US },
+  providers: [{ provide: NZ_I18N, useValue: sk_SK },
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
               AuthService, AuthGuard, CookieService],
   bootstrap: [AppComponent],
