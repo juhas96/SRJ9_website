@@ -132,12 +132,12 @@ export class GymReservationComponent implements OnInit {
   }
 
   // this function returns specific date format in string by given day of week (e.g. for day=0 it returns current sunday, 7 for next sunday)
-  setReservationDate(day: number): string{
+  setReservationDate(day: number): string {
     return  moment().day(day).hour(1).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000');
   }
 
   // this function returns specific date format in string for tables by gjven day of week (e.g. 0 for sunday, 7 for next sunday)
-  setTableDate(day: number): string{
+  setTableDate(day: number): string {
     return moment().day(day).format('DD.MM.YYYY');
   }
 
