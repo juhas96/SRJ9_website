@@ -24,13 +24,12 @@ export class EditGymReservationComponent implements OnInit {
     });
   }
 
-  
+
   validateForm: FormGroup;
   reservationForEdit: GymReservation;
 
   ngOnInit(): void {
     this.data.currentReservation.subscribe(reservation => this.reservationForEdit = reservation);
-    console.log(this.reservationForEdit);
   }
 
   submitForm(value: any): void {

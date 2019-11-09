@@ -1,1 +1,11 @@
-<p>home works!</p>
+<div id="main" *ngIf="!getAuthService.isUserLoggedIn()">
+        <nz-result nzTitle="{{txt.common.welcomeText}}">
+            <div nz-result-extra>
+                <button nz-button nzType="primary" routerLink="/login">{{txt.common.register}}</button>
+            </div>
+        </nz-result>
+</div>
+
+<div *ngIf="getAuthService.isUserLoggedIn()">
+    <app-successfull-login></app-successfull-login>
+</div>

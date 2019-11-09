@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import { GymReservation } from 'src/app/model/gym.model';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
-import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
-import { DataService } from 'src/app/services/data.service';
+import {GymReservationComponent} from '../../../pages/gym-reservation/gym-reservation.component';
+import {NotificationService} from '../../../services/notification.service';
+import {text} from '../../../texts/constants';
 
 
 @Component({
@@ -13,22 +14,24 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class GymTableComponent implements OnInit {
 
-  tplModal: NzModalRef;
-  htmlModalVisible = false;
   searchValue = '';
   data: GymReservation[] = [];
   reservationForEdit: GymReservation;
+  listOfDisplayData: GymReservation[] = [];
   loading = true;
   sortName: string | null = null;
   sortValue: string | null = null;
-  listOfFilterAddress = [{ text: 'London', value: 'London' }, { text: 'Sidney', value: 'Sidney' }];
-  listOfSearchAddress: string[] = [];
+  listOfAvailableGyms = [{ text: 'T1', value: '1' }, { text: 'T2', value: '2' }];
+  selectedGymNumber: string;
+  txt = text;
 
-  constructor(private gymReservationService: GymReservationService, private modalService: NzModalService, private dataService: DataService){}
+  constructor(private gymReservationService: GymReservationService,
+              private modalService: NzModalService,
+              private notificationService: NotificationService) {}
 
   reset(): void {
     this.searchValue = '';
-    this.search();
+    this.listOfDisplayData = this.data;
   }
 
   sort(sortName: string, value: string): void {
@@ -37,38 +40,22 @@ export class GymTableComponent implements OnInit {
     this.search();
   }
 
-  filterAddressChange(value: string[]): void {
-    this.listOfSearchAddress = value;
-    this.search();
+  filterGymChange(value: string): void {
+    this.selectedGymNumber = value;
+    this.filterData();
   }
 
   search(): void {
-    const filterFunc = (item: { name: string; age: number; address: string }) => {
-      return (
-        (this.listOfSearchAddress.length
-          ? this.listOfSearchAddress.some(address => item.address.indexOf(address) !== -1)
-          : true) && item.name.indexOf(this.searchValue) !== -1
-      );
-    };
-    // const data = this.listOfData.filter((item: { name: string; age: number; address: string }) => filterFunc(item));
-    // this.listOfDisplayData = data.sort((a, b) =>
-    //   this.sortValue === 'ascend'
-    //     ? a[this.sortName!] > b[this.sortName!]
-    //       ? 1
-    //       : -1
-    //     : b[this.sortName!] > a[this.sortName!]
-    //     ? 1
-    //     : -1
-    // );
+      this.listOfDisplayData = this.data.filter(reservation => reservation.user &&
+                                                reservation.user.email === this.searchValue + '@student.tuke.sk');
   }
 
-  editReservation() {
-    console.log('edit');
+  filterData() {
+      this.listOfDisplayData = this.data.filter(reservation => reservation.gym_number.toString() === this.selectedGymNumber);
   }
 
   ngOnInit(): void {
     this.searchData();
-    
   }
 
   searchData() {
@@ -76,39 +63,43 @@ export class GymTableComponent implements OnInit {
     this.gymReservationService
       .getReservations()
       .subscribe(
-        (res) => this.data = res,
-        (err) => console.log(err),
+        (res) => {
+          this.data = res;
+          this.listOfDisplayData = this.data;
+          },
+        (err) => this.notificationService.createNotification(
+            'error',
+            'Cannot load data',
+            'Unexpected error happened ' + err.toLocaleString()
+        ),
         () => this.loading = false
       );
   }
 
-  createComponentModal(id: number): void {
-    this.reservationForEdit = this.data.find(item => item.id === id);
-    this.dataService.changeReservation(this.reservationForEdit);
-    console.log(this.reservationForEdit);
-    const modal = this.modalService.create({
+  createComponentModal(): void {
+    this.modalService.create({
       nzTitle: 'Modal Title',
-      nzContent: EditGymReservationComponent,
+      nzContent: GymReservationComponent,
       nzWrapClassName: 'vertical-center-modal',
-      // nzComponentParams: {
-      //   title: 'title in component',
-      //   subtitle: 'component sub title，will be changed after 2 sec'
-      // },
-      // nzFooter: [
-      //   {
-      //     label: 'change component title from outside',
-      //     onClick: componentInstance => {
-      //       componentInstance!.title = 'title in inner component is changed';
-      //     }
-      //   }
-      // ]
+      nzWidth: '80%'
     });
   }
 
-  deleteReservation(id: number) {
-    console.log('prislo id: ' + id);
-    this.gymReservationService.deleteGymReservation(id).subscribe();
-    // const itemIndex = this.data.findIndex(obj => obj[idColumn] === id);
-    // this.data.splice(itemIndex, 1);
+  deleteReservation(id: number, gymReservation: GymReservation) {
+    gymReservation.user = null;
+    gymReservation.status = 'FREE';
+    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
+        () => this.notificationService.createNotification('success',
+            this.txt.gymTable.reservationDeleted,
+            this.txt.gymTable.reservationDeletedDesc),
+        error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
+  }
+
+  parseNameFromEmail(reservation: GymReservation): string {
+      if (reservation.user) {
+          return reservation.user.email.slice(0, reservation.user.email.indexOf('@'));
+      } else {
+          return '';
+      }
   }
 }

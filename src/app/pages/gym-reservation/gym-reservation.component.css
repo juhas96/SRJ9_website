@@ -2,6 +2,7 @@
     background-color: #85bb65;
     font-weight: bold;
     font-size: 1.40em;
+    height: 100px!important;
 }
 
 .reserved{
@@ -9,9 +10,30 @@
     font-weight: bold;
     font-size: 1.40em;
     cursor: default;
+    height: 100px!important;
+}
+
+.reserved-same-id {
+    background-color: red;
+    font-weight: bold;
+    font-size: 1.40em;
+    height: 100px!important;
+}
+
+.closed {
+    background-color: gray;
+    font-weight: bold;
+    font-size: 1.40em;
+    cursor: default;
+    height: 100px!important;
 }
 
 .gridStyle{
     width: 25%;
     text-align: center;
+}
+
+.nz-card-grid:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+    transition: 0.2s ease-in-out;
 }

@@ -1,41 +1,31 @@
 <nz-table #nzTable [nzData]="data" [nzFrontPagination]="true" [nzPageSize]="5" [nzLoading]="loading">
     <thead>
         <tr>
-        <th>Date</th>
-        <th>Reservation Number</th>
-        <th>Time From</th>
-        <th>Time Until</th>
-        <th>Status</th>
-        <th>Gym Number</th>
+            <th>{{txt.gymTable.date}}</th>
+            <th>{{txt.gymTable.timeFrom}}</th>
+            <th>{{txt.gymTable.timeUntil}}</th>
+            <th>{{txt.gymTable.status}}</th>
+            <th>{{txt.gymTable.gymNumber}}</th>
+            <th>{{txt.gymTable.deleteReservation}}</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let data of nzTable.data">
-        <td>{{ data.date | date }}</td>
-        <td>{{ data.reservation_number }}</td>
-        <td>{{ data.time_from | date: 'HH:mm'}}</td>
-        <td>{{ data.time_until | date: 'HH:mm' }}</td>
-        <td>{{ data.status }}</td>
-        <td>{{ data.gym_number }}</td>
-        <!-- <td>
-            <div nz-row nzType="flex" nzJustify="start">
-                <button nz-button nzType="primary" class="table-button" (click)="createComponentModal(data.id)">
-                    <i nz-icon nzType="edit"></i> Edit
-                </button>
-                <button nz-button nzType="danger" class="table-button" (click)="deleteReservation(data.id)">
-                        <i nz-icon nzType="delete"></i> Delete
-                </button>
-            </div>
-        </td> -->
+            <td>{{ data.date | date }}</td>
+            <td>{{ data.time_from}}</td>
+            <td>{{ data.time_until}}</td>
+            <td>{{ data.status }}</td>
+            <td>{{ data.gym_number }}</td>
+            <td>
+                <div nz-row nzType="flex" nzJustify="start">
+                    <button nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-button nzType="danger" class="table-button" (nzOnConfirm)="deleteReservation(data.id, data)">
+                            <i nz-icon nzType="delete"></i>{{txt.common.delete}}
+                    </button>
+                    <ng-template #iconTpl>
+                        <i nz-icon nzType="question-circle-o" style="color:red"></i>
+                    </ng-template>
+                </div>
+            </td>
         </tr>
     </tbody>
-    </nz-table>
-    <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
-    <div class="search-box">
-        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
-        Search
-        </button>
-        <button nz-button nzSize="small" (click)="reset()">Reset</button>
-    </div>
-    </nz-dropdown-menu> -->
+</nz-table>

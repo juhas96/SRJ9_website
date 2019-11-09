@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import { GymReservation } from 'src/app/model/gym.model';
-import { filter } from 'rxjs/operators'
-import * as moment from 'moment'
+import { filter } from 'rxjs/operators';
+import * as moment from 'moment';
 import { NzModalService } from 'ng-zorro-antd';
 import { User } from 'src/app/model/user.model';
+import {NotificationService} from '../../services/notification.service';
+import {UserService} from '../../services/user.service';
+import {CookieService} from 'ngx-cookie-service';
+import {text} from '../../texts/constants';
 
 
 @Component({
@@ -14,97 +18,126 @@ import { User } from 'src/app/model/user.model';
 })
 export class GymReservationComponent implements OnInit {
 
-  /* gridStyle = {
-    width: '25%',
-    textAlign: 'center'
-  }; */
-
-
+  // variable for loading spinner
+  isSpinning = false;
 
   // dates and arrays for current sunday and next sunday
-  sundayDate = moment().day(0).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // zero for sunday
-  nextSundayDate = moment().day(7).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // seven (0+7) for next sunday
-  sundayDateTable = moment().day(0).format("DD.MM.YYYY") // variable for writing sunday date in table e.g. 20.10.2010
-  nextSundayDateTable = moment().day(7).format("DD.MM.YYYY")
-  sundayArray: GymReservation[]
-  nextSundayArray: GymReservation[]
+  sundayDate = (moment().day() === 5 || moment().day() === 6) ? this.setReservationDate(7) : this.setReservationDate(0);
+  nextSundayDate = (moment().day() === 5 || moment().day() === 6) ? this.setReservationDate(14) : this.setReservationDate(7);
+  sundayDateTable = (moment().day() === 5 || moment().day() === 6) ? this.setTableDate(7) : this.setTableDate(0);
+  nextSundayDateTable = (moment().day() === 5 || moment().day() === 6) ? this.setTableDate(14) : this.setTableDate(7);
+  sundayArray: GymReservation[];
+  nextSundayArray: GymReservation[];
 
-  tuesdayDate = moment().day(2).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // two for tuesay
-  nextTuesdayDate = moment().day(9).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // nine (2+7) for next tuesday
-  tuesdayDateTable = moment().day(2).format("DD.MM.YYYY")
-  nextTuesdayDateTable = moment().day(9).format("DD.MM.YYYY")
-  tuesdayArray: GymReservation[]
-  nextTuesdayArray: GymReservation[]
+  tuesdayDate = (moment().day() === 5 || moment().day() === 6) ? this.setReservationDate(9) : this.setReservationDate(2);
+  nextTuesdayDate = (moment().day() === 5 || moment().day() === 6) ? this.setReservationDate(16) : this.setReservationDate(9);
+  tuesdayDateTable = (moment().day() === 5 || moment().day() === 6) ? this.setTableDate(9) : this.setTableDate(2);
+  nextTuesdayDateTable = (moment().day() === 5 || moment().day() === 6) ? this.setTableDate(16) : this.setTableDate(9);
+  tuesdayArray: GymReservation[];
+  nextTuesdayArray: GymReservation[];
 
-  thursdayDate = moment().day(4).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // four for thursday
-  nextThursdayDate = moment().day(11).hour(1).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000") // eleven (4+7) for next thursday
-  thursdayDateTable = moment().day(4).format("DD.MM.YYYY") 
-  nextThursdayDateTable = moment().day(11).format("DD.MM.YYYY")
-  thursdayArray: GymReservation[]
-  nextThursdayArray: GymReservation[] 
+  thursdayDate = (moment().day() === 5 || moment().day() === 6) ? this.setReservationDate(11) : this.setReservationDate(4);
+  nextThursdayDate = (moment().day() === 5 || moment().day() === 6) ? this.setReservationDate(18) : this.setReservationDate(11);
+  thursdayDateTable = (moment().day() === 5 || moment().day() === 6) ? this.setTableDate(11) : this.setTableDate(4);
+  nextThursdayDateTable = (moment().day() === 5 || moment().day() === 6) ? this.setTableDate(18) : this.setTableDate(11);
+  thursdayArray: GymReservation[];
+  nextThursdayArray: GymReservation[];
 
-  reservation: GymReservation
-  
+  reservation: GymReservation;
+  txt = text;
 
-
-
-  
-
-  constructor(private gymService: GymReservationService, private modalService: NzModalService) {
+  constructor(private gymService: GymReservationService,
+              private modalService: NzModalService,
+              private notificationService: NotificationService,
+              private userService: UserService,
+              private cookiesService: CookieService) {
    }
 
   ngOnInit() {
-
     this.gymService.getReservations().subscribe(data => {
-      this.sundayArray = data.filter(value=>value.date==this.sundayDate)
-      this.nextSundayArray = data.filter(value=>value.date==this.nextSundayDate)
-      this.sundayArray.sort( (a,b)=>a.id-b.id)
-      
-      this.tuesdayArray = data.filter(value=>value.date==this.tuesdayDate)
-      this.nextTuesdayArray = data.filter(value=>value.date==this.nextTuesdayDate)
-      console.log("utorok datum je " + this.nextTuesdayDate)
-      console.log(this.tuesdayArray)
-      this.thursdayArray = data.filter(value=>value.date==this.thursdayDate)
-      this.nextThursdayArray = data.filter(value=>value.date==this.nextThursdayDate)
-      console.log("stvrtok datum - "+ this.nextThursdayDate)
-      console.log(this.nextThursdayArray)
+      this.sundayArray = data.filter(value => value.date === this.sundayDate);
+      this.nextSundayArray = data.filter(value => value.date === this.nextSundayDate);
 
-      console.log("toto je userid " + sessionStorage.getItem("UserId"))
-      
-    })
+      this.tuesdayArray = data.filter(value => value.date === this.tuesdayDate);
+      this.nextTuesdayArray = data.filter(value => value.date === this.nextTuesdayDate);
 
-    console.log(moment().day(0).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //0 pre nedelu
-    console.log(moment().day(2).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //2 pre utorok
-    console.log(moment().day(4).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //4 pre stvrtok
-
-    console.log(moment().day(7).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //7 pre buducu nedelu
-    console.log(moment().day(9).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //9 pre buduci utorok
-    console.log(moment().day(11).hour(0).minute(0).second(0).millisecond(0).format("YYYY-MM-DDTHH:mm:ss.SSS+0000")) //11 pre buduci stvrtok
+      this.thursdayArray = data.filter(value => value.date === this.thursdayDate);
+      this.nextThursdayArray = data.filter(value => value.date === this.nextThursdayDate);
+    });
   }
 
 
   showConfirm(reservation: GymReservation): void {
-    //this.reservation=reservation
     this.modalService.confirm({
-      nzTitle: '<i>Do you really want to reserve this reservation ?</i>',
-      //nzContent: '<b>Some descriptions</b>',
-      nzCancelText: "Cancel",
-      nzOkText: "Yes",
+      nzTitle: this.txt.gymTable.reservationConfirm,
+      nzCancelText: this.txt.common.cancel,
+      nzOkText: this.txt.common.yes,
       nzOnOk: () => {
-        console.log('OK')
-        this.reservation = reservation
-        
-        this.reservation.status = "RESERVED";
-        var user: User = new User()
+        this.isSpinning = true;
+        this.reservation = reservation;
 
-        
-        user.id = +sessionStorage.getItem("UserId");
+        this.reservation.status = 'RESERVED';
+        const user: User = new User();
         this.reservation.user = user;
 
-        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(value => console.log(value))
-        
+        user.id = +this.cookiesService.get('UserId');
+        this.userService.getSingleUser(user.id).subscribe(
+            (val: User) => {
+              this.reservation.user = val;
+            });
+
+        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(
+            () => {},
+            (err) => {
+              if (err.status === 400) {
+                this.isSpinning = false;
+                this.notificationService.createNotification('error',
+                    this.txt.errors.tooManyReservationsErrorTitle,
+                    this.txt.errors.tooManyReservationsErrorDesc);
+                this.reservation.status = 'FREE';
+                this.reservation.user = null;
+              } else {
+                this.isSpinning = false;
+                this.notificationService.createNotification('error',
+                    this.txt.errors.error,
+                    this.txt.errors.cannotCreateReservationError);
+                this.reservation.status = 'FREE';
+                this.reservation.user = null;
+              }
+            },
+            () => {
+              this.notificationService.createNotification('success', this.txt.common.reserved, this.txt.common.succReservation);
+              this.isSpinning = false;
+            }
+        );
       }
-      }); 
+      });
+  }
+
+  deleteReservation(id: number, gymReservation: GymReservation) {
+    gymReservation.user = null;
+    gymReservation.status = 'FREE';
+    this.gymService.updateGymReservation(id, gymReservation).subscribe(
+        () => this.notificationService.createNotification('success',
+            this.txt.gymTable.reservationDeleted,
+            this.txt.gymTable.reservationDeletedDesc),
+        error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
+  }
+
+  parseUsernameFromEmail(email: string) {
+    if (email) {
+      return email.substring(0, email.indexOf('@'));
+    }
+  }
+
+  // this function returns specific date format in string by given day of week (e.g. for day=0 it returns current sunday, 7 for next sunday)
+  setReservationDate(day: number): string {
+    return  moment().day(day).hour(1).minute(0).second(0).millisecond(0).format('YYYY-MM-DDTHH:mm:ss.SSS+0000');
+  }
+
+  // this function returns specific date format in string for tables by gjven day of week (e.g. 0 for sunday, 7 for next sunday)
+  setTableDate(day: number): string {
+    return moment().day(day).format('DD.MM.YYYY');
   }
 
 

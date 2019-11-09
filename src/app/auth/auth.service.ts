@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {JwtResponse} from './jwt-response';
 import {AuthLoginInfo} from './login-info';
 import {SignupInfo} from './signup-info';
+import {TokenStorageService} from './token-storage.service';
+import {CookieService} from 'ngx-cookie-service';
 
 
 const httpOptions = {
@@ -16,19 +18,26 @@ const httpOptions = {
 export class AuthService {
 
   private loggedInStatus = false;
+  private roles;
 
   private loginUrl = 'http://147.232.191.144:8087/api/auth/signin';
   private signupUrl = 'http://147.232.191.144:8087/api/auth/signup';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private cookieService: CookieService) {
   }
 
   setLoggedIn(value: boolean) {
     this.loggedInStatus = value;
   }
 
-  get isLoggedIn(): boolean {
-    return this.loggedInStatus;
+  isUserLoggedIn() {
+    const user = this.cookieService.get('AuthUsername');
+    return !(user === '');
+  }
+
+  getUserAuthority() {
+    return this.cookieService.get('AuthAuthorities') === '[{"authority":"ROLE_ADMIN"}]';
   }
 
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {

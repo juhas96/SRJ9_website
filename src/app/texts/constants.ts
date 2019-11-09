@@ -1,6 +1,84 @@
 export const text = {
+
+    common: {
+        passwordPlaceholder: 'Heslo',
+        delete: 'Vymazať',
+        search: 'Hľadať',
+        reset: 'Resetovať',
+        week: 'Týždeň',
+        welcomeText: 'Vitajte na stránke Študentskej rady Jedlíková 9. Ak chcete využiť naše služby musíte sa zaregistrovať / prihlásiť',
+        register: 'Registrovať',
+        goToReservSystem: 'Rezervačný systém telocviční',
+        logIn: 'Prihlásiť sa',
+        gymReservations: 'Rezervácie telocviční',
+        createGymReservation: 'Vytvoriť rezerváciu na telocvičňu',
+        myReservations: 'Moje rezervácie',
+        logOut: 'Odhlásiť sa',
+        dashboard: 'Admin rezervácie',
+        yes: 'Áno',
+        cancel: 'Nie',
+        reserved: 'Rezervované',
+        succReservation: 'Rezervácia bola vytvorená',
+        logOutTitle: 'Odhlásenie',
+        logOutDesc: 'Odhlásenie bolo úspešné',
+    },
+    days: {
+        sunday: 'Nedeľa',
+        tuesday: 'Utorok',
+        thursday: 'Štvrtok',
+    },
     errors: {
-      network: 'Error connecting to API'
+        network: 'Error connecting to API',
+        sameEmailAddressErrorDesc: 'Účet s rovnakým emailom už bol vytvorený',
+        sameEmailAddressErrorTitle: 'Error počas registrácie',
+        logInErrorTitle: 'Error počas prihlásenia',
+        logInUsernameIsNotCorrect: 'Tvoje prihlasovacie meno alebo heslo je nesprávne. Vyskúšaj znova alebo kontaktuj administrátora.',
+        logInEmailIsNotAuthorized: 'Tvoj email pravdepodobne nebol potvrdený. Prosím potvrď svoj e-mail pred prihlásením.',
+        invalidFormularTitle: 'Formulár nie je validný',
+        invalidFormularDesc: 'Nie je možné pokračovať, formulár nie je validný',
+        logInError: 'Prosím zadaj tvoj login!',
+        passwordError: 'Prosím zadaj heslo!',
+        emailFormatError: 'Email musí mať formát meno.priezvisko@student.tuke.sk',
+        passwordNumberOfCharactersError: 'Heslo musí mať aspoň 6 znakov',
+        passwordAreNotSameError: 'Heslá sa nezhodujú',
+        unauthorizedTextError: 'Prepáčte, pre túto stránku nie ste autorizovaný.',
+        tooManyReservationsErrorTitle: 'Prekročený limit rezervácii',
+        tooManyReservationsErrorDesc: 'Maximálny počet rezervácii na jedného používateľa je 2',
+        error: 'Error',
+        cannotCreateReservationError: 'Rezervácia nemôže byť vytvorená',
+    },
+    api: {
+        baseUrl: 'localhost:8087/'
+    },
+    logIn: {
+        or: 'Alebo',
+        register: 'sa zaregistruj!',
+        userNamePlaceholder: 'meno.priezvisko',
+        postFixEmail: '@student.tuke.sk',
+        successfulLogin: 'Vaše prihlásenie bolo úspešné. Môžete využiť rezervácie telocviční kliknutím na tlačidlo nižšie.'
+    },
+    signUp: {
+        email: 'E-mail',
+        repeatPassword: 'Potvrdenie hesla',
+        successfulRegistration: 'Vaša registrácia bola úspešná. Pred prihlásenim si prosím potvrdite Váš EMAIL'
+    },
+    gymTable: {
+        date: 'Dátum',
+        timeFrom: 'Čas od',
+        timeUntil: 'Čas do',
+        status: 'Stav',
+        gymNumber: 'Čislo telocvične',
+        actions: 'Akcie',
+        searchPlaceholder: 'Hľadať meno',
+        deleteReservation: 'Vymazať rezerváciu',
+        deleteToolTip: 'Určite chcete zrušiť rezerváciu?',
+        t1: 'T1',
+        t2: 'T2',
+        freeReservation: 'Voľná rezervácia',
+        reservedReservation: 'Obsadená rezervácia',
+        closedReservation: 'Uzavretá rezervácia',
+        reservationConfirm: 'Naozaj chcete rezervovať?',
+        reservationDeleted: 'Rezervácia zrušená',
+        reservationDeletedDesc: 'Zrušenie rezervácie bolo úspešné',
     }
-  };
-  
+};

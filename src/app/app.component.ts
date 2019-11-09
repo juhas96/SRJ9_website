@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './auth/token-storage.service';
+import {AuthService} from './auth/auth.service';
+import {text} from './texts/constants';
 
 @Component({
   selector: 'app-root',
@@ -9,22 +11,23 @@ import { TokenStorageService } from './auth/token-storage.service';
 export class AppComponent implements OnInit {
   title = 'SRJ-Ant-Design';
 
+  txt = text;
+
+
   private roles: string[];
   private authority: string;
 
-  constructor(private tokenStorage: TokenStorageService) {}
+  constructor(private tokenStorage: TokenStorageService, private authService: AuthService) {
+  }
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      this.roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          this.authority = 'admin';
-          return false;
-        }
-        this.authority = 'user';
-        return true;
-      });
-    }
+  }
+
+  get getTokenStorage() {
+    return this.tokenStorage;
+  }
+
+  get getAuthService() {
+    return this.authService;
   }
 }

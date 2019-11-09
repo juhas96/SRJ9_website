@@ -3,6 +3,9 @@ import { AuthLoginInfo } from '../../login-info';
 import { AuthService } from '../../auth.service';
 import { TokenStorageService } from '../../token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
+import {NotificationService} from '../../../services/notification.service';
+import {text} from '../../../texts/constants';
 
 @Component({
   selector: 'app-log-in',
@@ -16,8 +19,14 @@ export class LogInComponent implements OnInit {
   roles: string[] = [];
   loginInfo: AuthLoginInfo;
   validateForm: FormGroup;
+  isLoading = false;
+  txt = text;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private fb: FormBuilder) { }
+  constructor(private authService: AuthService,
+              private tokenStorage: TokenStorageService,
+              private fb: FormBuilder,
+              private router: Router,
+              private notificationService: NotificationService) { }
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -29,7 +38,8 @@ export class LogInComponent implements OnInit {
     this.loginInfo = new AuthLoginInfo(
       this.validateForm.get('userName').value,
       this.validateForm.get('password').value
-    )
+    );
+    this.isLoading = true;
 
     this.authService.attemptAuth(this.loginInfo).subscribe(
       data => {
@@ -38,13 +48,23 @@ export class LogInComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveUserId(data.user_id);
 
+        this.isLoading = true;
         this.isLoginFailed = false;
         this.authService.setLoggedIn(true);
         this.roles = this.tokenStorage.getAuthorities();
-        this.reloadPage();
+        this.router.navigate(['/welcome-page']);
       },
       error => {
-        console.log(error);
+        if (error.status === 401) {
+          this.notificationService.createNotification('error',
+              this.txt.errors.logInErrorTitle,
+              this.txt.errors.logInUsernameIsNotCorrect);
+        } else if (error.status === 500) {
+          this.notificationService.createNotification('error',
+              this.txt.errors.logInErrorTitle,
+              this.txt.errors.logInEmailIsNotAuthorized);
+        }
+        this.isLoading = true;
         this.isLoginFailed = true;
       }
     );
@@ -53,6 +73,7 @@ export class LogInComponent implements OnInit {
 
 
   ngOnInit() {
+
     if (this.tokenStorage.getToken()) {
       this.authService.setLoggedIn(true);
       this.roles = this.tokenStorage.getAuthorities();
@@ -63,8 +84,10 @@ export class LogInComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [true]
     });
+  }
 
-
+  get getAuthService() {
+    return this.authService;
   }
 
   reloadPage() {
