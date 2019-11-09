@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {text} from '../../texts/constants';
 
 @Component({
   selector: 'app-unauthorized',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./unauthorized.component.css']
 })
 export class UnauthorizedComponent implements OnInit {
+
+  txt = text;
 
   constructor() { }
 

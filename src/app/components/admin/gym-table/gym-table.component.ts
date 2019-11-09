@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import { GymReservation } from 'src/app/model/gym.model';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
-import { EditGymReservationComponent } from '../edit-gym-reservation/edit-gym-reservation.component';
-import { DataService } from 'src/app/services/data.service';
 import {GymReservationComponent} from '../../../pages/gym-reservation/gym-reservation.component';
 import {NotificationService} from '../../../services/notification.service';
+import {text} from '../../../texts/constants';
 
 
 @Component({
@@ -24,6 +23,7 @@ export class GymTableComponent implements OnInit {
   sortValue: string | null = null;
   listOfAvailableGyms = [{ text: 'T1', value: '1' }, { text: 'T2', value: '2' }];
   selectedGymNumber: string;
+  txt = text;
 
   constructor(private gymReservationService: GymReservationService,
               private modalService: NzModalService,
@@ -63,8 +63,15 @@ export class GymTableComponent implements OnInit {
     this.gymReservationService
       .getReservations()
       .subscribe(
-        (res) => {this.data = res; this.listOfDisplayData = this.data; },
-        (err) => console.log(err),
+        (res) => {
+          this.data = res;
+          this.listOfDisplayData = this.data;
+          },
+        (err) => this.notificationService.createNotification(
+            'error',
+            'Cannot load data',
+            'Unexpected error happened ' + err.toLocaleString()
+        ),
         () => this.loading = false
       );
   }
@@ -82,7 +89,9 @@ export class GymTableComponent implements OnInit {
     gymReservation.user = null;
     gymReservation.status = 'FREE';
     this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
-        () => this.notificationService.createNotification('success', 'Reservation deleted', 'Reservation was successfully deleted!'),
+        () => this.notificationService.createNotification('success',
+            this.txt.gymTable.reservationDeleted,
+            this.txt.gymTable.reservationDeletedDesc),
         error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
   }
 

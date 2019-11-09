@@ -1,5 +1,5 @@
-<nz-result [nzIcon]="'smile-twotone'" [nzTitle]="'Great, your login was successfull. Now you can use our reservation system.'">
+<nz-result [nzIcon]="'smile-twotone'" nzTitle="{{txt.logIn.successfulLogin}}">
     <div nz-result-extra>
-        <button nz-button nzType="primary" routerLink="/gym_reservation">Go to reservation system</button>
+        <button nz-button nzType="primary" routerLink="/gym_reservation">{{txt.common.goToReservSystem}}</button>
     </div>
 </nz-result>

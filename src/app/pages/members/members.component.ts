@@ -15,8 +15,6 @@ export class MembersComponent implements OnInit {
 
   ngOnInit() {
     this.findMembers();
-    console.log(this.members);
-    console.log(window.sessionStorage.getItem('UserId'));
   }
 
   findMembers() {

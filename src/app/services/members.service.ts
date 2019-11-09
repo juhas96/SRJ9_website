@@ -8,11 +8,12 @@ import { Member } from '../model/member.model';
 })
 export class MembersService {
 
+  private baseUrl = 'http://147.232.191.144:8087/';
 
   constructor(private httpService: HttpClient) {}
 
   // GET /api/members
   public getAllMembers(): Observable<Member[]> {
-    return this.httpService.get<Member[]>('http://localhost:8087/api/members');
+    return this.httpService.get<Member[]>(this.baseUrl + 'api/members');
   }
 }

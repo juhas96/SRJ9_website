@@ -5,6 +5,7 @@ import {JwtResponse} from './jwt-response';
 import {AuthLoginInfo} from './login-info';
 import {SignupInfo} from './signup-info';
 import {TokenStorageService} from './token-storage.service';
+import {CookieService} from 'ngx-cookie-service';
 
 
 const httpOptions = {
@@ -22,7 +23,8 @@ export class AuthService {
   private loginUrl = 'http://147.232.191.144:8087/api/auth/signin';
   private signupUrl = 'http://147.232.191.144:8087/api/auth/signup';
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
+  constructor(private http: HttpClient,
+              private cookieService: CookieService) {
   }
 
   setLoggedIn(value: boolean) {
@@ -30,12 +32,12 @@ export class AuthService {
   }
 
   isUserLoggedIn() {
-    const user = sessionStorage.getItem('AuthUsername');
-    return !(user === null);
+    const user = this.cookieService.get('AuthUsername');
+    return !(user === '');
   }
 
   getUserAuthority() {
-    return sessionStorage.getItem('AuthAuthorities') === '[{"authority":"ROLE_ADMIN"}]';
+    return this.cookieService.get('AuthAuthorities') === '[{"authority":"ROLE_ADMIN"}]';
   }
 
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {

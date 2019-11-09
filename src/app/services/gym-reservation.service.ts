@@ -19,6 +19,11 @@ export class GymReservationService {
     return this.httpService.get<GymReservation[]>(this.baseUrl + 'api/gym_reservation');
   }
 
+  // GET /api/gym_reservation_filtered
+  public getFilteredReservations(): Observable<GymReservation[]> {
+    return this.httpService.get<GymReservation[]>(this.baseUrl + 'api/gym_reservation_filtered');
+  }
+
   // GET /api/user/gym_reservation
   public getAllReservationsForSpecificUser(userId: number): Observable<GymReservation[]> {
     return this.httpService.get<GymReservation[]>(this.baseUrl  + 'api/gym_reservation/user/' + userId);
