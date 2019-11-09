@@ -28,7 +28,6 @@ import { SearchInputComponent } from './components/admin/search-input/search-inp
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { SuccessfullLoginComponent } from './pages/successfull-login/successfull-login.component';
 import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
-import { SettingsComponent } from './pages/admin/settings/settings.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PublicGymReservationComponent } from './pages/public-gym-reservation/public-gym-reservation.component';
 
@@ -52,7 +51,6 @@ registerLocaleData(sk);
     UnauthorizedComponent,
     SuccessfullLoginComponent,
     SuccessfullRegistrationComponent,
-    SettingsComponent,
     PublicGymReservationComponent
   ],
   imports: [
