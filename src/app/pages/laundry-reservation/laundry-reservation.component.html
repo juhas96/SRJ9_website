@@ -1,0 +1,9 @@
+<div class="gutter-example">
+    <div *ngFor="let j of generateArray(24)">
+        <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzSpan]="24 / 8" *ngFor="let i of generateArray(8)">
+                <div class="grid-config">Column</div>
+            </div>
+        </div>
+    </div>
+</div>

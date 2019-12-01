@@ -66,6 +66,9 @@ export class GymReservationComponent implements OnInit {
     });
   }
 
+  getCookieService(){
+    return this.cookiesService;
+  }
 
   showConfirm(reservation: GymReservation): void {
     this.modalService.confirm({

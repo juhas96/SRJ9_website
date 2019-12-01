@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
           this.parseFirstNameFromEmail(this.validateForm.get('email').value),
           this.parseLastNameFromEmail(this.validateForm.get('email').value),
           this.parseUsernameFromEmail(this.validateForm.get('email').value),
-          this.validateForm.get('email').value + '@student.tuke.sk',
+          this.validateForm.get('email').value,
           this.validateForm.get('password').value);
 
       this.authService.signUp(this.signupInfo).subscribe(

@@ -10,14 +10,14 @@
                 <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
 
-              <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+              <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
                 {{element.time_from}} - {{element.time_until}}
                 <br>
                 <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
               </div>
 
               <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-                   *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+                   *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                    class="reserved-same-id gridStyle"
                   (nzOnConfirm)="deleteReservation(element.id, element)">
                 {{element.time_from}} - {{element.time_until}}
@@ -46,14 +46,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -82,14 +82,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -118,14 +118,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -154,14 +154,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -190,14 +190,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -226,14 +226,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -262,14 +262,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -298,14 +298,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
@@ -334,14 +334,14 @@
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
-          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != cookiesService.get('UserId')" class="reserved gridStyle" >
+          <div nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"   *ngIf="element.status=='RESERVED' && element.user.id != getCookieService().get('UserId')" class="reserved gridStyle" >
             {{element.time_from}} - {{element.time_until}}
             <br>
             <span *ngIf="element.user">{{parseUsernameFromEmail(element.user.email)}}</span>
           </div>
 
           <div nz-popconfirm nzPopconfirmTitle="{{txt.gymTable.deleteToolTip}}" [nzIcon]="iconTpl" nz-card-grid  nz-tooltip nzTooltipTitle="{{txt.gymTable.reservedReservation}}"
-               *ngIf="element.status=='RESERVED' && element.user.id == cookiesService.get('UserId')"
+               *ngIf="element.status=='RESERVED' && element.user.id == getCookieService().get('UserId')"
                class="reserved-same-id gridStyle"
                (nzOnConfirm)="deleteReservation(element.id, element)">
             {{element.time_from}} - {{element.time_until}}
