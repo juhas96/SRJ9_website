@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FacebookModule } from 'ngx-facebook';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,9 +29,13 @@ import { SearchInputComponent } from './components/admin/search-input/search-inp
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { SuccessfullLoginComponent } from './pages/successfull-login/successfull-login.component';
 import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
-import { SettingsComponent } from './pages/admin/settings/settings.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PublicGymReservationComponent } from './pages/public-gym-reservation/public-gym-reservation.component';
+import {SettingsComponent} from './pages/admin/settings/settings.component';
+import { DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarModule } from 'angular-calendar';
+import { LaundryReservationComponent } from './pages/laundry-reservation/laundry-reservation.component';
 
 registerLocaleData(sk);
 
@@ -52,8 +57,9 @@ registerLocaleData(sk);
     UnauthorizedComponent,
     SuccessfullLoginComponent,
     SuccessfullRegistrationComponent,
+    PublicGymReservationComponent,
     SettingsComponent,
-    PublicGymReservationComponent
+    LaundryReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +69,9 @@ registerLocaleData(sk);
     HttpClientModule,
     BrowserAnimationsModule,
     NzModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FacebookModule.forRoot(),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [{ provide: NZ_I18N, useValue: sk_SK },
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

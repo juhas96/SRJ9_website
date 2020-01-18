@@ -16,4 +16,5 @@ export class MembersService {
   public getAllMembers(): Observable<Member[]> {
     return this.httpService.get<Member[]>(this.baseUrl + 'api/members');
   }
+
 }

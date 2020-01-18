@@ -11,6 +11,9 @@ import { SuccessfullLoginComponent} from './pages/successfull-login/successfull-
 import { SuccessfullRegistrationComponent} from './pages/successfull-registration/successfull-registration.component';
 import { HomeComponent} from './pages/home/home.component';
 import { PublicGymReservationComponent} from './pages/public-gym-reservation/public-gym-reservation.component';
+import {MembersComponent} from './pages/members/members.component';
+import {LaundryReservationComponent} from './pages/laundry-reservation/laundry-reservation.component';
+import {SettingsComponent} from './pages/settings/settings.component';
 
 
 const routes: Routes = [
@@ -23,9 +26,11 @@ const routes: Routes = [
   { path: 'welcome-page', component: SuccessfullLoginComponent, canActivate: [AuthGuard]},
   { path: 'successfull-registration', component: SuccessfullRegistrationComponent},
   { path: 'unauthorized', component: UnauthorizedComponent},
-  { path: 'public_reservations', component: PublicGymReservationComponent}
+  { path: 'public_reservations', component: PublicGymReservationComponent},
+  { path: 'laundry_reservation', component: LaundryReservationComponent},
+  { path: 'settings', component: SettingsComponent},
   // { path: 'home', component: HomeComponent}
-  // { path: 'members', component: MembersComponent }
+  { path: 'members', component: MembersComponent }
 ];
 
 @NgModule({
