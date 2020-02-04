@@ -61,7 +61,7 @@ export class GymTableComponent implements OnInit {
   searchData() {
     this.loading = true;
     this.gymReservationService
-      .getReservations()
+      .findAll()
       .subscribe(
         (res) => {
           this.data = res;
@@ -88,7 +88,7 @@ export class GymTableComponent implements OnInit {
   deleteReservation(id: number, gymReservation: GymReservation) {
     gymReservation.user = null;
     gymReservation.status = 'FREE';
-    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
+    this.gymReservationService.update(id, gymReservation).subscribe(
         () => this.notificationService.createNotification('success',
             this.txt.gymTable.reservationDeleted,
             this.txt.gymTable.reservationDeletedDesc),

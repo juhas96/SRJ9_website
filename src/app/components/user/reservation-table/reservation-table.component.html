@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of nzTable.data">
-            <td>{{ data.date | date }}</td>
+            <td (click)="happ($event)">{{ data.date | date }}</td>
             <td>{{ data.time_from}}</td>
             <td>{{ data.time_until}}</td>
             <td>{{ data.status }}</td>

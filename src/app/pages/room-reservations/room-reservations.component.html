@@ -1,0 +1,119 @@
+<nz-steps [nzCurrent]="current">
+    <nz-step nzTitle="Výber bloku"></nz-step>
+    <nz-step nzTitle="Výber poschodia"></nz-step>
+    <nz-step nzTitle="Výber izby"></nz-step>
+    <nz-step nzTitle="Spolubývajúci"></nz-step>
+</nz-steps>
+
+<div class="steps-content">
+    <div>
+        <h1>{{text}}</h1>
+    </div>
+    <div *ngIf="current == 0" fxLayout="row" fxLayoutAlign="center">
+        <nz-select fxFlex="90%" nzShowSearch nzAllowClear nzPlaceHolder="Vyber si blok na ktorom chceš bývať" [(ngModel)]="selectedBlock">
+            <nz-option nzLabel="A" nzValue="A"></nz-option>
+            <nz-option nzLabel="B" nzValue="B"></nz-option>
+            <nz-option nzLabel="C" nzValue="C"></nz-option>
+            <nz-option nzLabel="D" nzValue="D"></nz-option>
+        </nz-select>
+    </div>
+
+    <div *ngIf="current == 1" fxLayout="row" fxLayoutAlign="center">
+        <nz-select fxFlex="90%" nzShowSearch nzAllowClear nzPlaceHolder="Vyber si poschodie na ktorom chceš bývať" [(ngModel)]="selectedFloor">
+            <nz-option nzLabel="1" nzValue="1"></nz-option>
+            <nz-option nzLabel="2" nzValue="2"></nz-option>
+            <nz-option nzLabel="3" nzValue="3"></nz-option>
+            <nz-option nzLabel="4" nzValue="4"></nz-option>
+            <nz-option nzLabel="5" nzValue="5"></nz-option>
+            <nz-option nzLabel="6" nzValue="6"></nz-option>
+            <nz-option nzLabel="7" nzValue="7"></nz-option>
+        </nz-select>
+    </div>
+
+    <div *ngIf="current == 2" fxLayout="row" fxLayoutAlign="center">
+        <nz-select fxFlex="90%" nzShowSearch nzAllowClear nzPlaceHolder="Vyber si izbu na ktorej chceš bývať" [(ngModel)]="selectedRoom">
+            <nz-option nzLabel="301" nzValue="301"></nz-option>
+            <nz-option nzLabel="302" nzValue="302"></nz-option>
+            <nz-option nzLabel="303" nzValue="303"></nz-option>
+            <nz-option nzLabel="304" nzValue="304"></nz-option>
+            <nz-option nzLabel="305" nzValue="305"></nz-option>
+            <nz-option nzLabel="306" nzValue="306"></nz-option>
+            <nz-option nzLabel="307" nzValue="307"></nz-option>
+            <nz-option nzLabel="308" nzValue="308"></nz-option>
+            <nz-option nzLabel="309" nzValue="309"></nz-option>
+            <nz-option nzLabel="310" nzValue="310"></nz-option>
+            <nz-option nzLabel="311" nzValue="311"></nz-option>
+            <nz-option nzLabel="312" nzValue="312"></nz-option>
+            <nz-option nzLabel="313" nzValue="313"></nz-option>
+            <nz-option nzLabel="314" nzValue="314"></nz-option>
+        </nz-select>
+    </div>
+
+    <div *ngIf="current == 3" fxLayout="row" fxLayoutAlign="center">
+        <nz-transfer
+                [nzDataSource]="list"
+                [nzShowSearch]="showSearch"
+                [nzShowSelectAll]="false"
+                [nzRenderList]="[renderList, renderList]"
+                (nzSelectChange)="select($event)"
+                (nzChange)="change($event)"
+        >
+            <ng-template
+                #renderList
+                let-items
+                let-direction="direction"
+                let-stat="stat"
+                let-disabled="disabled"
+                let-onItemSelectAll="onItemSelectAll"
+                let-onItemSelect="onItemSelect"
+            >
+                <nz-table #t [nzData]="convertItems(items)" nzSize="small">
+                    <thead>
+                    <tr>
+                        <th
+                                nzShowCheckbox
+                                [nzDisabled]="disabled"
+                                [nzChecked]="stat.checkAll"
+                                [nzIndeterminate]="stat.checkHalf"
+                                (nzCheckedChange)="onItemSelectAll($event)"
+                        ></th>
+                        <th>Name</th>
+                        <th *ngIf="direction === 'left'">Tag</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let data of t.data" (click)="onItemSelect(data)">
+                        <td
+                                nzShowCheckbox
+                                [nzChecked]="data.checked"
+                                [nzDisabled]="disabled || data.disabled"
+                                (nzCheckedChange)="onItemSelect(data)"
+                        ></td>
+                        <td>{{ data.title }}</td>
+                        <td *ngIf="direction === 'left'">
+                            <nz-tag>{{ data.tag }}</nz-tag>
+                        </td>
+                        <td>{{ data.description }}</td>
+                    </tr>
+                    </tbody>
+                </nz-table>
+            </ng-template>
+        </nz-transfer>
+<!--        <div style="margin-top: 8px;">-->
+<!--            <nz-switch [(ngModel)]="disabled" nzCheckedChildren="disabled" nzUnCheckedChildren="disabled"></nz-switch>-->
+<!--            <nz-switch [(ngModel)]="showSearch" nzCheckedChildren="showSearch" nzUnCheckedChildren="showSearch"></nz-switch>-->
+<!--        </div>-->
+    </div>
+</div>
+<div class="steps-action" fxLayout="row" fxLayoutAlign="center">
+    <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+        <span>Späť</span>
+    </button>
+    <button nz-button nzType="default" (click)="next()" *ngIf="current < 3">
+        <span>Ďalej</span>
+    </button>
+    <button nz-button nzType="primary" (click)="done()" *ngIf="current === 3">
+        <span>Potvrdiť</span>
+    </button>
+</div>

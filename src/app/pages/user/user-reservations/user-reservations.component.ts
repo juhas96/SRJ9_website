@@ -12,4 +12,8 @@ export class UserReservationsComponent implements OnInit {
   ngOnInit() {
   }
 
+  something(event) {
+    console.log(event);
+  }
+
 }

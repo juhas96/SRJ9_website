@@ -54,7 +54,7 @@ export class GymReservationComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.gymService.getReservations().subscribe(data => {
+    this.gymService.findAll().subscribe(data => {
       this.sundayArray = data.filter(value => value.date === this.sundayDate);
       this.nextSundayArray = data.filter(value => value.date === this.nextSundayDate);
 
@@ -89,7 +89,7 @@ export class GymReservationComponent implements OnInit {
               this.reservation.user = val;
             });
 
-        this.gymService.updateGymReservation(this.reservation.id, this.reservation).subscribe(
+        this.gymService.update(this.reservation.id, this.reservation).subscribe(
             () => {},
             (err) => {
               if (err.status === 400) {
@@ -120,7 +120,7 @@ export class GymReservationComponent implements OnInit {
   deleteReservation(id: number, gymReservation: GymReservation) {
     gymReservation.user = null;
     gymReservation.status = 'FREE';
-    this.gymService.updateGymReservation(id, gymReservation).subscribe(
+    this.gymService.update(id, gymReservation).subscribe(
         () => this.notificationService.createNotification('success',
             this.txt.gymTable.reservationDeleted,
             this.txt.gymTable.reservationDeletedDesc),
