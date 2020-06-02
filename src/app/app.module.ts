@@ -38,6 +38,9 @@ import { LaundryReservationComponent } from './pages/laundry-reservation/laundry
 import {SettingsComponent} from './pages/settings/settings.component';
 import { RoomReservationsComponent } from './pages/room-reservations/room-reservations.component';
 import {FlexModule} from '@angular/flex-layout';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 registerLocaleData(sk);
 
@@ -75,7 +78,9 @@ registerLocaleData(sk);
     ReactiveFormsModule,
     FacebookModule.forRoot(),
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
-    FlexModule
+    FlexModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [{ provide: NZ_I18N, useValue: sk_SK },
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
