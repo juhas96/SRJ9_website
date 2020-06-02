@@ -14,6 +14,7 @@ import { PublicGymReservationComponent} from './pages/public-gym-reservation/pub
 import {MembersComponent} from './pages/members/members.component';
 import {LaundryReservationComponent} from './pages/laundry-reservation/laundry-reservation.component';
 import {SettingsComponent} from './pages/settings/settings.component';
+import {RoomReservationsComponent} from './pages/room-reservations/room-reservations.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'public_reservations', component: PublicGymReservationComponent},
   { path: 'laundry_reservation', component: LaundryReservationComponent},
   { path: 'settings', component: SettingsComponent},
+  { path: 'room-reservations', component: RoomReservationsComponent},
   // { path: 'home', component: HomeComponent}
   { path: 'members', component: MembersComponent }
 ];

@@ -12,6 +12,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStepsModule } from 'ng-zorro-antd';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 
 const nz = [
@@ -27,7 +29,9 @@ const nz = [
   NzResultModule,
   NzNotificationModule,
   NzSpinModule,
-  NzStepsModule
+  NzStepsModule,
+  NzInputModule,
+  NzTreeSelectModule,
 ];
 
 @NgModule({
