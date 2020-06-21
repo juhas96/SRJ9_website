@@ -19,7 +19,7 @@ export class MembersComponent implements OnInit {
 
   findMembers() {
     this.membersService
-      .getAllMembers()
+      .findAll()
       .subscribe(
         (res) => this.members = res,
         (err) => console.log(err),

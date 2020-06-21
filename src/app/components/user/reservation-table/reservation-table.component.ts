@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { GymReservation } from 'src/app/model/gym.model';
 import { GymReservationService } from 'src/app/services/gym-reservation.service';
 import {NotificationService} from '../../../services/notification.service';
@@ -11,6 +11,10 @@ import {text} from '../../../texts/constants';
   styleUrls: ['./reservation-table.component.css']
 })
 export class ReservationTableComponent implements OnInit {
+
+
+  @Output()
+  happened: EventEmitter<any> = new EventEmitter<any>();
 
   data: GymReservation[] = [];
   loading = true;
@@ -38,7 +42,7 @@ export class ReservationTableComponent implements OnInit {
   deleteReservation(id: number, gymReservation: GymReservation) {
     gymReservation.user = null;
     gymReservation.status = 'FREE';
-    this.gymReservationService.updateGymReservation(id, gymReservation).subscribe(
+    this.gymReservationService.update(id, gymReservation).subscribe(
         () => {
           this.notificationService.createNotification('success',
               this.txt.gymTable.reservationDeleted,
@@ -46,6 +50,10 @@ export class ReservationTableComponent implements OnInit {
           this.searchData();
         },
         error => this.notificationService.createNotification('error', 'Error!', error.toLocaleString()));
+  }
+
+  happ(event) {
+    this.happened.emit(event);
   }
 
 

@@ -46,7 +46,7 @@ export class PublicGymReservationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gymService.getReservations().subscribe(data => {
+    this.gymService.findAll().subscribe(data => {
       this.sundayArray = data.filter(value => value.date === this.sundayDate);
       this.nextSundayArray = data.filter(value => value.date === this.nextSundayDate);
       this.sundayArray.sort( (a, b) => a.id - b.id);

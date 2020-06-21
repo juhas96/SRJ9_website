@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Member } from '../model/member.model';
+import {CrudService} from './crud.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MembersService {
+export class MembersService extends CrudService<Member, number> {
 
-  private baseUrl = 'http://147.232.191.144:8087/';
-
-  constructor(private httpService: HttpClient) {}
-
-  // GET /api/members
-  public getAllMembers(): Observable<Member[]> {
-    return this.httpService.get<Member[]>(this.baseUrl + 'api/members');
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient, '', '/members');
   }
 
 }
