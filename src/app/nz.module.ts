@@ -14,7 +14,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStepsModule } from 'ng-zorro-antd';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
-
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 const nz = [
   NzLayoutModule,
@@ -32,6 +32,7 @@ const nz = [
   NzStepsModule,
   NzInputModule,
   NzTreeSelectModule,
+  NzRadioModule
 ];
 
 @NgModule({

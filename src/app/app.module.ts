@@ -41,6 +41,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { TimerComponent } from './components/timer/timer.component';
 
 registerLocaleData(sk);
 
@@ -65,7 +66,8 @@ registerLocaleData(sk);
     PublicGymReservationComponent,
     SettingsComponent,
     LaundryReservationComponent,
-    RoomReservationsComponent
+    RoomReservationsComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,

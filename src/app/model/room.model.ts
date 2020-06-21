@@ -6,4 +6,8 @@ export class Room {
     roomNumber: string;
     isAvailable: boolean;
     capacity: number;
+    sex: string;
+
+    constructor() {
+    }
 }

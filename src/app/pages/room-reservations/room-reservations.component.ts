@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../services/notification.service';
-import * as firebase from 'firebase';
 import {RoomReservationsService} from '../../services/room-reservations.service';
-import {map, tap} from 'rxjs/operators';
-import {DropdownRoom} from '../../model/dropdown-room.model';
+import {map} from 'rxjs/operators';
 import {Room} from '../../model/room.model';
+import {Block} from '../../model/block.model';
+import {RoomDropdown} from '../../model/room-dropdown.model';
+import {Floor} from '../../model/floor.model';
+import {NzCascaderOption} from 'ng-zorro-antd';
+import {StateService} from '../../services/state.service';
+import {LoadingService} from '../../services/loading.service';
 
 @Component({
   selector: 'app-room-reservations',
@@ -14,42 +18,32 @@ import {Room} from '../../model/room.model';
   styleUrls: ['./room-reservations.component.css']
 })
 export class RoomReservationsComponent implements OnInit {
-  validateForm: FormGroup;
+  form: FormGroup;
   emailValidationPattern = '^[A-Za-z0-9._%+-]+@student.tuke.sk$';
   isLoading = false;
   roomCapacity = 0;
   allRooms: Room[];
-  options: DropdownRoom[] = [
-    {
-      value: 'A',
-      label: 'Blok A',
-      children: []
-    },
-    {
-      value: 'B',
-      label: 'Blok B',
-      children: []
-    },
-    {
-      value: 'C',
-      label: 'Blok C',
-      children: []
-    },
-    {
-      value: 'D',
-      label: 'Blok D',
-      children: []
-    }
-  ];
+  sex = 'M';
+  state;
+  options: NzCascaderOption[] = [];
 
   constructor(private fb: FormBuilder,
               private router: Router,
               private notificationService: NotificationService,
-              private roomReservationsService: RoomReservationsService) {
+              private roomReservationsService: RoomReservationsService,
+              private stateService: StateService,
+              private loadingService: LoadingService) {
   }
 
-  ngOnInit() {
-    this.roomReservationsService.getAllRooms().pipe(
+  fillUpRooms() {
+    this.options = [
+      {
+        value: 'A',
+        label: 'Blok A',
+        children: []
+      }
+    ];
+    this.roomReservationsService.getAllRooms(this.sex).pipe(
         map(arr => {
           return arr.map(snap => {
             return {
@@ -59,12 +53,42 @@ export class RoomReservationsComponent implements OnInit {
           });
         })
     ).subscribe(res => {
-      console.log('ROOMS', res);
       this.allRooms = res;
-      this.fillUpWholeBlockA(res);
-      // this.updateCapacity();
+      console.log('ZMENA', res);
+      this.fillDropdownOptions(res);
+      this.updateCapacity();
     });
-    this.validateForm = this.fb.group({
+  }
+
+  ngOnInit() {
+    this.loadingService.observable.subscribe(res => this.isLoading = res);
+    // this.roomReservationsService.fillDb();
+    this.options = [
+      {
+        value: 'A',
+        label: 'Blok A',
+        children: []
+      }
+    ];
+    this.roomReservationsService.getAllRooms(this.sex).pipe(
+        map(arr => {
+          return arr.map(snap => {
+            return {
+              id: snap.payload.doc.id,
+              ...snap.payload.doc.data()
+            } as Room;
+          });
+        })
+    ).subscribe(res => {
+      this.allRooms = res;
+      console.log('ZMENA', res);
+      this.fillDropdownOptions(res);
+      this.updateCapacity();
+    });
+    this.stateService.observable.subscribe(res => {
+      this.state = res;
+    });
+    this.form = this.fb.group({
       room: ['', [Validators.required]],
       firstUserName: ['', [Validators.required]],
       secondUserName: [''],
@@ -84,17 +108,18 @@ export class RoomReservationsComponent implements OnInit {
         Validators.pattern(this.emailValidationPattern)
       ]],
     });
+    this.updateValidations();
   }
 
   submitForm() {
-    if (this.validateForm.valid) {
+    if (this.form.valid) {
       console.log('VALID');
 
-      this.isLoading = true;
+      // this.isLoading = true;
       // tslint:disable-next-line: forin
-      for (const i in this.validateForm.controls) {
-        this.validateForm.controls[i].markAsDirty();
-        this.validateForm.controls[i].updateValueAndValidity();
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsDirty();
+        this.form.controls[i].updateValueAndValidity();
       }
     } else {
       console.log('INVALID');
@@ -102,78 +127,144 @@ export class RoomReservationsComponent implements OnInit {
   }
 
   updateValidations() {
-    if (this.validateForm.get('secondUserName').value) {
-      this.validateForm.get('secondUserName')
+    if (this.form.get('secondUserName').value) {
+      this.form.get('secondUserEmail')
           .setValidators([Validators.required, Validators.email, Validators.pattern(this.emailValidationPattern)]);
-      this.validateForm.get('secondUserName').updateValueAndValidity();
+      this.form.get('secondUserEmail').updateValueAndValidity();
     } else {
-      this.validateForm.get('secondUserName').clearValidators();
-      this.validateForm.get('secondUserName').updateValueAndValidity();
+      this.form.get('secondUserEmail').clearValidators();
+      this.form.get('secondUserEmail').updateValueAndValidity();
     }
 
-    if (this.validateForm.get('thirdUserName').value) {
-      this.validateForm.get('thirdUserName')
+    if (this.form.get('thirdUserName').value) {
+      this.form.get('thirdUserEmail')
           .setValidators([Validators.required, Validators.email, Validators.pattern(this.emailValidationPattern)]);
-      this.validateForm.get('thirdUserName').updateValueAndValidity();
+      this.form.get('thirdUserEmail').updateValueAndValidity();
     } else {
-      this.validateForm.get('thirdUserName').clearValidators();
-      this.validateForm.get('thirdUserName').updateValueAndValidity();
+      this.form.get('thirdUserEmail').clearValidators();
+      this.form.get('thirdUserEmail').updateValueAndValidity();
     }
 
-    if (this.validateForm.get('fourthUserName').value) {
-      this.validateForm.get('fourthUserName')
+    if (this.form.get('fourthUserName').value) {
+      this.form.get('fourthUserEmail')
           .setValidators([Validators.required, Validators.email, Validators.pattern(this.emailValidationPattern)]);
-      this.validateForm.get('fourthUserName').updateValueAndValidity();
+      this.form.get('fourthUserEmail').updateValueAndValidity();
     } else {
-      this.validateForm.get('fourthUserName').clearValidators();
-      this.validateForm.get('fourthUserName').updateValueAndValidity();
+      this.form.get('fourthUserEmail').clearValidators();
+      this.form.get('fourthUserEmail').updateValueAndValidity();
+    }
+
+    if (this.roomCapacity >= 3) {
+      this.form.get('secondUserName')
+          .setValidators(Validators.required);
+      this.form.get('secondUserEmail')
+          .setValidators([Validators.required, Validators.email, Validators.pattern(this.emailValidationPattern)]);
+
+      this.form.get('thirdUserName')
+          .setValidators(Validators.required);
+      this.form.get('thirdUserEmail')
+          .setValidators([Validators.required, Validators.email, Validators.pattern(this.emailValidationPattern)]);
     }
   }
 
-  fillUpWholeBlockA(rooms: Room[]) {
-    console.log('TEST');
-    this.options.find(block => block.value === 'A').children.forEach(optionFloor => {
-      optionFloor.children.forEach(optionRoom => {
-        if (!rooms.filter(block => block.block === 'A')
-            .filter(floor => floor.floor.toString() === optionFloor.value)
-            .find(room => room.roomNumber === optionRoom.value)) {
-          optionFloor.children.splice(optionFloor.children.indexOf(optionRoom));
-        }
+  fillDropdownOptions(rooms: Room[]) {
+    const blocksMap: Map<string, Map<string, NzCascaderOption[]>> = new Map<string, Map<string, NzCascaderOption[]>>();
+    rooms.forEach(room => {
+      if (!blocksMap.has(room.block)) {
+        blocksMap.set(room.block, new Map<string, NzCascaderOption[]>());
+      }
+
+      const singleBlock = blocksMap.get(room.block);
+      if (!singleBlock.has(room.floor.toString())) {
+        singleBlock.set(room.floor.toString(), []);
+      }
+
+      const singleFloor = singleBlock.get(room.floor.toString());
+
+      singleFloor.push(new RoomDropdown(room.roomNumber, 'Izba č.' + room.roomNumber + ' (' + room.capacity + ')'));
+    });
+
+    blocksMap.forEach((floors, blockKey) => {
+      const block = new Block(blockKey, 'Blok ' + blockKey);
+      const floorsArray = [];
+
+      floors.forEach((floorRooms: RoomDropdown[], floorKey) => {
+        const floor = new Floor(floorKey, floorKey + '.poschodie');
+        floor.children.push(...floorRooms);
+        floorsArray.push(floor);
+      });
+      console.log(this.options);
+      block.children.push(...floorsArray);
+      this.options.push(block);
+    });
+    this.options = this.options.filter(option => option.children.length > 0);
+    // Filter for unique blocks
+    this.options = Array.from(new Set(this.options.map(a => a.value))).map(x => {
+      return this.options.find(a => a.value === x);
+    });
+    this.options[0].children.sort((a, b) => {
+      return a.value < b.value ? -1 : 1;
+    });
+    this.options[0].children.forEach(floor => {
+      floor.children.sort((a, b) => {
+        return a.value < b.value ? -1 : 1;
       });
     });
-    rooms
-        .filter(block => block.block === 'A')
-        .filter(floor => floor.floor === 1)
-        .forEach(room => {
-            let firstFloor: {value: string, label: string, children: [{value: string, label: string, isLeaf: boolean, capacity: number}?]};
-            if (!this.options.find(block => block.value === 'A').children.find(floor => floor.value === '1')) {
-                this.options.find(block => block.value === 'A').children.push({value: '1', label: '1. Poschodie', children: []});
-                firstFloor = this.options.find(block => block.value === 'A').children.find(floor => floor.value === '1');
-            } else {
-              firstFloor = this.options.find(block => block.value === 'A').children.find(floor => floor.value === '1');
-            }
-            if (!firstFloor.children.find(x => x.value === room.roomNumber)) {
-              firstFloor.children.push({
-                value: room.roomNumber,
-                label: 'Izba č.' + room.roomNumber + ' (' + room.capacity + ')',
-                isLeaf: true,
-                capacity: room.capacity
-              });
-            } else {
-              firstFloor.children.find(x => x.value === room.roomNumber).value = room.roomNumber;
-              firstFloor.children.find(x => x.value === room.roomNumber).label = 'Izba č.' + room.roomNumber + ' (' + room.capacity + ')';
-              firstFloor.children.find(x => x.value === room.roomNumber).capacity = room.capacity;
-            }
-          }
-        );
   }
 
   updateCapacity() {
-    console.log(this.validateForm.get('room').value);
-    this.roomCapacity = this.allRooms
-       .find(block => block.block === this.validateForm
-           .get('room').value[0] && block.floor == this.validateForm
-           .get('room').value[1] && block.roomNumber === this.validateForm
-           .get('room').value[2]).capacity;
+    const room = this.allRooms
+        .find(block => block.block === this.form
+            .get('room').value[0] && block.floor == this.form
+            .get('room').value[1] && block.roomNumber === this.form
+            .get('room').value[2]);
+    if (room) {
+      this.roomCapacity = room.capacity;
+    } else {
+      this.roomCapacity = 0;
+    }
+  }
+
+  reserveRoom() {
+    this.loadingService.changeData(true);
+    const room = this.allRooms
+        .find(block => block.block === this.form
+            .get('room').value[0] && block.floor == this.form
+            .get('room').value[1] && block.roomNumber === this.form
+            .get('room').value[2]);
+
+    let reservedPlaces = 0;
+    if (this.form.get('firstUserEmail').value) {
+      reservedPlaces += 1;
+      room.users.push(this.form.get('firstUserEmail').value);
+    }
+
+    if (this.form.get('secondUserEmail').value) {
+      reservedPlaces += 1;
+      room.users.push(this.form.get('secondUserEmail').value);
+    }
+
+    if (this.form.get('thirdUserEmail').value) {
+      reservedPlaces += 1;
+      room.users.push(this.form.get('thirdUserEmail').value);
+    }
+
+    if (this.form.get('fourthUserEmail').value) {
+      reservedPlaces += 1;
+      room.users.push(this.form.get('fourthUserEmail').value);
+    }
+
+    room.capacity = room.capacity - reservedPlaces;
+    if (room.capacity === 0) {
+      room.isAvailable = false;
+    }
+    room.sex = this.sex;
+    this.roomReservationsService.updateRoom(room, room.id);
+  }
+
+  filterRoomsBySex() {
+    this.roomCapacity = 0;
+    this.form.get('room').patchValue('');
+    this.fillUpRooms();
   }
 }

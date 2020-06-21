@@ -1,16 +1,29 @@
 <nz-spin [nzSpinning]="isLoading">
     <div fxLayout="row" fxLayoutAlign="center">
-        <h1>Rezervácia izieb</h1>
+        <h1>Rezervácie izieb</h1>
     </div>
 
-    <div>
-        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="state == 0">
+        <app-timer inputDate="Jun 22, 2020 11:00:00"></app-timer>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="state == 1">
+        <app-timer inputDate="Jun 22, 2020 18:00:00"></app-timer>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="state == 1">
+        <nz-radio-group [(ngModel)]="sex" (ngModelChange)="filterRoomsBySex()">
+            <label nz-radio-button nzValue="M">Chlapčenské izby</label>
+            <label nz-radio-button nzValue="Z">Dievčenské izby</label>
+        </nz-radio-group>
+    </div>
+
+    <div *ngIf="state == 1">
+        <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
             <nz-form-item>
                 <nz-form-label nzRequired [nzSpan]="6" nzFor="block">Izba</nz-form-label>
                 <nz-form-control [nzSpan]="14">
                     <nz-input-group nzCompact>
-                        <nz-cascader (ngModelChange)="updateCapacity()" formControlName="room" name="room" [nzOptions]="options" style="width: 100%;"></nz-cascader>
-                    </nz-input-group>
+                        <nz-cascader (ngModelChange)="updateCapacity()" [nzOptions]="options" formControlName="room" name="room" style="width: 100%;"></nz-cascader>
+                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <div *ngIf="roomCapacity > 0">
@@ -25,21 +38,21 @@
                 </nz-form-item>
 
                 <nz-form-item *ngIf="roomCapacity > 1">
-                    <nz-form-label [nzSpan]="6" nzFor="block">Ubytovaný č.2</nz-form-label>
+                    <nz-form-label [nzRequired]="roomCapacity >= 3" [nzSpan]="6" nzFor="block">Ubytovaný č.2</nz-form-label>
                     <nz-form-control [nzSpan]="14">
                         <nz-input-group nzCompact>
                             <input (change)="updateValidations()" formControlName="secondUserName" placeholder="Janko Hraško" name="firstUserName" type="text" nz-input  style="width: 20%;" />
-                            <input formControlName="secondUserEmail" placeholder="janko.hrasko@student.tuke.sk" name="fistUserEmail" type="email" nz-input style="width:80%;" />
+                            <input (change)="updateValidations()" formControlName="secondUserEmail" placeholder="janko.hrasko@student.tuke.sk" name="fistUserEmail" type="email" nz-input style="width:80%;" />
                         </nz-input-group>
                     </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item *ngIf="roomCapacity > 2">
-                    <nz-form-label [nzSpan]="6" nzFor="block">Ubytovaný č.3</nz-form-label>
+                    <nz-form-label [nzRequired]="roomCapacity >= 3" [nzSpan]="6" nzFor="block">Ubytovaný č.3</nz-form-label>
                     <nz-form-control [nzSpan]="14">
                         <nz-input-group nzCompact>
                             <input (change)="updateValidations()" formControlName="thirdUserName" placeholder="Janko Hraško" name="firstUserName" type="text" nz-input style="width: 20%;" />
-                            <input formControlName="thirdUserEmail" placeholder="janko.hrasko@student.tuke.sk" name="fistUserEmail" type="email" nz-input style="width:80%;" />
+                            <input (change)="updateValidations()" formControlName="thirdUserEmail" placeholder="janko.hrasko@student.tuke.sk" name="fistUserEmail" type="email" nz-input style="width:80%;" />
                         </nz-input-group>
                     </nz-form-control>
                 </nz-form-item>
@@ -49,13 +62,13 @@
                     <nz-form-control [nzSpan]="14">
                         <nz-input-group nzCompact>
                             <input (change)="updateValidations()" formControlName="fourthUserName" placeholder="Janko Hraško" name="firstUserName" type="text" nz-input style="width: 20%;" />
-                            <input formControlName="fourthUserEmail" placeholder="janko.hrasko@student.tuke.sk" name="fistUserEmail" type="email" nz-input style="width:80%;" />
+                            <input (change)="updateValidations()" formControlName="fourthUserEmail" placeholder="janko.hrasko@student.tuke.sk" name="fistUserEmail" type="email" nz-input style="width:80%;" />
                         </nz-input-group>
                     </nz-form-control>
                 </nz-form-item>
 
                 <div fxLayout="row" fxLayoutAlign="center">
-                    <button [disabled]="validateForm.invalid" nz-button nzType="primary">Zarezervovať</button>
+                    <button [disabled]="form.invalid" (click)="reserveRoom()" nz-button nzType="primary">Zarezervovať</button>
                 </div>
             </div>
         </form>
