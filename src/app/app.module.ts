@@ -31,9 +31,6 @@ import { SuccessfullLoginComponent } from './pages/successfull-login/successfull
 import { SuccessfullRegistrationComponent } from './pages/successfull-registration/successfull-registration.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PublicGymReservationComponent } from './pages/public-gym-reservation/public-gym-reservation.component';
-import { DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarModule } from 'angular-calendar';
 import { LaundryReservationComponent } from './pages/laundry-reservation/laundry-reservation.component';
 import {SettingsComponent} from './pages/settings/settings.component';
 import { RoomReservationsComponent } from './pages/room-reservations/room-reservations.component';
@@ -79,7 +76,6 @@ registerLocaleData(sk);
     NzModule,
     ReactiveFormsModule,
     FacebookModule.forRoot(),
-    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
     FlexModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule

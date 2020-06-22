@@ -19,6 +19,13 @@ export class RoomReservationsService {
     }).snapshotChanges();
   }
 
+  getRooms() {
+      return this.db.collection('rooms', ref => {
+         return ref.orderBy('roomNumber', 'asc');
+      }).snapshotChanges();
+  }
+
+
   // fillDb() {
   //     const rooms = [];
   //     for (let floor = 1; floor < 8; floor++) {
@@ -54,7 +61,7 @@ export class RoomReservationsService {
               } else {
                 console.log('Transaction failed because somebody else reserved room');
                 this.notificationService.createNotification('error', 'Chyba', 'Niekto si pravdepodobne túto izbu rezervoval skôr ako ty.');
-                  this.loadingService.changeData(false);
+                this.loadingService.changeData(false);
                 return Promise.reject('Sorry! Somebody reserved room ');
               }
             })).then(() => {

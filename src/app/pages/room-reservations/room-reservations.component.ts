@@ -62,6 +62,18 @@ export class RoomReservationsComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.observable.subscribe(res => this.isLoading = res);
+    this.roomReservationsService.getRooms().pipe(
+        map(arr => {
+          return arr.map(snap => {
+            return {
+              id: snap.payload.doc.id,
+              ...snap.payload.doc.data()
+            } as Room;
+          });
+        })
+    ).subscribe(res => {
+      console.log(JSON.stringify(res))
+    });
     // this.roomReservationsService.fillDb();
     this.options = [
       {
